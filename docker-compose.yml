@@ -1,0 +1,32 @@
+---
+
+version: "3"
+
+services:
+  builds:
+    build:
+      context: .
+      dockerfile: Dockerfile-development
+    network_mode: host
+    environment:
+      PORT: 4000
+    volumes:
+      - ./apps:/opt/builds/apps
+      - ./config:/opt/builds/config
+    command: do ecto.create, phx.server
+    working_dir: /opt/builds
+    depends_on:
+      - postgres
+      - browser
+
+  postgres:
+    image: timescale/timescaledb:latest-pg11
+    network_mode: host
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USERNAME: postgres
+
+  browser:
+    image: wernight/phantomjs
+    network_mode: host
+    command: phantomjs --webdriver=8910

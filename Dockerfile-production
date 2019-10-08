@@ -1,0 +1,61 @@
+# Dockerfile
+# Building Builds website in production environment
+
+FROM elixir:alpine as build
+MAINTAINER Blake Kostner
+
+RUN mkdir -p /app
+
+COPY . /app
+WORKDIR /app
+
+ENV APP_NAME=builds
+ENV MIX_ENV=prod
+
+RUN apk --no-cache --update add \
+  git make g++ \
+  nodejs nodejs-npm && \
+  npm install npm -g --no-progress
+
+RUN cd /app && \
+  mix local.hex --force && \
+  mix local.rebar --force && \
+  mix deps.get && \
+  mix deps.compile --all && \
+  cd /app/assets && \
+  npm ci && \
+  npx webpack --mode production && \
+  cd /app && \
+  mix phx.digest && \
+  mix release
+
+RUN ls -d /app/_build/prod/rel/$APP_NAME/releases/*/
+
+RUN export RELEASE_DIR=`ls -d /app/_build/prod/rel/$APP_NAME/releases/*/` && \
+  mkdir /export && \
+  tar -xf "$RELEASE_DIR/$APP_NAME.tar.gz" -C /export && \
+  mv /export/bin/$APP_NAME /export/bin/builds
+
+# Dockerfile
+# An OTP docker image for running production builds website
+
+FROM elixir:alpine as release
+MAINTAINER Blake Kostner
+
+RUN mkdir -p /opt/builds
+
+COPY --from=build /export/ /opt/builds
+WORKDIR /opt/builds
+
+ENV MIX_APP=builds
+ENV MIX_ENV=prod
+ENV PORT=4000
+ENV REPLACE_OS_VARS=true
+ENV SHELL=/bin/bash
+
+EXPOSE 4000
+
+RUN apk add --no-cache bash openssl
+
+ENTRYPOINT ["/opt/builds/bin/builds"]
+CMD ["foreground"]

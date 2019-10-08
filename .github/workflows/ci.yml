@@ -1,0 +1,108 @@
+---
+
+name: CI
+
+on:
+  - pull_request
+  - push
+
+jobs:
+  format:
+    name: Elixir Format
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Compile
+      run: docker-compose build
+
+    - name: Format
+      run: docker-compose run houston format
+
+  test:
+    name: Elixir Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Compile
+      run: docker-compose build
+
+    - name: Test
+      run: docker-compose run houston test --exclude browser
+
+  # Firefox is some issues
+  # PR: https://github.com/HashNuke/hound/pull/237
+  # browser_firefox:
+  #   name: Browser Test Firefox
+  #   runs-on: ubuntu-18.04
+  #   steps:
+  #     - uses: actions/checkout@v1
+
+  #     - name: Compile
+  #       run: docker-compose build
+
+  #     - name: Setup
+  #       run: |
+  #         sudo apt update &&
+  #         sudo apt install -y firefox firefox-geckodriver
+
+  #     - name: Test
+  #       run: |
+  #         geckodriver --port=4444 &
+  #         docker-compose run -e WEBDRIVER=selenium -e BROWSER=firefox houston test --only browser --max-cases 1
+
+  browser_chromium:
+    name: Browser Test Chromium
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Compile
+        run: docker-compose build
+
+      - name: Setup
+        run: |
+          sudo apt update &&
+          sudo apt install -y chromium-browser chromium-chromedriver
+
+      - name: Test
+        run: |
+          chromedriver --port=4444 &
+          docker-compose run -e WEBDRIVER=selenium -e BROWSER=chromium houston test --only browser
+
+  # Install docker-compose to start working on this more. Will need an macOS
+  # computer to assist in this.
+  # browser_safari:
+  #   name: Browser Test Safari
+  #   runs-on: macOS-10.14
+  #   steps:
+  #     - uses: actions/checkout@v1
+
+  #     - name: Compile
+  #       run: docker-compose build
+
+  #     - name: Test
+  #       run: |
+  #         safaridriver --enable --port=4444 &
+  #         docker-compose run -e WEBDRIVER=selenium -e BROWSER=safari houston test --only browser
+
+  # Need window support in the Houston dockerfile before we can continue
+  # browser_edge:
+  #   name: Browser Test Edge
+  #   runs-on: windows-2019
+  #   steps:
+  #     - uses: actions/checkout@v1
+
+  #     - name: Compile
+  #       run: docker-compose build
+
+  #     - name: Setup
+  #       run: DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0
+
+  #     - name: Test
+  #       run: |
+  #         MicrosoftWebDriver.exe --port=4444 &
+  #         docker-compose run -e WEBDRIVER=selenium -e BROWSER=edge houston test --only browser

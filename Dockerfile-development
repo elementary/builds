@@ -1,0 +1,31 @@
+# Dockerfile
+# A dockerfile for Builds website development
+
+FROM elixir:alpine
+MAINTAINER Blake Kostner
+
+RUN mkdir -p /opt/builds
+
+COPY . /opt/builds
+WORKDIR /opt/builds
+
+ENV APP_NAME=builds
+
+RUN apk --no-cache --update add \
+  bash git make g++ inotify-tools \
+  nodejs nodejs-npm && \
+  npm install npm -g --no-progress
+
+RUN cd /opt/builds && \
+  mix local.hex --force && \
+  mix local.rebar --force && \
+  mix deps.get --all && \
+  MIX_ENV=dev mix deps.compile --all && \
+  MIX_ENV=test mix deps.compile --all && \
+  cd /opt/builds/assets && \
+  npm ci
+
+EXPOSE 4000
+
+ENTRYPOINT ["mix"]
+CMD ["phx.server"]
