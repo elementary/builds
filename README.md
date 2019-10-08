@@ -1,7 +1,7 @@
 <div align="center">
   <a href="https://builds.elementary.io" align="center">
     <center align="center">
-      <img src="https://raw.githubusercontent.com/elementary/houston/v2/brand/AppCenter.png" alt="AppCenter" align="center">
+      <img src="./priv/brand/logo.png" alt="elementary" align="center">
     </center>
   </a>
   <br>
