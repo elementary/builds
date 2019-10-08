@@ -18,7 +18,7 @@ jobs:
       run: docker-compose build
 
     - name: Format
-      run: docker-compose run houston format
+      run: docker-compose run builds format
 
   test:
     name: Elixir Test
@@ -31,7 +31,21 @@ jobs:
       run: docker-compose build
 
     - name: Test
-      run: docker-compose run houston test --exclude browser
+      run: docker-compose run builds test --exclude browser
+
+  browser_phantom:
+    name: Browser Test Phantom
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Compile
+        run: docker-compose build
+
+      - name: Test
+        run: |
+          docker-compose run builds test --only browser --max-cases 1
+
 
   # Firefox is some issues
   # PR: https://github.com/HashNuke/hound/pull/237
@@ -52,26 +66,27 @@ jobs:
   #     - name: Test
   #       run: |
   #         geckodriver --port=4444 &
-  #         docker-compose run -e WEBDRIVER=selenium -e BROWSER=firefox houston test --only browser --max-cases 1
+  #         docker-compose run -e WEBDRIVER=selenium -e BROWSER=firefox builds test --only browser --max-cases 1
 
-  browser_chromium:
-    name: Browser Test Chromium
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v1
+  # Session ID issue while testing
+  # browser_chromium:
+  #   name: Browser Test Chromium
+  #   runs-on: ubuntu-18.04
+  #   steps:
+  #     - uses: actions/checkout@v1
 
-      - name: Compile
-        run: docker-compose build
+  #     - name: Compile
+  #       run: docker-compose build
 
-      - name: Setup
-        run: |
-          sudo apt update &&
-          sudo apt install -y chromium-browser chromium-chromedriver
+  #     - name: Setup
+  #       run: |
+  #         sudo apt update &&
+  #         sudo apt install -y chromium-browser chromium-chromedriver
 
-      - name: Test
-        run: |
-          chromedriver --port=4444 &
-          docker-compose run -e WEBDRIVER=selenium -e BROWSER=chromium houston test --only browser
+  #     - name: Test
+  #       run: |
+  #         chromedriver --port=4444 &
+  #         docker-compose run -e WEBDRIVER=selenium -e BROWSER=chromium builds test --only browser
 
   # Install docker-compose to start working on this more. Will need an macOS
   # computer to assist in this.
@@ -87,9 +102,9 @@ jobs:
   #     - name: Test
   #       run: |
   #         safaridriver --enable --port=4444 &
-  #         docker-compose run -e WEBDRIVER=selenium -e BROWSER=safari houston test --only browser
+  #         docker-compose run -e WEBDRIVER=selenium -e BROWSER=safari builds test --only browser
 
-  # Need window support in the Houston dockerfile before we can continue
+  # Need window support in the builds dockerfile before we can continue
   # browser_edge:
   #   name: Browser Test Edge
   #   runs-on: windows-2019
@@ -105,4 +120,4 @@ jobs:
   #     - name: Test
   #       run: |
   #         MicrosoftWebDriver.exe --port=4444 &
-  #         docker-compose run -e WEBDRIVER=selenium -e BROWSER=edge houston test --only browser
+  #         docker-compose run -e WEBDRIVER=selenium -e BROWSER=edge builds test --only browser
