@@ -28,3 +28,11 @@ config :phoenix, :json_library, Jason
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
+
+# Finally import the secret config file which should be versioned
+# separately.
+try do
+  import_config "#{Mix.env()}.secret.exs"
+rescue Code.LoadError ->
+  :no_op
+end
