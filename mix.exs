@@ -39,10 +39,15 @@ defmodule Builds.MixProject do
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+
+      # Development dependencies
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+
+      # Testing dependencies
+      {:hound, "~> 1.0", only: :test}
     ]
   end
 
@@ -54,9 +59,10 @@ defmodule Builds.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
+      "assets.build": ["cmd npm --prefix assets/ run deploy"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["assets.build", "ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

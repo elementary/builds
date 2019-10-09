@@ -16,3 +16,10 @@ config :builds, Builds.Repo,
   database: "builds_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Setup hound for browser testing.
+config :hound,
+  driver: System.get_env("WEBDRIVER") || "phantomjs",
+  browser: System.get_env("BROWSER") || "phantomjs",
+  path_prefix: "",
+  app_port: 4184
