@@ -29,12 +29,8 @@ RUN cd /app && \
   mix phx.digest && \
   mix release
 
-RUN ls -d /app/_build/prod/rel/$APP_NAME/releases/*/
-
-RUN export RELEASE_DIR=`ls -d /app/_build/prod/rel/$APP_NAME/releases/*/` && \
-  mkdir /export && \
-  tar -xf "$RELEASE_DIR/$APP_NAME.tar.gz" -C /export && \
-  mv /export/bin/$APP_NAME /export/bin/builds
+RUN mkdir /export && \
+  cp -r /app/_build/prod/rel/$APP_NAME/* /export
 
 # Dockerfile
 # An OTP docker image for running production builds website
