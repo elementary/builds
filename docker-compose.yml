@@ -11,8 +11,7 @@ services:
     environment:
       PORT: 4000
     volumes:
-      - ./apps:/opt/builds/apps
-      - ./config:/opt/builds/config
+      - .:/opt/builds
     command: do ecto.create, phx.server
     working_dir: /opt/builds
     depends_on:
