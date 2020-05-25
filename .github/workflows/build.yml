@@ -21,8 +21,6 @@ jobs:
       run: apk add --update git
 
     - uses: actions/checkout@v2
-      with:
-        path: builds
 
     - name: Lint
       run: |
