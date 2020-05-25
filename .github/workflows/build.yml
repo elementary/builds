@@ -48,3 +48,5 @@ jobs:
 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CLIENT_ID: ${{ secrets.BUILDS_CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.BUILDS_CLIENT_SECRET }}
