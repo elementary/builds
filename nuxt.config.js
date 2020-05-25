@@ -1,6 +1,6 @@
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
   // Headers of the page
   head: {
     title: process.env.npm_package_name || '',

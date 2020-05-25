@@ -30,7 +30,7 @@ jobs:
     - name: Audit
       run: |
         npm ci
-        npm audit
+        npm audit --production
 
     - name: Run script, commit changes, and deploy
       run: |
