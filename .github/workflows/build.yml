@@ -17,7 +17,12 @@ jobs:
       image: node:alpine
 
     steps:
+    - name: install git
+      run: apk add --update git
+
     - uses: actions/checkout@v2
+      with:
+        path: builds
 
     - name: Lint
       run: |
@@ -31,7 +36,6 @@ jobs:
 
     - name: Run script, commit changes, and deploy
       run: |
-        apk add --update git
         echo "Setting up git credentials..."
         git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/"$GITHUB_REPOSITORY".git
         git config --global user.email "actions@github.com"
