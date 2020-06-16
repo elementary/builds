@@ -27,7 +27,6 @@
     "elementaryos-6.0-daily.20200520",
     "elementaryos-6.0-daily.20200519",
     "elementaryos-6.0-daily.20200518",
-    "elementaryos-6.0-daily.20200517",
     "elementaryos-5.1-daily.20200615",
     "elementaryos-5.1-daily.20200614",
     "elementaryos-5.1-daily.20200613",
@@ -58,8 +57,7 @@
     "elementaryos-5.1-daily.20200520",
     "elementaryos-5.1-daily.20200520-distinst",
     "elementaryos-5.1-daily.20200519",
-    "elementaryos-5.1-daily.20200518",
-    "elementaryos-5.1-daily.20200517"
+    "elementaryos-5.1-daily.20200518"
   ],
   "stable": [
     "elementaryos-5.1-stable.20200603",
