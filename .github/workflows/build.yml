@@ -46,7 +46,7 @@ jobs:
         git checkout master
         git add .
         git commit -m "Automatic update of image data" && git push -u origin master || true
-        npm run generate
+        npm run build
         npm run deploy
 
       env:
