@@ -1,5 +1,6 @@
 {
   "daily": [
+    "elementaryos-6.0-daily.20200723",
     "elementaryos-6.0-daily.20200722",
     "elementaryos-6.0-daily.20200720",
     "elementaryos-6.0-daily.20200719",
@@ -28,7 +29,7 @@
     "elementaryos-6.0-daily.20200626",
     "elementaryos-6.0-daily.20200625",
     "elementaryos-6.0-daily.20200624",
-    "elementaryos-6.0-daily.20200623",
+    "elementaryos-5.1-daily.20200723",
     "elementaryos-5.1-daily.20200722",
     "elementaryos-5.1-daily.20200722-distinst",
     "elementaryos-5.1-daily.20200721",
@@ -60,8 +61,7 @@
     "elementaryos-5.1-daily.20200626",
     "elementaryos-5.1-daily.20200625",
     "elementaryos-5.1-daily.20200624",
-    "elementaryos-5.1-daily.20200624-distinst",
-    "elementaryos-5.1-daily.20200623"
+    "elementaryos-5.1-daily.20200624-distinst"
   ],
   "stable": [
     "elementaryos-5.1-stable.20200706",
