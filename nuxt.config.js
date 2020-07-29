@@ -1,5 +1,5 @@
 export default {
-  mode: 'spa',
+  mode: 'universal',
 
   components: true,
   telemetry: true,
