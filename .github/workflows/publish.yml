@@ -30,7 +30,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          GITHUB_CLIENT_ID: ${{ secrets.BUIDLS_CLIENT_ID }}
+          GITHUB_CLIENT_ID: ${{ secrets.BUILDS_CLIENT_ID }}
           GITHUB_CLIENT_SECRET: ${{ secrets.BUILDS_CLIENT_SECRET }}
 
       - name: Deploy
