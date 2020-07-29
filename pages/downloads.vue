@@ -82,7 +82,7 @@ import images from '../data/images.json'
 import whitelist from '../data/whitelist.json'
 
 export default {
-  middleware: ['auth'],
+  middleware: (process.env.NODE_ENV === 'production') ? 'auth' : null,
 
   computed: {
     images: () => images,

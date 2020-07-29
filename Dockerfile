@@ -7,6 +7,7 @@ WORKDIR /app
 RUN npm ci
 RUN npm run build
 
+ENV NODE_ENV=production
 ENV NUXT_HOST=0.0.0.0
 ENV NUXT_PORT=80
 
