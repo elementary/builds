@@ -27,7 +27,7 @@ jobs:
         run: npm ci
 
       - name: Update
-        run: node fetchImages.js
+        run: node ./scripts/update-images.js
 
       - name: Push
         run: |
