@@ -1,7 +1,7 @@
 <div align="center">
   <a href="https://builds.elementary.io" align="center">
     <center align="center">
-      <img src="./static/logo.png" alt="elementary" align="center">
+      <img src="./static/elementary.svg" alt="elementary" align="center">
     </center>
   </a>
   <br>
