@@ -12,7 +12,7 @@
 </div>
 
 <p align="center">
-  <img src="https://github.com/elementary/builds/workflows/publish/badge.svg" alt="Publish">
+  <img src="https://github.com/elementary/builds/workflows/Publish/badge.svg" alt="Publish">
 </p>
 
 ---
