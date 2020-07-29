@@ -24,11 +24,13 @@
     </table>
   </div>
 </template>
+
 <style scoped lang="scss">
 .centergrid {
   display: grid;
   justify-items: center;
 }
+
 table {
   background-color: var(--view-color);
   border-spacing: 0;

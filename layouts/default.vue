@@ -7,6 +7,7 @@
 
 <style lang="scss">
 @import "@fortawesome/fontawesome-free/css/all.css";
+
 html {
   font-family: Inter, "Open Sans", "Noto Sans", "Roboto", "Droid Sans", sans-serif;
   font-size: 16px;
@@ -17,9 +18,10 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
+
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
 }
