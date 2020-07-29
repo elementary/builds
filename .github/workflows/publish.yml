@@ -1,0 +1,41 @@
+---
+
+name: Publish
+
+on:
+  push:
+    branches:
+      - master
+  repository_dispatch:
+    types:
+      - publish
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          GITHUB_CLIENT_ID: ${{ secrets.BUIDLS_CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.BUILDS_CLIENT_SECRET }}
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.GIT_USER_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: ./dist

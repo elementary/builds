@@ -1,26 +1,21 @@
 {
-  "name": "builds.elementary.io",
+  "name": "@elementary/builds",
   "version": "1.0.0",
   "description": "Frontend to elementary OS Builds",
   "author": "elementary",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build && nuxt export",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
+    "start": "nuxt dev",
+    "build": "nuxt build",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lint:css": "stylelint **/*.vue **/*.css",
-    "fetch": "node fetchImages.js"
+    "lint:css": "stylelint **/*.vue **/*.css"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.1",
     "@nuxtjs/auth": "^4.9.1",
-    "@nuxtjs/axios": "^5.11.0",
-    "@nuxtjs/proxy": "^1.3.3",
+    "@nuxtjs/axios": "^5.12.0",
     "fast-xml-parser": "^3.17.4",
-    "nuxt": "^2.13.3"
+    "nuxt": "^2.14.0"
   },
   "devDependencies": {
     "@mapbox/stylelint-processor-arbitrary-tags": "^0.3.0",
@@ -29,7 +24,7 @@
     "eslint": "^7.5.0",
     "push-dir": "^0.4.1",
     "sass": "^1.26.10",
-    "sass-loader": "^8.0.2",
+    "sass-loader": "^9.0.2",
     "stylelint": "^13.6.1",
     "stylelint-config-standard": "^20.0.0"
   }

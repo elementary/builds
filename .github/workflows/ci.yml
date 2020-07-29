@@ -1,0 +1,49 @@
+---
+
+name: CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  lint_js:
+    name: Lint (JS)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint:js
+
+  lint_css:
+    name: Lint (CSS)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint:css

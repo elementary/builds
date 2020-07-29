@@ -71,132 +71,133 @@
     </div>
   </nav>
 </template>
+
 <style scoped>
-nav {
-  line-height: 48px;
-  min-height: 48px;
-  min-width: 100%;
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
-@media (max-width: 768px) {
   nav {
-    font-size: 14px;
-  }
-}
-
-.nav-content {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-}
-
-html.ie-legacy .nav-content {
-  min-width: 430px;
-}
-
-html.ie-legacy .nav-content > ul.right {
-  float: right;
-}
-
-nav ul {
-  display: inline-block;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-nav ul:first-child {
-  flex: 0 0 auto;
-}
-
-nav li {
-  display: inline-block;
-}
-
-nav a,
-nav a:visited {
-  color: inherit;
-  display: inline-block;
-  fill: inherit;
-  margin: 0;
-  padding: 0 12px;
-}
-
-nav a:focus {
-  color: #08c;
-  fill: #08c;
-  text-decoration: none;
-}
-
-nav a:hover,
-nav a:visited:hover {
-  opacity: 0.7;
-}
-
-nav a[title="Facebook"]:focus,
-nav a[title="Facebook"]:hover {
-  color: #19227e;
-  fill: #19227e;
-}
-
-nav a[title="Google+"]:focus,
-nav a[title="Google+"]:hover {
-  color: #d50000;
-  fill: #d50000;
-}
-
-nav a[title="Medium"]:focus,
-nav a[title="Medium"]:hover {
-  color: #00ab6b;
-  fill: #00ab6b;
-}
-
-nav a[title="Reddit"]:focus,
-nav a[title="Reddit"]:hover {
-  color: #ff4500;
-  fill: #ff4500;
-}
-
-nav a[title="StackExchange"]:focus,
-nav a[title="StackExchange"]:hover {
-  color: #0d93ff;
-  fill: #0d93ff;
-}
-
-nav a[title="Twitter"]:focus,
-nav a[title="Twitter"]:hover {
-  color: #1da1f2;
-  fill: #1da1f2;
-}
-
-nav .logomark {
-  line-height: 14px;
-  vertical-align: middle;
-}
-
-nav .logomark .logomark-svg,
-nav .logomark:focus .logomark-svg {
-  fill: inherit;
-}
-
-/* this media query is for ie-legacy support */
-@media only screen and (max-width: 430px) {
-  html.ie-legacy nav {
-    overflow-x: scroll;
+    line-height: 48px;
+    min-height: 48px;
+    min-width: 100%;
+    overflow-x: auto;
     white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    nav {
+      font-size: 14px;
+    }
+  }
+
+  .nav-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
   }
 
   html.ie-legacy .nav-content {
-    overflow: visible;
-    white-space: nowrap;
-    width: 430px;
+    min-width: 430px;
   }
 
-  html.ie-legacy .nav-content > .right {
-    float: left;
+  html.ie-legacy .nav-content > ul.right {
+    float: right;
   }
-}
+
+  nav ul {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav ul:first-child {
+    flex: 0 0 auto;
+  }
+
+  nav li {
+    display: inline-block;
+  }
+
+  nav a,
+  nav a:visited {
+    color: inherit;
+    display: inline-block;
+    fill: inherit;
+    margin: 0;
+    padding: 0 12px;
+  }
+
+  nav a:focus {
+    color: #08c;
+    fill: #08c;
+    text-decoration: none;
+  }
+
+  nav a:hover,
+  nav a:visited:hover {
+    opacity: 0.7;
+  }
+
+  nav a[title="Facebook"]:focus,
+  nav a[title="Facebook"]:hover {
+    color: #19227e;
+    fill: #19227e;
+  }
+
+  nav a[title="Google+"]:focus,
+  nav a[title="Google+"]:hover {
+    color: #d50000;
+    fill: #d50000;
+  }
+
+  nav a[title="Medium"]:focus,
+  nav a[title="Medium"]:hover {
+    color: #00ab6b;
+    fill: #00ab6b;
+  }
+
+  nav a[title="Reddit"]:focus,
+  nav a[title="Reddit"]:hover {
+    color: #ff4500;
+    fill: #ff4500;
+  }
+
+  nav a[title="StackExchange"]:focus,
+  nav a[title="StackExchange"]:hover {
+    color: #0d93ff;
+    fill: #0d93ff;
+  }
+
+  nav a[title="Twitter"]:focus,
+  nav a[title="Twitter"]:hover {
+    color: #1da1f2;
+    fill: #1da1f2;
+  }
+
+  nav .logomark {
+    line-height: 14px;
+    vertical-align: middle;
+  }
+
+  nav .logomark .logomark-svg,
+  nav .logomark:focus .logomark-svg {
+    fill: inherit;
+  }
+
+  /* this media query is for ie-legacy support */
+  @media only screen and (max-width: 430px) {
+    html.ie-legacy nav {
+      overflow-x: scroll;
+      white-space: nowrap;
+    }
+
+    html.ie-legacy .nav-content {
+      overflow: visible;
+      white-space: nowrap;
+      width: 430px;
+    }
+
+    html.ie-legacy .nav-content > .right {
+      float: left;
+    }
+  }
 </style>

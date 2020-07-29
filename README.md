@@ -1,7 +1,7 @@
 <div align="center">
   <a href="https://builds.elementary.io" align="center">
     <center align="center">
-      <img src="./priv/brand/logo.png" alt="elementary" align="center">
+      <img src="./static/logo.png" alt="elementary" align="center">
     </center>
   </a>
   <br>
@@ -12,13 +12,13 @@
 </div>
 
 <p align="center">
-  <img src="https://github.com/elementary/builds/workflows/CI/badge.svg" alt="CI">
+  <img src="https://github.com/elementary/builds/workflows/publish/badge.svg" alt="Publish">
 </p>
 
 ---
 
-This repository contains the website code for our daily builds. This **DOES NOT**
-build elementary OS or have any operating system related code.
+This repository contains the website code for our daily builds. This **DOES
+NOT** build elementary OS or have any operating system related code.
 
 For development, testing, and production building instructions, please read the
 [`DEVELOPMENT.md`](DEVELOPMENT.md) file.

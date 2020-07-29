@@ -1,10 +1,15 @@
+#!/usr/bin/env node
+
+/* eslint-disable no-console */
+
 const fs = require('fs')
-// eslint-disable-next-line import/no-extraneous-dependencies
+const path = require('path')
 const axios = require('axios')
 const parser = require('fast-xml-parser')
 
-// return uniques
-const unique = (v, i, a) => a.indexOf(v) === i
+const IMAGES_JSON_PATH = path.resolve(__dirname, '../data/images.json')
+
+const unique = (v, i, a) => (a.indexOf(v) === i)
 
 const getIsos = async () => {
   try {
@@ -20,7 +25,7 @@ const getIsos = async () => {
       daily: allDaily.map(v => v.replace(regex, '')).filter(unique).reverse(),
       stable: allStable.map(v => v.replace(regex, '')).filter(unique).reverse()
     }
-    return fs.writeFile('data/images.json', JSON.stringify(releases, null, 2), (err) => {
+    return fs.writeFile(IMAGES_JSON_PATH, JSON.stringify(releases, null, 2), (err) => {
       if (err) { throw err }
       console.log('Updated image list')
     })

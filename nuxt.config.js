@@ -1,8 +1,15 @@
 export default {
   mode: 'spa',
 
+  components: true,
+  telemetry: true,
+
+  build: {
+    transpile: ['@nuxtjs/auth']
+  },
+
   head: {
-    title: 'elementary Builds'.
+    title: 'elementary Builds',
 
     meta: [
       { charset: 'utf-8' },
@@ -15,7 +22,9 @@ export default {
     ]
   },
 
-  loading: { color: '#fff' },
+  loading: {
+    color: '#3689e6'
+  },
 
   modules: [
     '@nuxtjs/axios',
@@ -25,13 +34,9 @@ export default {
   auth: {
     strategies: {
       github: {
-        client_id: process.env.CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET
       }
     }
-  },
-
-  router: {
-    middleware: ['auth']
   }
 }
