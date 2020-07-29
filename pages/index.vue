@@ -4,7 +4,9 @@
       <div v-if="$auth.loggedIn && whitelist.users.includes($auth.user.login)">
         <div class="account">
           {{ $auth.user.login }}
-          <button class="button--grey" @click="logout()">logout</button>
+          <button class="button--grey" @click="logout()">
+            logout
+          </button>
         </div>
         <Downloads />
       </div>
@@ -22,26 +24,26 @@
 </style>
 
 <script>
-import Downloads from '../components/Downloads.vue';
-import whitelist from '../data/whitelist.json';
+import Downloads from '../components/Downloads.vue'
+import whitelist from '../data/whitelist.json'
 
 export default {
   components: {
-    Downloads,
+    Downloads
+  },
+  data () {
+    return {
+      whitelist
+    }
   },
   methods: {
-    logout() {
+    logout () {
       if (this.$auth.loggedIn) {
         this.$auth.logout().then(() => {
-          this.$router.push('login');
-        });
+          this.$router.push('login')
+        })
       }
-    },
-  },
-  data() {
-    return {
-      whitelist,
-    };
-  },
-};
+    }
+  }
+}
 </script>

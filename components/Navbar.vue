@@ -34,37 +34,37 @@
       <ul class="right">
         <li>
           <a href="https://www.facebook.com/elementaryos" target="_blank" title="Facebook">
-            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-facebook-f" />
           </a>
         </li>
         <li>
           <a href="https://mastodon.social/@elementary" target="_blank" rel="noopener">
-            <i class="fab fa-mastodon"></i>
+            <i class="fab fa-mastodon" />
           </a>
         </li>
         <li>
           <a href="https://medium.com/elementaryos" target="_blank" title="Medium">
-            <i class="fab fa-medium-m"></i>
+            <i class="fab fa-medium-m" />
           </a>
         </li>
         <li>
           <a href="https://www.reddit.com/r/elementaryos" target="_blank" title="Reddit">
-            <i class="fab fa-reddit"></i>
+            <i class="fab fa-reddit" />
           </a>
         </li>
         <li>
           <a href="https://elementaryos.stackexchange.com" target="_blank" title="StackExchange">
-            <i class="fab fa-stack-exchange"></i>
+            <i class="fab fa-stack-exchange" />
           </a>
         </li>
         <li>
           <a href="https://twitter.com/elementary" target="_blank" title="Twitter">
-            <i class="fab fa-twitter"></i>
+            <i class="fab fa-twitter" />
           </a>
         </li>
         <li>
           <a href="https://community-slack.elementary.io" target="_blank" title="Slack">
-            <i class="fab fa-slack"></i>
+            <i class="fab fa-slack" />
           </a>
         </li>
       </ul>

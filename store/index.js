@@ -2,11 +2,11 @@
 /* eslint-disable no-param-reassign */
 
 export const state = () => ({
-  isLoaded: false,
-});
+  isLoaded: false
+})
 
 export const mutations = {
-  FINISH_LOADING(state) {
-    state.isLoaded = true;
-  },
-};
+  FINISH_LOADING (state) {
+    state.isLoaded = true
+  }
+}

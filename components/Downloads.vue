@@ -74,14 +74,14 @@ a {
 </style>
 
 <script>
-import images from '../data/images.json';
+import images from '../data/images.json'
 
 export default {
   name: 'Downloads',
-  data() {
+  data () {
     return {
-      images,
-    };
-  },
-};
+      images
+    }
+  }
+}
 </script>

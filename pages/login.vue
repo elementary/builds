@@ -1,10 +1,14 @@
 <template>
-  <div class="centergrid" v-if="$auth.loggedIn">
+  <div v-if="$auth.loggedIn" class="centergrid">
     {{ $auth.user.login }}
-    <button @click="$auth.logout()" class="button--grey">logout</button>
+    <button class="button--grey" @click="$auth.logout()">
+      logout
+    </button>
   </div>
-  <div class="centergrid" v-else>
-    <button @click="login('github')" class="suggested-action">Log In with GitHub</button>
+  <div v-else class="centergrid">
+    <button class="suggested-action" @click="login('github')">
+      Log In with GitHub
+    </button>
   </div>
 </template>
 <style scoped>
@@ -47,9 +51,9 @@ export default {
   auth: false,
   components: {},
   methods: {
-    login(login) {
-      this.$auth.loginWith(login);
-    },
-  },
-};
+    login (login) {
+      this.$auth.loginWith(login)
+    }
+  }
+}
 </script>
