@@ -32,11 +32,20 @@ export default {
   ],
 
   auth: {
+    plugins: [
+      '~/plugins/auth'
+    ],
+
     strategies: {
-      github: {
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_CLIENT_SECRET
-      }
+      github: {}
     }
+  },
+
+  publicRuntimeConfig: {
+    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID
+  },
+
+  privateRuntimeConfig: {
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET
   }
 }
