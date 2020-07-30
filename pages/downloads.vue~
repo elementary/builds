@@ -1,21 +1,23 @@
 <template>
   <div>
-    <h2>Latest Build</h2>
-    <p>Download <code>{{ latest(dailyIsos) | name }}</code>, which was built {{ latest(dailyIsos) | relativeDate }}. If this build does not install or otherwise work for you, try a previous build.</p>
+    <div class="large">
+      <h2>Latest Build</h2>
+      <p>Download <code>{{ latest(dailyIsos) | name }}</code>, which was built {{ latest(dailyIsos) | relativeDate }}. If this build does not install or otherwise work for you, try a previous build.</p>
 
-    <div class="center">
-      <a
-        class="button"
-        :href="latest(dailyIsos) | shaUrl"
-      >
-        Download SHA256
-      </a>
-      <a
-        class="button suggested"
-        :href="latest(dailyIsos) | isoUrl"
-      >
-        Download ({{ latest(dailyIsos) | size }} GB)
-      </a>
+      <div class="center">
+        <a
+          class="button"
+          :href="latest(dailyIsos) | shaUrl"
+        >
+          Download SHA256
+        </a>
+        <a
+          class="button suggested"
+          :href="latest(dailyIsos) | isoUrl"
+        >
+          Download ({{ latest(dailyIsos) | size }} GB)
+        </a>
+        </div>
     </div>
 
     <h2>Previous Builds</h2>
@@ -50,6 +52,10 @@
 </template>
 
 <style scoped lang="scss">
+  hr {
+    margin: 4rem 0;
+  }
+
   table {
     background-color: var(--view-color);
     border-spacing: 0;
