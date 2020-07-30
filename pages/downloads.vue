@@ -140,7 +140,9 @@ import { formatRelative } from 'date-fns'
 import images from '../data/images.json'
 
 export default {
-  middleware: (process.env.NODE_ENV === 'production') ? 'whitelisted' : null,
+  middleware: (process.env.NODE_ENV === 'production')
+    ? ['auth', 'whitelisted']
+    : null,
 
   filters: {
     isoUrl (iso) {
