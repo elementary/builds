@@ -1,4 +1,4 @@
-import whitelist from '~/data/whitelist'
+import allowlist from '~/data/allowlist'
 
 export default function ({ $auth, error }) {
   if (!$auth.loggedIn) {
@@ -6,10 +6,10 @@ export default function ({ $auth, error }) {
       statusCode: 401,
       message: 'Not Logged In'
     })
-  } else if (!whitelist.users.includes($auth.user.login)) {
+  } else if (!allowlist.users.includes($auth.user.login)) {
     return error({
       statusCode: 403,
-      message: 'Not Whitelisted'
+      message: 'Not allowed'
     })
   }
 }
