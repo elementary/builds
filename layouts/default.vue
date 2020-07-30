@@ -2,6 +2,7 @@
   <div id="__page">
     <layout-navbar />
 
+    <h1>elementary OS Daily Builds</h1>
     <nuxt id="__content" />
 
     <layout-footer />

@@ -1,29 +1,25 @@
 <template>
-  <div class="center">
-    <h1>Daily ISOs</h1>
+  <div>
+    <h2>Latest Build</h2>
+    <p>Download <code>{{ latest(dailyIsos) | name }}</code>, which was built {{ latest(dailyIsos) | relativeDate }}. If this build does not install or otherwise work for you, try a previous build.</p>
 
-    <div class="large">
-      <h2>{{ latest(dailyIsos) | name }}</h2>
-      <h3>Built {{ latest(dailyIsos) | relativeDate }}</h3>
-
+    <div class="center">
       <a
-        class="download"
+        class="button"
+        :href="latest(dailyIsos) | shaUrl"
+      >
+        Download SHA256
+      </a>
+      <a
+        class="button suggested"
         :href="latest(dailyIsos) | isoUrl"
       >
-        Download
+        Download ({{ latest(dailyIsos) | size }} GB)
       </a>
-
-      <h5>
-        {{ latest(dailyIsos) | size }} GB |
-        <a :href="latest(dailyIsos) | shaUrl">
-          Download SHA
-        </a>
-      </h5>
     </div>
 
-    <hr>
-
-    <h2>Previous ISOs</h2>
+    <h2>Previous Builds</h2>
+    <p>Historical daily builds may be useful for debugging issues, or when the latest build is not working for you.</p>
 
     <table>
       <thead>
@@ -54,50 +50,6 @@
 </template>
 
 <style scoped lang="scss">
-  .large h3 {
-    margin-top: 1em;
-  }
-
-  .large .download {
-    appearance: none;
-    background-color: var(--grape-700);
-    border-color: transparent;
-    border-radius: 3px;
-    border: none;
-    color: #fff;
-    display: inline-block;
-    font-family: inherit;
-    font-family: var(--ui-font);
-    font-size: 16px;
-    font-weight: 600;
-    margin: 24px 24px 12px;
-    min-width: 250px;
-    outline: none;
-    padding: 7px;
-    text-align: center;
-    text-decoration: none;
-    text-rendering: optimizeLegibility;
-    transition: opacity 200ms ease;
-  }
-
-  .large .download:hover,
-  .large .download:focus,
-  .large .download:active {
-    background-color: var(--grape-500);
-    box-shadow:
-      0 2px 3px -1px rgba(73, 55, 147, 0.3),
-      0 5px 10px -2px rgba(156, 100, 218, 0.5);
-    opacity: 0.8;
-  }
-
-  .large h5 {
-    margin-top: 0;
-  }
-
-  hr {
-    margin: 4rem 0;
-  }
-
   table {
     background-color: var(--view-color);
     border-spacing: 0;
