@@ -141,7 +141,7 @@ import images from '../data/images.json'
 
 export default {
   middleware: (process.env.NODE_ENV === 'production')
-    ? ['auth', 'whitelisted']
+    ? ['auth', 'allowed']
     : null,
 
   filters: {
