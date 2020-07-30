@@ -4,10 +4,6 @@ export default {
   components: true,
   telemetry: true,
 
-  build: {
-    transpile: ['@nuxtjs/auth']
-  },
-
   head: {
     title: 'elementary Builds',
 
@@ -28,28 +24,5 @@ export default {
 
   loading: {
     color: '#3689e6'
-  },
-
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/auth'
-  ],
-
-  auth: {
-    plugins: [
-      '~/plugins/auth'
-    ],
-
-    strategies: {
-      github: {}
-    }
-  },
-
-  publicRuntimeConfig: {
-    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID
-  },
-
-  privateRuntimeConfig: {
-    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET
   }
 }
