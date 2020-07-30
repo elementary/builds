@@ -8,7 +8,7 @@ on:
       - master
   repository_dispatch:
     types:
-      - publish
+      - Publish
 
 jobs:
   publish:
