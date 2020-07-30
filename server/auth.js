@@ -39,7 +39,7 @@ export default function (req, res, next) {
           Accept: 'application/json'
         }
       })
-      .then(response => {
+      .then((response) => {
         res.end(JSON.stringify(response.data))
       })
       .catch(error => next(error))
