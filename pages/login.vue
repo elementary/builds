@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <h1>Loggin In...</h1>
+    <h1>Logging In...</h1>
   </div>
 </template>
 
