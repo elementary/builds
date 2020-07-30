@@ -28,5 +28,30 @@ export default {
 
   loading: {
     color: '#3689e6'
+  },
+
+  publicRuntimeConfig: {
+    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID
+  },
+
+  privateRuntimeConfig: {
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET
+  },
+
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
+
+    '~/modules/auth'
+  ],
+
+  auth: {
+    plugins: [
+      '~/plugins/auth'
+    ],
+
+    strategies: {
+      github: {}
+    }
   }
 }
