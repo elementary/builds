@@ -1,0 +1,45 @@
+@charset "utf-8";
+
+@import "colors";
+@import "layout";
+@import "typography";
+
+:root {
+  color-scheme: light dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  background-color: var(--bg-color);
+  color: var(--fg-color);
+  fill: var(--fg-color);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+html {
+  // To blend with the footer on short pages
+  background-color: var(--secondary-bg-color);
+}
+
+svg {
+  fill: inherit;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.button {
+  border: 1px solid;
+  border-radius: 0.25em;
+  font-family: var(--ui-font);
+  padding: 0.5em 1em;
+  text-decoration: none;
+}

@@ -1,46 +1,43 @@
 <template>
   <div class="center">
+    <h1>elementary Build ISOs</h1>
+
     <nuxt-link to="/downloads">
-      Download ISOs
+      Download
     </nuxt-link>
   </div>
 </template>
 
 <style scoped>
-  .center {
-    height: 100vh;
-    display: grid;
-    align-items: center;
-    justify-items: center;
-  }
-
-  button.suggested-action,
-  .button.suggested-action {
-    background-color: #64b9f1;
-    background-image: linear-gradient(to bottom, #4ca7e4, #328ecc);
-    border-color: #337cac;
-    color: #fff;
-    text-shadow: 0 1px rgba(0, 0, 0, 0.3);
-  }
-
-  button,
-  select,
-  .button {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-top-color: rgba(0, 0, 0, 0.2);
-    border-right-color: rgba(0, 0, 0, 0.2);
-    border-bottom-color: rgba(0, 0, 0, 0.2);
-    border-left-color: rgba(0, 0, 0, 0.2);
+  a {
+    appearance: none;
+    background-color: var(--grape-700);
+    border-color: transparent;
     border-radius: 3px;
-    box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.45),
-      inset 0 -1px 0 0 rgba(255, 255, 255, 0.15),
-      0 1px 0 0 rgba(255, 255, 255, 0.15);
-    cursor: pointer;
+    border: none;
+    color: #fff;
+    display: inline-block;
+    font-family: inherit;
+    font-family: var(--ui-font);
     font-size: 16px;
-    padding: 16px 32px;
-    transition: all 100ms ease-in;
-    margin: auto;
+    font-weight: 600;
+    margin: 24px;
+    min-width: 250px;
+    outline: none;
+    padding: 7px;
+    text-align: center;
+    text-decoration: none;
+    text-rendering: optimizeLegibility;
+    transition: opacity 200ms ease;
+  }
+
+  a:hover,
+  a:focus,
+  a:active {
+    background-color: var(--grape-500);
+    box-shadow:
+      0 2px 3px -1px rgba(73, 55, 147, 0.3),
+      0 5px 10px -2px rgba(156, 100, 218, 0.5);
+    opacity: 0.8;
   }
 </style>

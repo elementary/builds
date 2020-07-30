@@ -4,35 +4,46 @@
 
 const fs = require('fs')
 const path = require('path')
-const axios = require('axios')
-const parser = require('fast-xml-parser')
+const fetch = require('node-fetch')
+const xmlParser = require('fast-xml-parser')
 
 const IMAGES_JSON_PATH = path.resolve(__dirname, '../data/images.json')
 
-const unique = (v, i, a) => (a.indexOf(v) === i)
+async function downloadManifest () {
+  const res = await fetch('https://elementary-iso.nyc3.digitaloceanspaces.com')
+  const body = await res.text()
 
-const getIsos = async () => {
-  try {
-    const res = await axios.get('https://elementary-iso.nyc3.digitaloceanspaces.com')
-    const obj = parser.parse(res.data)
-    const pathKeys = obj.ListBucketResult.Contents.map(entry => entry.Key)
-    // get all daily and stable keys
-    const allDaily = pathKeys.filter(url => url.includes('daily/')).map(u => u.slice(6))
-    const allStable = pathKeys.filter(url => url.includes('stable/')).map(u => u.slice(7))
-    // get just the unique names
-    const regex = /(.iso(.*))|(.md5.txt)|(.sha256.txt)/
-    const releases = {
-      daily: allDaily.map(v => v.replace(regex, '')).filter(unique).reverse(),
-      stable: allStable.map(v => v.replace(regex, '')).filter(unique).reverse()
-    }
-    return fs.writeFile(IMAGES_JSON_PATH, JSON.stringify(releases, null, 2), (err) => {
-      if (err) { throw err }
-      console.log('Updated image list')
-    })
-  } catch (err) {
-    console.log('Unable to get images:', err)
-    return err
-  }
+  return xmlParser.parse(body)
 }
 
-getIsos()
+function parseManifest (data) {
+  return data.ListBucketResult.Contents
+    .filter(({ Key }) => Key.endsWith('.iso'))
+    .map(d => ({
+      path: d.Key,
+      timestamp: d.LastModified,
+      size: d.Size
+    }))
+}
+
+function writeJson (data) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(IMAGES_JSON_PATH, JSON.stringify(data, null, 2), (err) => {
+      if (err != null) {
+        return reject(err)
+      } else {
+        return resolve()
+      }
+    })
+  })
+}
+
+async function getImages () {
+  const manifest = await downloadManifest()
+
+  const data = parseManifest(manifest)
+
+  await writeJson(data)
+}
+
+getImages()

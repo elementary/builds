@@ -22,6 +22,10 @@ export default {
     ]
   },
 
+  css: [
+    '~/assets/styles/main.scss'
+  ],
+
   loading: {
     color: '#3689e6'
   }
