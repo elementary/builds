@@ -40,8 +40,11 @@ jobs:
 
       - name: Deploy
         run: >
+          echo "${{ secrets.KUBE_CERT }}" | base64 -d  > /tmp/elementary.crt
+
           kubectl \
             --server="${{ secrets.KUBE_SERVER }}" \
+            --certificate-authority="/tmp/elementary.crt" \
             --token="${{ secrets.KUBE_TOKEN }}" \
             --namespace="builds" \
             rollout restart deployment builds
