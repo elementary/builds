@@ -34,3 +34,15 @@ jobs:
         run: |
           docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
           docker push elementary/builds:latest
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v1
+
+      - name: Deploy
+        run: >
+          kubectl
+            --user="${{ secrets.KUBE_USER }}"
+            --server="${{ secrets.KUBE_SERVER }}"
+            --token="${{ secrets.KUBE_TOKEN }}"
+            --namespace="builds"
+            set image deployment/builds builds=elementary/builds:latest
