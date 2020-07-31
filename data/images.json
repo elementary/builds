@@ -1,15 +1,5 @@
 [
   {
-    "path": "daily/elementaryos-5.1-daily.20200701-distinst.iso",
-    "timestamp": "2020-07-01T00:43:13.677Z",
-    "size": 1470627840
-  },
-  {
-    "path": "daily/elementaryos-5.1-daily.20200701.iso",
-    "timestamp": "2020-07-01T00:56:02.632Z",
-    "size": 1482964992
-  },
-  {
     "path": "daily/elementaryos-5.1-daily.20200702.iso",
     "timestamp": "2020-07-02T00:40:41.984Z",
     "size": 1482964992
@@ -165,9 +155,9 @@
     "size": 1487339520
   },
   {
-    "path": "daily/elementaryos-6.0-daily.20200701.iso",
-    "timestamp": "2020-07-01T00:36:26.678Z",
-    "size": 1862270976
+    "path": "daily/elementaryos-5.1-daily.20200731.iso",
+    "timestamp": "2020-07-31T00:38:51.685Z",
+    "size": 1487339520
   },
   {
     "path": "daily/elementaryos-6.0-daily.20200702.iso",
@@ -297,6 +287,11 @@
   {
     "path": "daily/elementaryos-6.0-daily.20200729.iso",
     "timestamp": "2020-07-29T00:41:45.941Z",
+    "size": 1826930688
+  },
+  {
+    "path": "daily/elementaryos-6.0-daily.20200731.iso",
+    "timestamp": "2020-07-31T00:37:58.166Z",
     "size": 1826930688
   },
   {
