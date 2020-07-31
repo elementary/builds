@@ -9,7 +9,7 @@ export default function ({ $auth, error }) {
   } else if (!allowlist.users.includes($auth.user.login)) {
     return error({
       statusCode: 403,
-      message: 'Not allowed'
+      message: 'GitHub Account Not Allowed'
     })
   }
 }
