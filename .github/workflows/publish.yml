@@ -40,9 +40,8 @@ jobs:
 
       - name: Deploy
         run: >
-          kubectl
-            --user="${{ secrets.KUBE_USER }}"
-            --server="${{ secrets.KUBE_SERVER }}"
-            --token="${{ secrets.KUBE_TOKEN }}"
-            --namespace="builds"
-            set image deployment/builds builds=elementary/builds:latest
+          kubectl \
+            --server="${{ secrets.KUBE_SERVER }}" \
+            --token="${{ secrets.KUBE_TOKEN }}" \
+            --namespace="builds" \
+            rollout restart deployment builds
