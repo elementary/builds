@@ -17,5 +17,7 @@
         ♡ Sponsor elementary
       </a>
     </div>
+
+    <disclaimer />
   </div>
 </template>

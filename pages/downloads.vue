@@ -1,6 +1,9 @@
 <template>
   <div>
     <h1>elementary OS Daily Builds</h1>
+
+    <disclaimer />
+
     <h2>Latest Build</h2>
     <p>
       Download <code>{{ latest(dailyIsos) | name }}</code>, which was built {{
