@@ -1,7 +1,12 @@
 <template>
   <div>
+    <h1>elementary OS Daily Builds</h1>
     <h2>Latest Build</h2>
-    <p>Download <code>{{ latest(dailyIsos) | name }}</code>, which was built {{ latest(dailyIsos) | relativeDate }}. If this build does not install or otherwise work for you, try a previous build.</p>
+    <p>
+      Download <code>{{ latest(dailyIsos) | name }}</code>, which was built {{
+        latest(dailyIsos) | relativeDate }}. If this build does not install or
+      otherwise work for you, try a previous build.
+    </p>
 
     <div class="center">
       <a
@@ -19,7 +24,10 @@
     </div>
 
     <h2>Previous Builds</h2>
-    <p>Historical daily builds may be useful for debugging issues, or when the latest build is not working for you.</p>
+    <p>
+      Historical daily builds may be useful for debugging issues, or when the
+      latest build is not working for you.
+    </p>
 
     <table>
       <thead>
@@ -93,7 +101,7 @@ import images from '../data/images.json'
 
 export default {
   middleware: (process.env.NODE_ENV === 'production')
-    ? ['auth', 'allowed']
+    ? 'auth'
     : null,
 
   filters: {
