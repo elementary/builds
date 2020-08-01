@@ -52,6 +52,8 @@ export default {
   },
 
   serverMiddleware: {
+    '/api/download': '~/server/download',
+    '/api/images': '~/server/images',
     '/auth/callback': '~/server/auth-callback',
     '/auth/login': '~/server/auth-url'
   }

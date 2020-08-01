@@ -6,9 +6,6 @@ on:
   push:
     branches:
       - master
-  repository_dispatch:
-    types:
-      - Publish
 
 jobs:
   publish:

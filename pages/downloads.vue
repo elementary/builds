@@ -5,58 +5,67 @@
     <disclaimer />
 
     <h2>Latest Build</h2>
-    <p>
-      Download <code>{{ latest(dailyIsos) | name }}</code>, which was built {{
-        latest(dailyIsos) | relativeDate }}. If this build does not install or
-      otherwise work for you, try a previous build.
+
+    <p v-if="$fetchState.pending">
+      Loading Images
     </p>
 
-    <div class="center">
-      <a
-        class="button"
-        :href="latest(dailyIsos) | shaUrl"
-      >
-        Download SHA256
-      </a>
-      <a
-        class="button suggested"
-        :href="latest(dailyIsos) | isoUrl"
-      >
-        Download ({{ latest(dailyIsos) | size }} GB)
-      </a>
-    </div>
+    <template v-if="latestDaily">
+      <p>
+        Download <code>{{ latestDaily | name }}</code>, which was built {{
+          latestDaily | relativeDate }}. If this build does not install or
+        otherwise work for you, try a previous build.
+      </p>
 
-    <h2>Previous Builds</h2>
-    <p>
-      Historical daily builds may be useful for debugging issues, or when the
-      latest build is not working for you.
-    </p>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr
-          v-for="iso in others(dailyIsos)"
-          :key="iso.path"
+      <div class="center">
+        <a
+          class="button"
+          :href="latestDaily | shaUrl"
         >
-          <td>
-            <a :href="iso | isoUrl">
-              {{ iso | name }}
-            </a>
-          </td>
+          Download SHA256
+        </a>
+        <a
+          class="button suggested"
+          :href="latestDaily | isoUrl"
+        >
+          Download ({{ latestDaily | size }} GB)
+        </a>
+      </div>
+    </template>
 
-          <td>
-            {{ iso | relativeDate }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <template v-if="oldDalies.length > 0">
+      <h2>Previous Builds</h2>
+      <p>
+        Historical daily builds may be useful for debugging issues, or when the
+        latest build is not working for you.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            v-for="iso in oldDalies"
+            :key="iso.path"
+          >
+            <td>
+              <a :href="iso | isoUrl">
+                {{ iso | name }}
+              </a>
+            </td>
+
+            <td>
+              {{ iso | relativeDate }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
   </div>
 </template>
 
@@ -99,8 +108,7 @@
 
 <script>
 import { formatRelative } from 'date-fns'
-
-import images from '../data/images.json'
+import { mapGetters } from 'vuex'
 
 export default {
   middleware: (process.env.NODE_ENV === 'production')
@@ -109,12 +117,11 @@ export default {
 
   filters: {
     isoUrl (iso) {
-      return `https://elementary-iso.nyc3.digitaloceanspaces.com/${iso.path}`
+      return `/api/download/${iso.path}`
     },
 
     name (iso) {
       const [, name] = iso.path.split('/')
-
       return name
     },
 
@@ -123,7 +130,7 @@ export default {
     },
 
     shaUrl (iso) {
-      return `https://elementary-iso.nyc3.digitaloceanspaces.com/${iso.path}`
+      return `/api/download/${iso.path}`
         .replace('.iso', '.sha256.txt')
     },
 
@@ -133,36 +140,11 @@ export default {
   },
 
   computed: {
-    images () {
-      return images
-        .map(image => ({ ...image, timestamp: new Date(image.timestamp) }))
-        .sort((a, b) => (b.timestamp - a.timestamp))
-    },
-
-    dailyIsos () {
-      return this.images
-        .filter(({ path }) => path.startsWith('daily/'))
-        .filter(({ path }) => path.includes('6.0'))
-    },
-
-    stableIsos () {
-      return this.images
-        .filter(({ path }) => path.startsWith('stable/'))
-    }
+    ...mapGetters('images', ['latestDaily', 'oldDalies'])
   },
 
-  methods: {
-    latest (isos) {
-      return isos[0]
-    },
-
-    others (isos) {
-      const newIsos = [...isos]
-
-      newIsos.shift()
-
-      return newIsos
-    }
+  async fetch () {
+    await this.$store.dispatch('images/fetch')
   }
 }
 </script>
