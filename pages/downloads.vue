@@ -124,7 +124,12 @@ export default {
     relativeDate (iso) {
       const [,year, month, day] = iso.path.match(/([0-9]{4})([0-9]{2})([0-9]{2})/)
       const date = new Date(`${year}-${month}-${day}T01:00:00.000Z`)
-      return date.toDateString()
+      return date.toLocaleDateString(undefined, {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
     },
 
     shaUrl (iso) {
