@@ -24,7 +24,7 @@ export default {
     script: [
       {
         src: 'https://stats.elementary.io/js/index.js',
-        dataDomain: 'builds.elementary.io',
+        'data-domain': 'builds.elementary.io',
         async: true,
         defer: true
       }
