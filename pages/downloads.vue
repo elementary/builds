@@ -100,7 +100,7 @@ import { formatRelative } from 'date-fns'
 import images from '../data/images.json'
 
 export default {
-  middleware: (process.env.NODE_ENV !== 'production')
+  middleware: (process.env.NODE_ENV === 'production')
     ? 'auth'
     : null,
 
