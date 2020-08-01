@@ -12,6 +12,7 @@
           latestDaily | relativeDate }}. If this build does not install or
         otherwise work for you, try a previous build.
       </p>
+      <p>As this is a <strong>pre-release</strong> build, we ask that you refrain from sharing “reviews” or other in-depth looks at elementary OS in this state. Daily builds are intended for developers and dedicated testers, but it is best to maintain a sense of surprise for end users with the stable release.</p>
 
       <div class="center">
         <a
