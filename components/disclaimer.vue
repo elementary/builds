@@ -9,6 +9,7 @@
     <ul>
       <li>May require Internet to install</li>
       <li>Full-disk encryption may lead to a non-bootable install</li>
+      <li>Curated apps are not available in AppCenter</li>
       <li>Dark style support is unfinished</li>
       <li>System stylesheet is unfinished</li>
       <li>General features, APIs are <strong>not finalized</strong></li>
