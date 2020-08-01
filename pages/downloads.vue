@@ -6,10 +6,6 @@
 
     <h2>Latest Build</h2>
 
-    <p v-if="$fetchState.pending">
-      Loading Images
-    </p>
-
     <template v-if="latestDaily">
       <p>
         Download <code>{{ latestDaily | name }}</code>, which was built {{
@@ -139,12 +135,12 @@ export default {
     }
   },
 
-  computed: {
-    ...mapGetters('images', ['latestDaily', 'oldDalies'])
-  },
-
   async fetch () {
     await this.$store.dispatch('images/fetch')
+  },
+
+  computed: {
+    ...mapGetters('images', ['latestDaily', 'oldDalies'])
   }
 }
 </script>

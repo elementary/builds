@@ -17,13 +17,14 @@ export const getters = {
 
 export const mutations = {
   check (state) {
-    if (process.client) {
-      const { builds: cookie } = Cookie.parse(document.cookie)
-      const jwtToken = (cookie != null) ? jwtDecode(cookie) : {}
+    const { builds: cookie } = (this.app.context.req != null)
+      ? Cookie.parse(this.app.context.req.headers.cookie || '')
+      : Cookie.parse(document.cookie || '')
 
-      if (jwtToken.exp) {
-        state.expires = new Date(jwtToken.exp)
-      }
+    const jwtToken = (cookie != null) ? jwtDecode(cookie) : {}
+
+    if (jwtToken.exp) {
+      state.expires = new Date(jwtToken.exp)
     }
   },
 
