@@ -103,7 +103,6 @@
 </style>
 
 <script>
-import { formatRelative } from 'date-fns'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -122,7 +121,9 @@ export default {
     },
 
     relativeDate (iso) {
-      return formatRelative(iso.timestamp, new Date())
+      const [,year, month, day] = iso.path.match(/([0-9]{4})([0-9]{2})([0-9]{2})/)
+      const date = new Date(`${year}-${month}-${day}T01:00:00.000Z`)
+      return date.toDateString()
     },
 
     shaUrl (iso) {
