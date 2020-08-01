@@ -30,6 +30,10 @@ export default {
     color: '#3689e6'
   },
 
+  plugins: [
+    '~/plugins/auth'
+  ],
+
   publicRuntimeConfig: {
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID
   },
@@ -38,20 +42,8 @@ export default {
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET
   },
 
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/auth',
-
-    '~/modules/auth'
-  ],
-
-  auth: {
-    plugins: [
-      '~/plugins/auth'
-    ],
-
-    strategies: {
-      github: {}
-    }
+  serverMiddleware: {
+    '/auth/callback': '~/server/auth-callback',
+    '/auth/login': '~/server/auth-url'
   }
 }

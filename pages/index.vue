@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>elementary OS Daily Builds</h1>
     <p>Note: This site hosts <strong>pre-release</strong> images and requires signing in with an authorized GitHub account to access. The latest stable version of elementary OS can always be downloaded at <a href="https://elementary.io">elementary.io</a>.</p>
 
     <div class="download">
