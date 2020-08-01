@@ -1,18 +1,20 @@
 <template>
   <div>
-    <h1>Sponsor elementary OS</h1>
+    <h1>Become a Sponsor to Get Access</h1>
 
     <p>
-      It looks like you are not sponsoring elementary on GitHub. If you sponsor
-      more than $10 you will immediately given access to our daily ISO builds.
+      Help support elementary OS by <a href="https://github.com/sponsors/elementary">becoming a sponsor on GitHub</a>. Members of the <strong>$10/month tier</strong> and higher receive access to pre-release daily builds as a perk of their sponsorship. Alternatively, visit <a href="https://elementary.io">elementary.io</a> for the latest stable version of elementary OS.
     </p>
 
     <div class="center">
+      <a class="button" href="https://elementary.io">
+        Visit elementary.io
+      </a>
       <a
         class="button suggested"
         href="https://github.com/sponsors/elementary"
       >
-        Sponsor elementary
+        ♡ Sponsor elementary
       </a>
     </div>
   </div>
