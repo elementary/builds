@@ -1,7 +1,11 @@
 <template>
   <div>
     <p>
-      These are <strong>pre-release</strong> daily builds of elementary OS. Things will be broken. Please see the <a href="https://github.com/orgs/elementary/projects/55" rel="noopener" target="_blank">6.0 Release GitHub Project</a> for a full list of tasks and regressions. Current major issues with these images may include, but are not limited to:
+      These are <strong>pre-release</strong> daily builds of elementary OS.
+      Things will be broken. Please see the
+      <a href="https://github.com/orgs/elementary/projects/55" rel="noopener" target="_blank">6.0 Release GitHub Project</a>
+      for a full list of tasks and regressions. Current major issues with these
+      images may include, but are not limited to:
     </p>
 
     <ul>
