@@ -1,7 +1,7 @@
 <template>
   <div class="center">
-    <h1>elementary OS Daily Builds</h1>
-    <p>Logging into GitHub</p>
+    <h1>elementary OS Early Access Builds</h1>
+    <p>Logging in to GitHub</p>
   </div>
 </template>
 
