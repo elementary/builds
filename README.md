@@ -20,6 +20,8 @@
 This repository contains the website code for our daily builds. This **DOES
 NOT** build elementary OS or have any operating system related code.
 
+---
+
 ### Building & Testing
 This site is built with Nuxt.JS, a Vue.JS framework.
 
@@ -27,13 +29,11 @@ You'll need the following dependenices:
 * nodejs >= 10.20.1
 * npm
 
-
 Run `npm` to install additional packages and start the development server
 
 ```sh
-npm ci # Installs the packages
+npm ci # Installs additional dependency packages
 npm start # Starts the web server
 ```
 
-You will see a url in your terminal that you can click to see the website.
-
+A link to the test server will appear in Terminal. (Typically this is `https://localhost:3000/`)
