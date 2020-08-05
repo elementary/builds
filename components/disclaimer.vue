@@ -8,7 +8,7 @@
     <ul>
       <li>Installation failures while installing offline or with full-disk encryption</li>
       <li>Curated apps are not available in AppCenter</li>
-      <li>Look & feel issues, including unfinished dark mode support</li>
+      <li>Look &amp; feel issues, including unfinished dark style support</li>
       <li>General features and APIs are <strong>not finalized</strong></li>
     </ul>
 

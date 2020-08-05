@@ -24,7 +24,7 @@
           class="button suggested"
           :href="latestDaily | isoUrl"
         >
-          Download {{ latestDaily | name }} ({{ latestDaily | size }} GB)
+          Download ({{ latestDaily | size }} GB)
         </a>
       </div>
     </template>
