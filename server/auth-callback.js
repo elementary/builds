@@ -63,7 +63,9 @@ function isSponsored (data) {
 }
 
 function isAllowlisted (data) {
-  return allowlist.users.includes(data.viewer.login)
+  return allowlist.users
+    .map((u) => u.toLowerCase())
+    .includes(data.viewer.login.toLowerCase())
 }
 
 export default async (req, res, next) => {
