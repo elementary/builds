@@ -8,8 +8,8 @@
 
     <template v-if="latestDaily">
       <p>
-        The latest build occured on {{
-          latestDaily | relativeDate }}. If this build does not install or
+        <code>{{ latestDaily | name }}</code> was built {{
+          latestDaily | relativeDate }}. If it does not install or
         otherwise work for you, try a previous build.
       </p>
 
