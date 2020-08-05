@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <h1>elementary OS Daily Builds</h1>
+    <h1>elementary OS Early Access Builds</h1>
     <p>Checking Sponsorship</p>
   </div>
 </template>
