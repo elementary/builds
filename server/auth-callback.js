@@ -64,7 +64,7 @@ function isSponsored (data) {
 
 function isAllowlisted (data) {
   return allowlist.users
-    .map((u) => u.toLowerCase())
+    .map(u => u.toLowerCase())
     .includes(data.viewer.login.toLowerCase())
 }
 
