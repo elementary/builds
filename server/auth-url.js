@@ -15,7 +15,7 @@ export default (req, res, next) => {
   const params = encodeParams({
     client_id: process.env.GITHUB_CLIENT_ID,
     redirect_uri: redirect,
-    scope: 'read:user'
+    scope: 'user'
   })
 
   res.end(JSON.stringify({
