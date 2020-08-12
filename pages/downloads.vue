@@ -33,26 +33,28 @@
     <template v-if="latestDaily">
       <h3>Pinebook Pro</h3>
       <p>
-        <strong>Experimental build</strong>; see <a href="https://github.com/elementary/os/wiki/Pinebook-Pro" target="_blank" rel="noopener">the wiki</a> for more info. 
+        <strong>Experimental build</strong>; see
+        <a href="https://github.com/elementary/os/wiki/Pinebook-Pro" target="_blank" rel="noopener">the wiki</a>
+        for more info.
       </p>
       <p>
-        <code>{{ latestDaily | name }}</code> was built {{
-        latestDaily | relativeDate }}. If it does not install or
+        <code>{{ latestPinebook | name }}</code> was built {{
+        latestPinebook | relativeDate }}. If it does not install or
         otherwise work for you, try a previous build.
       </p>
 
       <div class="center">
         <a
           class="button"
-          :href="latestDaily | shaUrl"
+          :href="latestPinebook | shaUrl"
         >
           Download SHA256
         </a>
         <a
           class="button suggested"
-          :href="latestDaily | isoUrl"
+          :href="latestPinebook | isoUrl"
         >
-          Download ({{ latestDaily | size }} GB)
+          Download ({{ latestPinebook | size }} GB)
         </a>
       </div>
     </template>
@@ -174,7 +176,27 @@ export default {
   },
 
   computed: {
-    ...mapGetters('images', ['latestDaily', 'oldDalies'])
+    ...mapGetters('images', ['imagesFor']),
+
+    latestDaily () {
+      const [latest] = this.imagesFor('daily')
+      return latest
+    },
+
+    latestPinebook () {
+      const [latest] = this.imagesFor('daily-pinebookpro')
+      return latest
+    },
+
+    oldDalies () {
+      const [, ...old] = this.imagesFor('daily')
+      return old
+    },
+
+    oldPinebooks () {
+      const [, ...old] = this.imagesFor('daily-pinebookpro')
+      return old
+    }
   }
 }
 </script>
