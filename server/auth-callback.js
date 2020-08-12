@@ -1,9 +1,12 @@
+require('json5/lib/register')
+
 import Cookie from 'cookie'
 import { GraphQLClient } from 'graphql-request'
 import fetch from 'node-fetch'
+import JSON5 from 'json5'
 import jwt from 'jsonwebtoken'
 
-import allowlist from '../data/allowlist'
+const allowlist = require('../data/allowlist.json5')
 
 function encodeParams (obj) {
   return Object.entries(obj)
