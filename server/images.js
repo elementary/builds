@@ -24,7 +24,7 @@ async function downloadImages () {
   })
 
   return manifest.Contents
-    .filter(({ Key }) => Key.endsWith('.iso'))
+    .filter(({ Key }) => Key.endsWith('.iso') || Key.endsWith('.img.xz'))
     .map(d => ({
       path: d.Key,
       timestamp: d.LastModified,
