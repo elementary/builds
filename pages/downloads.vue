@@ -38,8 +38,8 @@
         for more info.
       </p>
       <p>
-        <code>{{ latestPinebook | name }}</code> was built {{
-        latestPinebook | relativeDate }}. If it does not install or
+        <code>{{ latestPinebook | name }}</code> was built
+        {{ latestPinebook | relativeDate }}. If it does not install or
         otherwise work for you, try a previous build.
       </p>
 
@@ -122,7 +122,6 @@
         </tbody>
       </table>
     </template>
-
   </div>
 </template>
 
