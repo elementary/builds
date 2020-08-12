@@ -59,13 +59,14 @@
       </div>
     </template>
 
-    <template v-if="oldDalies.length > 0">
-      <h2>Previous Builds</h2>
-      <p>
-        Historical daily builds may be useful for debugging issues, or when the
-        latest build is not working for you.
-      </p>
+    <h2>Previous Builds</h2>
+    <p>
+      Historical daily builds may be useful for debugging issues, or if the
+      latest build is not working for you.
+    </p>
 
+    <template v-if="oldDalies.length > 0">
+      <h3>64-bit AMD/Intel</h3>
       <table>
         <thead>
           <tr>
@@ -92,6 +93,36 @@
         </tbody>
       </table>
     </template>
+
+    <template v-if="oldPinebooks.length > 0">
+      <h3>Pinebook Pro</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            v-for="iso in oldPinebooks"
+            :key="iso.path"
+          >
+            <td>
+              <a :href="iso | isoUrl">
+                {{ iso | name }}
+              </a>
+            </td>
+
+            <td>
+              {{ iso | relativeDate }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+    
   </div>
 </template>
 
