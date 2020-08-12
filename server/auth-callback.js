@@ -1,9 +1,9 @@
+/* eslint-disable import/first */
 require('json5/lib/register')
 
 import Cookie from 'cookie'
 import { GraphQLClient } from 'graphql-request'
 import fetch from 'node-fetch'
-import JSON5 from 'json5'
 import jwt from 'jsonwebtoken'
 
 const allowlist = require('../data/allowlist.json5')
