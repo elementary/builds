@@ -338,5 +338,15 @@
     "path": "stable/elementaryos-5.1-stable.20200706.iso",
     "timestamp": "2020-07-06T04:33:16.243Z",
     "size": 1484423168
+  },
+  {
+    "path": "daily-pinebookpro/elementaryos-6.0-daily-pinebookpro-20200812.img.xz",
+    "timestamp": "2020-08-12T00:41:37.811Z",
+    "size": 1482964992
+  },
+  {
+    "path": "daily-pinebookpro/elementaryos-6.0-daily-pinebookpro-20200811.img.xz",
+    "timestamp": "2020-08-11T00:41:37.811Z",
+    "size": 1482964992
   }
 ]

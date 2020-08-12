@@ -3,26 +3,16 @@ export const state = () => ({
 })
 
 export const getters = {
-  dalies (state, getters) {
+  imagesFor: (state, getters) => (channel = 'daily') => {
     return getters.images
-      .filter(({ path }) => path.startsWith('daily/'))
+      .filter(({ path }) => path.startsWith(`${channel}/`))
       .filter(({ path }) => path.includes('6.0'))
-  },
-
-  latestDaily (state, getters) {
-    const [latest] = getters.dalies
-    return latest
   },
 
   images (state) {
     return state.images
       .map(image => ({ ...image, timestamp: new Date(image.timestamp) }))
       .sort((a, b) => (b.timestamp - a.timestamp))
-  },
-
-  oldDalies (state, getters) {
-    const [, ...old] = getters.dalies
-    return old
   }
 }
 

@@ -4,9 +4,10 @@
 
     <disclaimer />
 
-    <h2>Latest Build</h2>
+    <h2>Latest Builds</h2>
 
     <template v-if="latestDaily">
+      <h3>64-bit AMD/Intel</h3>
       <p>
         <code>{{ latestDaily | name }}</code> was built {{
           latestDaily | relativeDate }}. If it does not install or
@@ -29,13 +30,43 @@
       </div>
     </template>
 
-    <template v-if="oldDalies.length > 0">
-      <h2>Previous Builds</h2>
+    <template v-if="latestDaily">
+      <h3>Pinebook Pro</h3>
       <p>
-        Historical daily builds may be useful for debugging issues, or when the
-        latest build is not working for you.
+        <strong>Experimental build</strong>; see
+        <a href="https://github.com/elementary/os/wiki/Pinebook-Pro" target="_blank" rel="noopener">the wiki</a>
+        for more info.
+      </p>
+      <p>
+        <code>{{ latestPinebook | name }}</code> was built
+        {{ latestPinebook | relativeDate }}. If it does not install or
+        otherwise work for you, try a previous build.
       </p>
 
+      <div class="center">
+        <a
+          class="button"
+          :href="latestPinebook | shaUrl"
+        >
+          Download SHA256
+        </a>
+        <a
+          class="button suggested"
+          :href="latestPinebook | isoUrl"
+        >
+          Download ({{ latestPinebook | size }} GB)
+        </a>
+      </div>
+    </template>
+
+    <h2>Previous Builds</h2>
+    <p>
+      Historical daily builds may be useful for debugging issues, or if the
+      latest build is not working for you.
+    </p>
+
+    <template v-if="oldDalies.length > 0">
+      <h3>64-bit AMD/Intel</h3>
       <table>
         <thead>
           <tr>
@@ -47,6 +78,35 @@
         <tbody>
           <tr
             v-for="iso in oldDalies"
+            :key="iso.path"
+          >
+            <td>
+              <a :href="iso | isoUrl">
+                {{ iso | name }}
+              </a>
+            </td>
+
+            <td>
+              {{ iso | relativeDate }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+
+    <template v-if="oldPinebooks.length > 0">
+      <h3>Pinebook Pro</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            v-for="iso in oldPinebooks"
             :key="iso.path"
           >
             <td>
@@ -134,6 +194,7 @@ export default {
     shaUrl (iso) {
       return `/api/download/${iso.path}`
         .replace('.iso', '.sha256.txt')
+        .replace('.img.xz', '.sha256.txt')
     },
 
     size (iso) {
@@ -146,7 +207,27 @@ export default {
   },
 
   computed: {
-    ...mapGetters('images', ['latestDaily', 'oldDalies'])
+    ...mapGetters('images', ['imagesFor']),
+
+    latestDaily () {
+      const [latest] = this.imagesFor('daily')
+      return latest
+    },
+
+    latestPinebook () {
+      const [latest] = this.imagesFor('daily-pinebookpro')
+      return latest
+    },
+
+    oldDalies () {
+      const [, ...old] = this.imagesFor('daily')
+      return old
+    },
+
+    oldPinebooks () {
+      const [, ...old] = this.imagesFor('daily-pinebookpro')
+      return old
+    }
   }
 }
 </script>
