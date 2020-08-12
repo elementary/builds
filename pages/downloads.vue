@@ -4,12 +4,40 @@
 
     <disclaimer />
 
-    <h2>Latest Build</h2>
+    <h2>Latest Builds</h2>
 
     <template v-if="latestDaily">
+      <h3>64-bit AMD/Intel</h3>
       <p>
         <code>{{ latestDaily | name }}</code> was built {{
           latestDaily | relativeDate }}. If it does not install or
+        otherwise work for you, try a previous build.
+      </p>
+
+      <div class="center">
+        <a
+          class="button"
+          :href="latestDaily | shaUrl"
+        >
+          Download SHA256
+        </a>
+        <a
+          class="button suggested"
+          :href="latestDaily | isoUrl"
+        >
+          Download ({{ latestDaily | size }} GB)
+        </a>
+      </div>
+    </template>
+
+    <template v-if="latestDaily">
+      <h3>Pinebook Pro</h3>
+      <p>
+        <strong>Experimental build</strong>; see <a href="https://github.com/elementary/os/wiki/Pinebook-Pro" target="_blank" rel="noopener">the wiki</a> for more info. 
+      </p>
+      <p>
+        <code>{{ latestDaily | name }}</code> was built {{
+        latestDaily | relativeDate }}. If it does not install or
         otherwise work for you, try a previous build.
       </p>
 
