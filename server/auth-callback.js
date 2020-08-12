@@ -38,13 +38,23 @@ function githubData (token) {
   const query = `{
     viewer {
       login
+      organizations(last: 100) {
+        nodes {
+          login
+        }
+      }
       sponsorshipsAsSponsor(last: 100) {
         nodes {
           tier {
             monthlyPriceInCents
           }
-          maintainer {
-            login
+          sponsorable {
+            ... on User {
+              login
+            }
+            ... on Organization {
+              login
+            }
           }
         }
       }
@@ -56,10 +66,14 @@ function githubData (token) {
 
 function isSponsored (data) {
   return data.viewer.sponsorshipsAsSponsor.nodes
-    .filter(s => (s.maintainer.login === 'elementary'))
-    .map(s => s.tier)
-    .map(t => t.monthlyPriceInCents)
+    .filter(s => (s.sponsorable.login === 'elementary'))
+    .map(s => s.tier.monthlyPriceInCents)
     .some(p => (p >= 1000))
+}
+
+function isInOrganization (data) {
+  return data.viewer.organizations.nodes
+    .some(org => (org.login === 'elementary'))
 }
 
 function isAllowlisted (data) {
@@ -84,8 +98,9 @@ export default async (req, res, next) => {
     const data = await githubData(accessToken)
 
     const sponsored = isSponsored(data)
+    const organizationed = isInOrganization(data)
     const allowListed = isAllowlisted(data)
-    const success = (sponsored || allowListed)
+    const success = (sponsored || organizationed || allowListed)
 
     if (!success) {
       throw new Error('Not sponsoring or allow listed')
