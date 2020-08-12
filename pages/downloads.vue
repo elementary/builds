@@ -122,7 +122,7 @@
         </tbody>
       </table>
     </template>
-    
+
   </div>
 </template>
 
@@ -195,6 +195,7 @@ export default {
     shaUrl (iso) {
       return `/api/download/${iso.path}`
         .replace('.iso', '.sha256.txt')
+        .replace('.img.xz', '.sha256.txt')
     },
 
     size (iso) {
