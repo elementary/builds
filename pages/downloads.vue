@@ -184,6 +184,7 @@ export default {
       const [, year, month, day] = iso.path.match(/([0-9]{4})([0-9]{2})([0-9]{2})/)
       const date = new Date(`${year}-${month}-${day}T01:00:00.000Z`)
       return date.toLocaleDateString(undefined, {
+        timeZone: 'UTC',
         weekday: 'short',
         year: 'numeric',
         month: 'short',
