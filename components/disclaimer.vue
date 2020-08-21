@@ -7,7 +7,6 @@
 
     <ul>
       <li>Installation failures while installing offline or with full-disk encryption</li>
-      <li>Session defaults to “Ubuntu”; user must choose “Pantheon” from greeter menu</li>
       <li>Curated apps are not available in AppCenter</li>
       <li>Look &amp; feel issues, including unfinished dark style support</li>
       <li>General features and APIs are <strong>not finalized</strong></li>
