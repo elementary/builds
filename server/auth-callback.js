@@ -62,6 +62,19 @@ function githubData (token) {
   }`
 
   return client.request(query)
+    .catch(err => {
+      // If there are parts of the graph that this app does not have access to,
+      // e.g. the user sponsoring another organization for which we cannot query
+      // the "tier", GitHub will return partial "data" as well as some "errors".
+      // graphql-request considers such a response an error, but we can salvage
+      // the partial data by catching and inspecting the error:
+      // https://github.com/prisma-labs/graphql-request/issues/5
+      if (err.response && err.response.data) {
+        return err.response.data
+      } else {
+        throw err
+      }
+    })
 }
 
 function isSponsored (data) {
