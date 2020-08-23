@@ -62,7 +62,7 @@ function githubData (token) {
   }`
 
   return client.request(query)
-    .catch(err => {
+    .catch((err) => {
       // If there are parts of the graph that this app does not have access to,
       // e.g. the user sponsoring another organization for which we cannot query
       // the "tier", GitHub will return partial "data" as well as some "errors".
