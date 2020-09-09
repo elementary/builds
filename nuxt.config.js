@@ -19,15 +19,6 @@ export default {
 
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ],
-
-    script: [
-      {
-        src: 'https://stats.elementary.io/js/index.js',
-        'data-domain': 'builds.elementary.io',
-        async: true,
-        defer: true
-      }
     ]
   },
 
@@ -40,7 +31,8 @@ export default {
   },
 
   plugins: [
-    '~/plugins/auth'
+    '~/plugins/auth',
+    '~/plugins/plausible'
   ],
 
   publicRuntimeConfig: {
