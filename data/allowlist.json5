@@ -24,7 +24,6 @@
     "flexiondotorg",
     "freaktechnik",
     "GammaGames",
-    "giovannicaligaris",
     "HangmansJoke",
     "herronjo",
     "hisnameismarco",
@@ -37,19 +36,16 @@
     "joeress",
     "kevinanderson1",
     "killyourfm",
-    "laptopwithlinux",
     "lemonistas",
     "leoherzog",
     "LievenHanssen",
     "linuxr01",
     "lucksidedown",
-    "LukaszErecinski",
     "lukeco11",
     "lxmcf",
     "mail4asim",
     "marbetschar",
     "meisenzahl",
-    "micahilbery",
     "modzilla99",
     "mooshoe",
     "mrBen",
@@ -64,7 +60,6 @@
     "ReinBentdal",
     "rottenpants466",
     "rubenmvc",
-    "Sean-StarLabs",
     "silvernode",
     "stustill",
     "thaller66",
@@ -75,6 +70,15 @@
     "Westis96",
     "xalmat",
     "Xurel",
-    "yerbestpal"
+    "yerbestpal",
+    
+    // OEMs
+    "Ben-StarLabs",      // Star Labs
+    "giovannicaligaris", // Juno Computers
+    "laptopwithlinux",   // Laptop with Linux
+    "LukaszErecinski",   // PINE64
+    "Sean-StarLabs",     // Star Labs
+    "slimbook",          // Slimbook
+    "Stephen-StarLabs"   // Star Labs
   ]
 }
