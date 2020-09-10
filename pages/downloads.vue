@@ -71,6 +71,7 @@
         <thead>
           <tr>
             <th>Name</th>
+            <th>Checksum</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -83,6 +84,12 @@
             <td>
               <a :href="iso | isoUrl">
                 {{ iso | name }}
+              </a>
+            </td>
+
+            <td>
+              <a :href="iso | shaUrl">
+                SHA256
               </a>
             </td>
 
@@ -100,6 +107,7 @@
         <thead>
           <tr>
             <th>Name</th>
+            <th>Checksum</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -112,6 +120,12 @@
             <td>
               <a :href="iso | isoUrl">
                 {{ iso | name }}
+              </a>
+            </td>
+
+            <td>
+              <a :href="iso | shaUrl">
+                SHA256
               </a>
             </td>
 
