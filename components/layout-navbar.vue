@@ -68,7 +68,7 @@
       </ul>
     </nav>
 
-    <nav v-if=loggedIn" class="secondary">
+    <nav v-if="loggedIn" class="secondary">
       <ul>
         <li>
           <a @click="logout">
