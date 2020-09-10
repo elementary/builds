@@ -67,7 +67,8 @@
         </li>
       </ul>
     </nav>
-    <nav v-if="$store.getters['auth/loggedIn']" class="secondary">
+
+    <nav v-if=loggedIn" class="secondary">
       <ul>
         <li>
           <a @click="logout">
@@ -175,7 +176,11 @@ export default {
     faReddit: () => faReddit,
     faSlack: () => faSlack,
     faStackExchange: () => faStackExchange,
-    faTwitter: () => faTwitter
+    faTwitter: () => faTwitter,
+    
+    loggedIn () {
+      return this.$store.getters['auth/loggedIn']
+    }
   },
 
   methods: {
