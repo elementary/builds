@@ -65,7 +65,7 @@
       latest build is not working for you.
     </p>
 
-    <template v-if="oldDalies.length > 0">
+    <template v-if="oldDailies.length > 0">
       <h3>64-bit AMD/Intel</h3>
       <table>
         <thead>
@@ -77,7 +77,7 @@
 
         <tbody>
           <tr
-            v-for="iso in oldDalies"
+            v-for="iso in oldDailies"
             :key="iso.path"
           >
             <td>
@@ -220,7 +220,7 @@ export default {
       return latest
     },
 
-    oldDalies () {
+    oldDailies () {
       const [, ...old] = this.imagesFor('daily')
       return old
     },
