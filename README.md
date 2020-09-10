@@ -25,7 +25,7 @@ NOT** build elementary OS or have any operating system related code.
 ### Building & Testing
 This site is built with Nuxt.JS, a Vue.JS framework.
 
-You'll need the following dependenices:
+You'll need the following dependencies:
 * nodejs >= 10.20.1
 * npm
 
@@ -36,4 +36,4 @@ npm ci # Installs additional dependency packages
 npm start # Starts the web server
 ```
 
-A link to the test server will appear in Terminal. (Typically this is `https://localhost:3000/`)
+A link to the test server will appear in Terminal. (Typically this is `http://localhost:3000/`)
