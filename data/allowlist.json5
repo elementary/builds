@@ -1,14 +1,5 @@
 {
   users: [
-    // elementary first party developers
-    "aroman",
-    "btkostner",
-    "cassidyjames",
-    "danrabbit",
-    "davidmhewitt",
-    "lewisgoddard",
-    "kgrubb",
-
     // AppCenter backers
     "aia832003",
     "amzamora",
