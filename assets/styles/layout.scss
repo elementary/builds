@@ -2,3 +2,64 @@
   --page-width: 80rem;
   --content-width: 40rem;
 }
+
+table {
+  // When to switch from stacked to traditional table layout
+  $width: 600px;
+
+  background-color: var(--view-color);
+  border-radius: 0.375em;
+  border-spacing: 0;
+  box-shadow:
+    0 0 0 1px rgba(black, 0.05),
+    0 3px 6px rgba(black, 0.22);
+  margin: 2em auto;
+  max-width: 1000px;
+  width: 100%;
+
+  td,
+  th {
+    display: block;
+    text-align: center;
+    padding: 0.25em;
+
+    @media (min-width: $width) {
+      display: table-cell;
+      padding: 0.5em 1em;
+      text-align: left;
+    }
+  }
+
+  td {
+    @media (min-width: $width) {
+      border-top: 1px solid var(--dim-color);
+    }
+  }
+
+  th {
+    background-color: var(--dim-color);
+    opacity: 0.75;
+
+    &:first-child {
+      border-top-left-radius: calc(0.375em - 1px);
+    }
+
+    &:last-child {
+      border-top-right-radius: calc(0.375em - 1px);
+    }
+  }
+
+  tr {
+    display: block;
+
+    &:not(:first-of-type) {
+      border-top: 1px solid var(--dim-color);
+      padding: 0.5em 0;
+    }
+
+      @media (min-width: $width) {
+        display: table-row;
+        padding: 0;
+      }
+  }
+}
