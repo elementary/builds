@@ -139,43 +139,6 @@
   </div>
 </template>
 
-<style scoped lang="scss">
-  table {
-    background-color: var(--view-color);
-    border-spacing: 0;
-    border-radius: 0.375em;
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.05),
-      0 3px 6px rgba(0, 0, 0, 0.22);
-    margin: 2em auto;
-    max-width: 1000px;
-    width: 100%;
-
-    td,
-    th {
-      padding: 0.5em 1em;
-      text-align: left;
-    }
-
-    td {
-      border-top: 1px solid var(--dim-color);
-    }
-
-    th {
-      background-color: var(--dim-color);
-      opacity: 0.75;
-
-      &:first-child {
-        border-top-left-radius: calc(0.375em - 1px);
-      }
-
-      &:last-child {
-        border-top-right-radius: calc(0.375em - 1px);
-      }
-    }
-  }
-</style>
-
 <script>
 import { mapGetters } from 'vuex'
 
