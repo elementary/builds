@@ -32,6 +32,10 @@ export const mutations = {
     if (token.exp) {
       state.expires = new Date(token.exp)
     }
+  },
+
+  clear (state) {
+    state.expires = null
   }
 }
 

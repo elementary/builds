@@ -67,6 +67,15 @@
         </li>
       </ul>
     </nav>
+    <nav v-if="$store.getters['auth/loggedIn']" class="secondary">
+      <ul>
+        <li>
+          <a @click="logout">
+            Log Out
+          </a>
+        </li>
+      </ul>
+    </nav>
   </header>
 </template>
 
@@ -128,6 +137,20 @@
       height: auto;
     }
   }
+
+  nav.secondary {
+    background-color: var(--secondary-bg-color);
+
+    a {
+      color: var(--secondary-fg-color);
+      font-family: var(--ui-font);
+      cursor: pointer;
+    }
+
+    ul {
+      margin-left: auto;
+    }
+  }
 </style>
 
 <script>
@@ -153,6 +176,13 @@ export default {
     faSlack: () => faSlack,
     faStackExchange: () => faStackExchange,
     faTwitter: () => faTwitter
+  },
+
+  methods: {
+    logout () {
+      this.$store.commit('auth/clear')
+      this.$router.push('/')
+    }
   }
 }
 </script>
