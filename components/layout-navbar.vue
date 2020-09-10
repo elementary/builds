@@ -177,7 +177,7 @@ export default {
     faSlack: () => faSlack,
     faStackExchange: () => faStackExchange,
     faTwitter: () => faTwitter,
-    
+
     loggedIn () {
       return this.$store.getters['auth/loggedIn']
     }
