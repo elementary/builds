@@ -49,12 +49,6 @@ table {
     }
   }
 
-  thead {
-    @media (min-width: $width) {
-      display: table-header-group;
-    }
-  }
-
   tr {
     display: block;
 
