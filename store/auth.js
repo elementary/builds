@@ -35,6 +35,10 @@ export const mutations = {
   },
 
   clear (state) {
+    window.document.cookie = Cookie.serialize('builds', '', {
+      path: '/',
+      maxAge: 0
+    })
     state.expires = null
   }
 }
