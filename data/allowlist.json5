@@ -87,6 +87,9 @@
     "LukaszErecinski",   // PINE64
     "Sean-StarLabs",     // Star Labs
     "slimbook",          // Slimbook
-    "Stephen-StarLabs"   // Star Labs
+    "Stephen-StarLabs",   // Star Labs
+
+    // Third-party developers
+    "JoseExposito"
   ]
 }
