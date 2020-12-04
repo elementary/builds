@@ -95,7 +95,9 @@
     </p>
 
     <template v-if="oldDailies.length > 0">
-      <h3 id="oldDailies">64-bit AMD/Intel</h3>
+      <h3 id="oldDailies">
+        64-bit AMD/Intel
+      </h3>
       <table>
         <thead>
           <tr>
@@ -131,7 +133,9 @@
     </template>
 
     <template v-if="oldPinebooks.length > 0">
-      <h3 id="oldPinebooks">Pinebook Pro</h3>
+      <h3 id="oldPinebooks">
+        Pinebook Pro
+      </h3>
       <table>
         <thead>
           <tr>
@@ -167,7 +171,9 @@
     </template>
 
     <template v-if="oldRasPis.length > 0">
-      <h3 id="oldRasPis">Raspberry Pi 4</h3>
+      <h3 id="oldRasPis">
+        Raspberry Pi 4
+      </h3>
       <table>
         <thead>
           <tr>
