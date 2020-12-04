@@ -11,7 +11,7 @@
       <p>
         <code>{{ latestDaily | name }}</code> was built {{
           latestDaily | relativeDate }}. If it does not install or
-        otherwise work for you, try a previous build.
+        otherwise work for you, try a <a href="#oldDailies">previous build</a>.
       </p>
 
       <div class="center">
@@ -30,7 +30,7 @@
       </div>
     </template>
 
-    <template v-if="latestDaily">
+    <template v-if="latestPinebook">
       <h3>Pinebook Pro</h3>
       <p>
         <strong>Experimental build</strong>; see
@@ -40,7 +40,7 @@
       <p>
         <code>{{ latestPinebook | name }}</code> was built
         {{ latestPinebook | relativeDate }}. If it does not install or
-        otherwise work for you, try a previous build.
+        otherwise work for you, try a <a href="#oldPinebooks">previous build</a>.
       </p>
 
       <div class="center">
@@ -59,6 +59,35 @@
       </div>
     </template>
 
+    <template v-if="latestRasPi">
+      <h3>Raspberry Pi 4</h3>
+      <p>
+        <strong>Experimental build</strong>; see
+        <a href="https://github.com/elementary/os/wiki/Raspberry-Pi" target="_blank" rel="noopener">the wiki</a>
+        for more info.
+      </p>
+      <p>
+        <code>{{ latestRasPi | name }}</code> was built
+        {{ latestRasPi | relativeDate }}. If it does not install or
+        otherwise work for you, try a <a href="#oldRasPis">previous build</a>.
+      </p>
+
+      <div class="center">
+        <a
+          class="button"
+          :href="latestRasPi | shaUrl"
+        >
+          Download SHA256
+        </a>
+        <a
+          class="button suggested"
+          :href="latestRasPi | isoUrl"
+        >
+          Download ({{ latestRasPi | size }} GB)
+        </a>
+      </div>
+    </template>
+
     <h2>Previous Builds</h2>
     <p>
       Historical daily builds may be useful for debugging issues, or if the
@@ -66,7 +95,7 @@
     </p>
 
     <template v-if="oldDailies.length > 0">
-      <h3>64-bit AMD/Intel</h3>
+      <h3 id="oldDailies">64-bit AMD/Intel</h3>
       <table>
         <thead>
           <tr>
@@ -102,7 +131,7 @@
     </template>
 
     <template v-if="oldPinebooks.length > 0">
-      <h3>Pinebook Pro</h3>
+      <h3 id="oldPinebooks">Pinebook Pro</h3>
       <table>
         <thead>
           <tr>
@@ -115,6 +144,42 @@
         <tbody>
           <tr
             v-for="iso in oldPinebooks"
+            :key="iso.path"
+          >
+            <td>
+              <a :href="iso | isoUrl">
+                {{ iso | name }}
+              </a>
+            </td>
+
+            <td>
+              <a :href="iso | shaUrl">
+                SHA256
+              </a>
+            </td>
+
+            <td>
+              {{ iso | relativeDate }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+
+    <template v-if="oldRasPis.length > 0">
+      <h3 id="oldRasPis">Raspberry Pi 4</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Checksum</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            v-for="iso in oldRasPis"
             :key="iso.path"
           >
             <td>
@@ -197,6 +262,11 @@ export default {
       return latest
     },
 
+    latestRasPi () {
+      const [latest] = this.imagesFor('daily-rpi')
+      return latest
+    },
+
     oldDailies () {
       const [, ...old] = this.imagesFor('daily')
       return old
@@ -204,6 +274,11 @@ export default {
 
     oldPinebooks () {
       const [, ...old] = this.imagesFor('daily-pinebookpro')
+      return old
+    },
+
+    oldRasPis () {
+      const [, ...old] = this.imagesFor('daily-rpi')
       return old
     }
   }
