@@ -9,10 +9,11 @@ export const getters = {
       .filter(({ path }) => path.includes('6.0'))
   },
 
-  imagesForGroupedByDate: (state, getters) => (channel = 'daily') => {
+  imagesOldForGroupedByDate: (state, getters) => (channel = 'daily') => {
     const result = []
     const map = {}
-    getters.imagesFor(channel).forEach((image) => {
+    const [, ...old] = getters.imagesFor(channel)
+    old.forEach((image) => {
       const [, year, month, day] = image.path.match(/([0-9]{4})([0-9]{2})([0-9]{2})/)
       const key = `${year}-${month}`
       const date = new Date(`${year}-${month}-${day}T01:00:00.000Z`)

@@ -221,21 +221,21 @@
 
         <tbody>
           <template
-            v-for="month in oldRaspis"
+            v-for="month in oldRasPis"
           >
             <tr
               :key="month.date"
-              :class="{ opened: opened.includes(`oldRaspis-${month.date}`) }"
-              @click="toggle(`oldRaspis-${month.date}`)"
+              :class="{ opened: opened.includes(`oldRasPis-${month.date}`) }"
+              @click="toggle(`oldRasPis-${month.date}`)"
             >
               <td>{{ month.date }}</td>
               <td />
               <td style="text-align:right">
-                <font-awesome-icon v-if="opened.includes(`oldRaspis-${month.date}`)" :icon="faChevronUp" />
+                <font-awesome-icon v-if="opened.includes(`oldRasPis-${month.date}`)" :icon="faChevronUp" />
                 <font-awesome-icon v-else :icon="faChevronDown" />
               </td>
             </tr>
-            <template v-if="opened.includes(`oldRaspis-${month.date}`)">
+            <template v-if="opened.includes(`oldRasPis-${month.date}`)">
               <tr
                 v-for="iso in month.images"
                 :key="iso.path"
@@ -325,7 +325,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('images', ['imagesFor', 'imagesForGroupedByDate']),
+    ...mapGetters('images', ['imagesFor', 'imagesOldForGroupedByDate']),
 
     latestDaily () {
       const [latest] = this.imagesFor('daily')
@@ -343,18 +343,15 @@ export default {
     },
 
     oldDailies () {
-      const [, ...old] = this.imagesForGroupedByDate('daily')
-      return old
+      return this.imagesOldForGroupedByDate('daily')
     },
 
     oldPinebooks () {
-      const [, ...old] = this.imagesForGroupedByDate('daily-pinebookpro')
-      return old
+      return this.imagesOldForGroupedByDate('daily-pinebookpro')
     },
 
     oldRasPis () {
-      const [, ...old] = this.imagesForGroupedByDate('daily-rpi')
-      return old
+      return this.imagesOldForGroupedByDate('daily-rpi')
     },
 
     faChevronDown: () => faChevronDown,
