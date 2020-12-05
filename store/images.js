@@ -12,23 +12,23 @@ export const getters = {
   imagesForGroupedByDate: (state, getters) => (channel = 'daily') => {
     const result = []
     const map = {}
-    getters.imagesFor(channel).forEach(image => {
-        const [, year, month, day] = image.path.match(/([0-9]{4})([0-9]{2})([0-9]{2})/)
-        const key = `${year}-${month}`
-        const date = new Date(`${year}-${month}-${day}T01:00:00.000Z`)
-        if (!map[key]) {
-            map[key] = {
-              date: date.toLocaleDateString(undefined, {
-                timeZone: 'UTC',
-                year: 'numeric',
-                month: 'short'
-            }),
-              images: []
-            }
+    getters.imagesFor(channel).forEach((image) => {
+      const [, year, month, day] = image.path.match(/([0-9]{4})([0-9]{2})([0-9]{2})/)
+      const key = `${year}-${month}`
+      const date = new Date(`${year}-${month}-${day}T01:00:00.000Z`)
+      if (!map[key]) {
+        map[key] = {
+          date: date.toLocaleDateString(undefined, {
+            timeZone: 'UTC',
+            year: 'numeric',
+            month: 'short'
+          }),
+          images: []
         }
-        map[key]['images'].push(image)
+      }
+      map[key].images.push(image)
     })
-    for (var key in map) {
+    for (const key in map) {
       result.push(map[key])
     }
     return result

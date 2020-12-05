@@ -111,31 +111,40 @@
           <template
             v-for="month in oldDailies"
           >
-            <tr @click="toggle(`oldDailies-${month.date}`)" :class="{ opened: opened.includes(`oldDailies-${month.date}`) }">
+            <tr
+              :key="month.date"
+              :class="{ opened: opened.includes(`oldDailies-${month.date}`) }"
+              @click="toggle(`oldDailies-${month.date}`)"
+            >
               <td>{{ month.date }}</td>
-              <td></td>
+              <td />
               <td style="text-align:right">
-                <font-awesome-icon :icon="faChevronUp" v-if="opened.includes(`oldDailies-${month.date}`)"/>
-                <font-awesome-icon :icon="faChevronDown" v-else/>
+                <font-awesome-icon v-if="opened.includes(`oldDailies-${month.date}`)" :icon="faChevronUp" />
+                <font-awesome-icon v-else :icon="faChevronDown" />
               </td>
             </tr>
-            <tr v-for="iso in month.images" v-if="opened.includes(`oldDailies-${month.date}`)">
-              <td>
-                <a :href="iso | isoUrl">
-                  {{ iso | name }}
-                </a>
-              </td>
+            <template v-if="opened.includes(`oldDailies-${month.date}`)">
+              <tr
+                v-for="iso in month.images"
+                :key="iso.path"
+              >
+                <td>
+                  <a :href="iso | isoUrl">
+                    {{ iso | name }}
+                  </a>
+                </td>
 
-              <td>
-                <a :href="iso | shaUrl">
-                  SHA256
-                </a>
-              </td>
+                <td>
+                  <a :href="iso | shaUrl">
+                    SHA256
+                  </a>
+                </td>
 
-              <td>
-                {{ iso | relativeDate }}
-              </td>
-            </tr>
+                <td>
+                  {{ iso | relativeDate }}
+                </td>
+              </tr>
+            </template>
           </template>
         </tbody>
       </table>
@@ -158,31 +167,40 @@
           <template
             v-for="month in oldPinebooks"
           >
-            <tr @click="toggle(`oldPinebooks-${month.date}`)" :class="{ opened: opened.includes(`oldPinebooks-${month.date}`) }">
+            <tr
+              :key="month.date"
+              :class="{ opened: opened.includes(`oldPinebooks-${month.date}`) }"
+              @click="toggle(`oldPinebooks-${month.date}`)"
+            >
               <td>{{ month.date }}</td>
-              <td></td>
+              <td />
               <td style="text-align:right">
-                <font-awesome-icon :icon="faChevronUp" v-if="opened.includes(`oldPinebooks-${month.date}`)"/>
-                <font-awesome-icon :icon="faChevronDown" v-else/>
+                <font-awesome-icon v-if="opened.includes(`oldPinebooks-${month.date}`)" :icon="faChevronUp" />
+                <font-awesome-icon v-else :icon="faChevronDown" />
               </td>
             </tr>
-            <tr v-for="iso in month.images" v-if="opened.includes(`oldPinebooks-${month.date}`)">
-              <td>
-                <a :href="iso | isoUrl">
-                  {{ iso | name }}
-                </a>
-              </td>
+            <template v-if="opened.includes(`oldPinebooks-${month.date}`)">
+              <tr
+                v-for="iso in month.images"
+                :key="iso.path"
+              >
+                <td>
+                  <a :href="iso | isoUrl">
+                    {{ iso | name }}
+                  </a>
+                </td>
 
-              <td>
-                <a :href="iso | shaUrl">
-                  SHA256
-                </a>
-              </td>
+                <td>
+                  <a :href="iso | shaUrl">
+                    SHA256
+                  </a>
+                </td>
 
-              <td>
-                {{ iso | relativeDate }}
-              </td>
-            </tr>
+                <td>
+                  {{ iso | relativeDate }}
+                </td>
+              </tr>
+            </template>
           </template>
         </tbody>
       </table>
@@ -205,31 +223,40 @@
           <template
             v-for="month in oldRaspis"
           >
-            <tr @click="toggle(`oldRaspis-${month.date}`)" :class="{ opened: opened.includes(`oldRaspis-${month.date}`) }">
+            <tr
+              :key="month.date"
+              :class="{ opened: opened.includes(`oldRaspis-${month.date}`) }"
+              @click="toggle(`oldRaspis-${month.date}`)"
+            >
               <td>{{ month.date }}</td>
-              <td></td>
+              <td />
               <td style="text-align:right">
-                <font-awesome-icon :icon="faChevronUp" v-if="opened.includes(`oldRaspis-${month.date}`)"/>
-                <font-awesome-icon :icon="faChevronDown" v-else/>
+                <font-awesome-icon v-if="opened.includes(`oldRaspis-${month.date}`)" :icon="faChevronUp" />
+                <font-awesome-icon v-else :icon="faChevronDown" />
               </td>
             </tr>
-            <tr v-for="iso in month.images" v-if="opened.includes(`oldRaspis-${month.date}`)">
-              <td>
-                <a :href="iso | isoUrl">
-                  {{ iso | name }}
-                </a>
-              </td>
+            <template v-if="opened.includes(`oldRaspis-${month.date}`)">
+              <tr
+                v-for="iso in month.images"
+                :key="iso.path"
+              >
+                <td>
+                  <a :href="iso | isoUrl">
+                    {{ iso | name }}
+                  </a>
+                </td>
 
-              <td>
-                <a :href="iso | shaUrl">
-                  SHA256
-                </a>
-              </td>
+                <td>
+                  <a :href="iso | shaUrl">
+                    SHA256
+                  </a>
+                </td>
 
-              <td>
-                {{ iso | relativeDate }}
-              </td>
-            </tr>
+                <td>
+                  {{ iso | relativeDate }}
+                </td>
+              </tr>
+            </template>
           </template>
         </tbody>
       </table>
@@ -253,23 +280,6 @@ export default {
   middleware: (process.env.NODE_ENV === 'production')
     ? 'auth'
     : null,
-
-  data() {
-    return {
-      opened: [],
-    };
-  },
-
-  methods: {
-  	toggle(id) {
-    	const index = this.opened.indexOf(id);
-      if (index > -1) {
-      	this.opened.splice(index, 1)
-      } else {
-      	this.opened.push(id)
-      }
-    }
-  },
 
   filters: {
     isoUrl (iso) {
@@ -308,6 +318,12 @@ export default {
     await this.$store.dispatch('images/fetch')
   },
 
+  data () {
+    return {
+      opened: []
+    }
+  },
+
   computed: {
     ...mapGetters('images', ['imagesFor', 'imagesForGroupedByDate']),
 
@@ -343,6 +359,17 @@ export default {
 
     faChevronDown: () => faChevronDown,
     faChevronUp: () => faChevronUp
+  },
+
+  methods: {
+    toggle (id) {
+      const index = this.opened.indexOf(id)
+      if (index > -1) {
+        this.opened.splice(index, 1)
+      } else {
+        this.opened.push(id)
+      }
+    }
   }
 }
 </script>
