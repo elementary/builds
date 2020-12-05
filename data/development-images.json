@@ -363,5 +363,20 @@
     "path": "daily-rpi/elementaryos-6.0-daily-rpi-20201202.img.xz",
     "timestamp": "2020-12-02T00:41:37.811Z",
     "size": 2082964992
+  },
+  {
+    "path": "daily-rpi/elementaryos-6.0-daily-rpi-20201201.img.xz",
+    "timestamp": "2020-12-01T00:41:37.811Z",
+    "size": 2082964992
+  },
+  {
+    "path": "daily-rpi/elementaryos-6.0-daily-rpi-20201130.img.xz",
+    "timestamp": "2020-11-30T00:41:37.811Z",
+    "size": 2082964992
+  },
+  {
+    "path": "daily-rpi/elementaryos-6.0-daily-rpi-20201129.img.xz",
+    "timestamp": "2020-11-29T00:41:37.811Z",
+    "size": 2082964992
   }
 ]
