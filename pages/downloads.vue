@@ -114,7 +114,10 @@
             <tr @click="toggle(`oldDailies-${month.date}`)" :class="{ opened: opened.includes(`oldDailies-${month.date}`) }">
               <td>{{ month.date }}</td>
               <td></td>
-              <td></td>
+              <td style="text-align:right">
+                <font-awesome-icon :icon="faChevronUp" v-if="opened.includes(`oldDailies-${month.date}`)"/>
+                <font-awesome-icon :icon="faChevronDown" v-else/>
+              </td>
             </tr>
             <tr v-for="iso in month.images" v-if="opened.includes(`oldDailies-${month.date}`)">
               <td>
@@ -158,7 +161,10 @@
             <tr @click="toggle(`oldPinebooks-${month.date}`)" :class="{ opened: opened.includes(`oldPinebooks-${month.date}`) }">
               <td>{{ month.date }}</td>
               <td></td>
-              <td></td>
+              <td style="text-align:right">
+                <font-awesome-icon :icon="faChevronUp" v-if="opened.includes(`oldPinebooks-${month.date}`)"/>
+                <font-awesome-icon :icon="faChevronDown" v-else/>
+              </td>
             </tr>
             <tr v-for="iso in month.images" v-if="opened.includes(`oldPinebooks-${month.date}`)">
               <td>
@@ -202,7 +208,10 @@
             <tr @click="toggle(`oldRaspis-${month.date}`)" :class="{ opened: opened.includes(`oldRaspis-${month.date}`) }">
               <td>{{ month.date }}</td>
               <td></td>
-              <td></td>
+              <td style="text-align:right">
+                <font-awesome-icon :icon="faChevronUp" v-if="opened.includes(`oldRaspis-${month.date}`)"/>
+                <font-awesome-icon :icon="faChevronDown" v-else/>
+              </td>
             </tr>
             <tr v-for="iso in month.images" v-if="opened.includes(`oldRaspis-${month.date}`)">
               <td>
@@ -229,9 +238,18 @@
 </template>
 
 <script>
+import {
+  faChevronDown,
+  faChevronUp
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { mapGetters } from 'vuex'
 
 export default {
+  components: {
+    FontAwesomeIcon
+  },
+
   middleware: (process.env.NODE_ENV === 'production')
     ? 'auth'
     : null,
@@ -321,7 +339,10 @@ export default {
     oldRasPis () {
       const [, ...old] = this.imagesForGroupedByDate('daily-rpi')
       return old
-    }
+    },
+
+    faChevronDown: () => faChevronDown,
+    faChevronUp: () => faChevronUp
   }
 }
 </script>
