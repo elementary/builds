@@ -108,26 +108,32 @@
         </thead>
 
         <tbody>
-          <tr
-            v-for="iso in oldDailies"
-            :key="iso.path"
+          <template
+            v-for="month in oldDailies"
           >
-            <td>
-              <a :href="iso | isoUrl">
-                {{ iso | name }}
-              </a>
-            </td>
+            <tr @click="toggle(`oldDailies-${month.date}`)" :class="{ opened: opened.includes(`oldDailies-${month.date}`) }">
+              <td>{{ month.date }}</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr v-for="iso in month.images" v-if="opened.includes(`oldDailies-${month.date}`)">
+              <td>
+                <a :href="iso | isoUrl">
+                  {{ iso | name }}
+                </a>
+              </td>
 
-            <td>
-              <a :href="iso | shaUrl">
-                SHA256
-              </a>
-            </td>
+              <td>
+                <a :href="iso | shaUrl">
+                  SHA256
+                </a>
+              </td>
 
-            <td>
-              {{ iso | relativeDate }}
-            </td>
-          </tr>
+              <td>
+                {{ iso | relativeDate }}
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </template>
@@ -146,26 +152,32 @@
         </thead>
 
         <tbody>
-          <tr
-            v-for="iso in oldPinebooks"
-            :key="iso.path"
+          <template
+            v-for="month in oldPinebooks"
           >
-            <td>
-              <a :href="iso | isoUrl">
-                {{ iso | name }}
-              </a>
-            </td>
+            <tr @click="toggle(`oldPinebooks-${month.date}`)" :class="{ opened: opened.includes(`oldPinebooks-${month.date}`) }">
+              <td>{{ month.date }}</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr v-for="iso in month.images" v-if="opened.includes(`oldPinebooks-${month.date}`)">
+              <td>
+                <a :href="iso | isoUrl">
+                  {{ iso | name }}
+                </a>
+              </td>
 
-            <td>
-              <a :href="iso | shaUrl">
-                SHA256
-              </a>
-            </td>
+              <td>
+                <a :href="iso | shaUrl">
+                  SHA256
+                </a>
+              </td>
 
-            <td>
-              {{ iso | relativeDate }}
-            </td>
-          </tr>
+              <td>
+                {{ iso | relativeDate }}
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </template>
@@ -184,26 +196,32 @@
         </thead>
 
         <tbody>
-          <tr
-            v-for="iso in oldRasPis"
-            :key="iso.path"
+          <template
+            v-for="month in oldRaspis"
           >
-            <td>
-              <a :href="iso | isoUrl">
-                {{ iso | name }}
-              </a>
-            </td>
+            <tr @click="toggle(`oldRaspis-${month.date}`)" :class="{ opened: opened.includes(`oldRaspis-${month.date}`) }">
+              <td>{{ month.date }}</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr v-for="iso in month.images" v-if="opened.includes(`oldRaspis-${month.date}`)">
+              <td>
+                <a :href="iso | isoUrl">
+                  {{ iso | name }}
+                </a>
+              </td>
 
-            <td>
-              <a :href="iso | shaUrl">
-                SHA256
-              </a>
-            </td>
+              <td>
+                <a :href="iso | shaUrl">
+                  SHA256
+                </a>
+              </td>
 
-            <td>
-              {{ iso | relativeDate }}
-            </td>
-          </tr>
+              <td>
+                {{ iso | relativeDate }}
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </template>
@@ -217,6 +235,23 @@ export default {
   middleware: (process.env.NODE_ENV === 'production')
     ? 'auth'
     : null,
+
+  data() {
+    return {
+      opened: [],
+    };
+  },
+
+  methods: {
+  	toggle(id) {
+    	const index = this.opened.indexOf(id);
+      if (index > -1) {
+      	this.opened.splice(index, 1)
+      } else {
+      	this.opened.push(id)
+      }
+    }
+  },
 
   filters: {
     isoUrl (iso) {
@@ -256,7 +291,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('images', ['imagesFor']),
+    ...mapGetters('images', ['imagesFor', 'imagesForGroupedByDate']),
 
     latestDaily () {
       const [latest] = this.imagesFor('daily')
@@ -274,17 +309,17 @@ export default {
     },
 
     oldDailies () {
-      const [, ...old] = this.imagesFor('daily')
+      const [, ...old] = this.imagesForGroupedByDate('daily')
       return old
     },
 
     oldPinebooks () {
-      const [, ...old] = this.imagesFor('daily-pinebookpro')
+      const [, ...old] = this.imagesForGroupedByDate('daily-pinebookpro')
       return old
     },
 
     oldRasPis () {
-      const [, ...old] = this.imagesFor('daily-rpi')
+      const [, ...old] = this.imagesForGroupedByDate('daily-rpi')
       return old
     }
   }
