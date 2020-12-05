@@ -9,6 +9,31 @@ export const getters = {
       .filter(({ path }) => path.includes('6.0'))
   },
 
+  imagesForGroupedByDate: (state, getters) => (channel = 'daily') => {
+    const result = []
+    const map = {}
+    getters.imagesFor(channel).forEach(image => {
+        const [, year, month, day] = image.path.match(/([0-9]{4})([0-9]{2})([0-9]{2})/)
+        const key = `${year}-${month}`
+        const date = new Date(`${year}-${month}-${day}T01:00:00.000Z`)
+        if (!map[key]) {
+            map[key] = {
+              date: date.toLocaleDateString(undefined, {
+                timeZone: 'UTC',
+                year: 'numeric',
+                month: 'short'
+            }),
+              images: []
+            }
+        }
+        map[key]['images'].push(image)
+    })
+    for (var key in map) {
+      result.push(map[key])
+    }
+    return result
+  },
+
   images (state) {
     return state.images
       .map(image => ({ ...image, timestamp: new Date(image.timestamp) }))
