@@ -89,6 +89,8 @@
     "xalmat",
     "Xurel",
     "yerbestpal",
+
+    "grzegor", // Workaround for a bug
     
     // OEMs
     "Ben-StarLabs",      // Star Labs
