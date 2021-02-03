@@ -95,117 +95,129 @@
     </p>
 
     <template v-if="oldDailies.length > 0">
-      <h3 id="oldDailies">
-        64-bit AMD/Intel
-      </h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Checksum</th>
-            <th>Date</th>
-          </tr>
-        </thead>
+      <details>
+        <summary>
+          <h3 id="oldDailies">
+            64-bit AMD/Intel
+          </h3>
+        </summary>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Checksum</th>
+              <th>Date</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr
-            v-for="iso in oldDailies"
-            :key="iso.path"
-          >
-            <td>
-              <a :href="iso | isoUrl">
-                {{ iso | name }}
-              </a>
-            </td>
+          <tbody>
+            <tr
+              v-for="iso in oldDailies"
+              :key="iso.path"
+            >
+              <td>
+                <a :href="iso | isoUrl">
+                  {{ iso | name }}
+                </a>
+              </td>
 
-            <td>
-              <a :href="iso | shaUrl">
-                SHA256
-              </a>
-            </td>
+              <td>
+                <a :href="iso | shaUrl">
+                  SHA256
+                </a>
+              </td>
 
-            <td>
-              {{ iso | relativeDate }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td>
+                {{ iso | relativeDate }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
     </template>
 
     <template v-if="oldPinebooks.length > 0">
-      <h3 id="oldPinebooks">
-        Pinebook Pro
-      </h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Checksum</th>
-            <th>Date</th>
-          </tr>
-        </thead>
+      <details>
+        <summary>
+          <h3 id="oldPinebooks">
+            Pinebook Pro
+          </h3>
+        </summary>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Checksum</th>
+              <th>Date</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr
-            v-for="iso in oldPinebooks"
-            :key="iso.path"
-          >
-            <td>
-              <a :href="iso | isoUrl">
-                {{ iso | name }}
-              </a>
-            </td>
+          <tbody>
+            <tr
+              v-for="iso in oldPinebooks"
+              :key="iso.path"
+            >
+              <td>
+                <a :href="iso | isoUrl">
+                  {{ iso | name }}
+                </a>
+              </td>
 
-            <td>
-              <a :href="iso | shaUrl">
-                SHA256
-              </a>
-            </td>
+              <td>
+                <a :href="iso | shaUrl">
+                  SHA256
+                </a>
+              </td>
 
-            <td>
-              {{ iso | relativeDate }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td>
+                {{ iso | relativeDate }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
     </template>
 
     <template v-if="oldRasPis.length > 0">
-      <h3 id="oldRasPis">
-        Raspberry Pi 4
-      </h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Checksum</th>
-            <th>Date</th>
-          </tr>
-        </thead>
+      <details>
+        <summary>
+          <h3 id="oldRasPis">
+            Raspberry Pi 4
+          </h3>
+        </summary>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Checksum</th>
+              <th>Date</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr
-            v-for="iso in oldRasPis"
-            :key="iso.path"
-          >
-            <td>
-              <a :href="iso | isoUrl">
-                {{ iso | name }}
-              </a>
-            </td>
+          <tbody>
+            <tr
+              v-for="iso in oldRasPis"
+              :key="iso.path"
+            >
+              <td>
+                <a :href="iso | isoUrl">
+                  {{ iso | name }}
+                </a>
+              </td>
 
-            <td>
-              <a :href="iso | shaUrl">
-                SHA256
-              </a>
-            </td>
+              <td>
+                <a :href="iso | shaUrl">
+                  SHA256
+                </a>
+              </td>
 
-            <td>
-              {{ iso | relativeDate }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td>
+                {{ iso | relativeDate }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
     </template>
   </div>
 </template>

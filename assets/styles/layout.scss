@@ -63,3 +63,30 @@ table {
       }
   }
 }
+
+details summary {
+  color: var(--accent-color);
+  cursor: default;
+}
+
+details summary:hover,
+details summary:focus {
+  outline: none;
+}
+
+details summary::marker,
+::-webkit-details-marker {
+  content: "";
+  display: none;
+}
+
+details summary >::after {
+  content: "▸";
+  display: inline-block;
+  margin-left: 0.5em;
+  transition: transform 250ms ease;
+}
+
+details[open] summary ::after {
+  transform: rotate(90deg);
+}
