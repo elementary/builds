@@ -10,6 +10,7 @@
       <li>Curated apps are not available in AppCenter</li>
       <li>Look &amp; feel issues, including unfinished dark style support</li>
       <li>General features and APIs are <strong>not finalized</strong></li>
+      <li><strong>It will not be possible to upgrade</strong> to the stable release</li>
     </ul>
 
     <p>
