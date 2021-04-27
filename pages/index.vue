@@ -4,7 +4,7 @@
     <p>This site is for beta and Early Access builds of elementary OS. The latest stable version of elementary OS can always be downloaded at <a href="https://elementary.io">elementary.io</a>.</p>
 
     <h2>Public Beta</h2>
-    <p>elementary OS 6 Public Beta is here for developers and testers. You must sign in with a GitHub account for access beta builds.</p>
+    <p>elementary OS 6 Public Beta is here for developers and testers. Sign in with a GitHub account for access.</p>
     <div class="download">
       <nuxt-link class="button suggested" to="/downloads">
         Get elementary OS 6 Public Beta
