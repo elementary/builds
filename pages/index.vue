@@ -6,6 +6,9 @@
     <h2>Public Beta</h2>
     <p>elementary OS 6 Public Beta is here for developers and testers. Sign in with a GitHub account for access.</p>
     <div class="download">
+      <a class="button" href="https://blog.elementary.io">
+        Read Announcement
+      </a>
       <nuxt-link class="button suggested" to="/downloads">
         Get elementary OS 6 Public Beta
       </nuxt-link>
