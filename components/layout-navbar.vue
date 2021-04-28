@@ -21,7 +21,7 @@
         </li>
 
         <li>
-          <a href="https://elementary.io/store/" target="_self">Store</a>
+          <a href="https://store.elementary.io/" target="_self">Store</a>
         </li>
 
         <li>
