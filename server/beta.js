@@ -1,7 +1,10 @@
 import path from 'path'
+import querystring from 'querystring'
 import { Reader } from '@maxmind/geoip2-node'
 
 const FILENAME = 'elementaryos-6.0-daily.20210430.iso'
+const MAGNET = 'd83cd89ea7b75f433d5be5e222cb4eb8cf3a619a'
+const SHASUM = 'c5ea5781329655ecca297f26f3d9cae17c3d08274daa86c21405a7d77d7d094f'
 
 function randomFromArray (...list) {
   return list[Math.floor(Math.random() * list.length)]
@@ -12,9 +15,13 @@ async function getRegion (ip) {
     return randomFromArray('nyc3', 'sfo1')
   }
 
-  const dbPath = path.join(__dirname, '/../data/GeoLite2-City.mmdb')
-  const reader = await Reader.open(dbPath, {})
-  const details = reader.city(ip)
+  try {
+    const dbPath = path.join(__dirname, '/../data/GeoLite2-City.mmdb')
+    const reader = await Reader.open(dbPath, {})
+    const details = reader.city(ip)
+  } catch (e) {
+    return randomFromArray('nyc3', 'sfo1')
+  }
 
   if (details == null || details.continent == null || details.continent.code == null || details.country == null || details.country.isoCode == null || details.location == null || details.location.longitude == null) {
     return randomFromArray('nyc3', 'sfo1')
@@ -84,8 +91,25 @@ export default async (req, res, next) => {
   const timestamp = (Date.now() / 1000).toFixed()
   const timecode = Buffer.from(timestamp).toString('base64')
 
-  const location = `//${region}.dl.elementary.io/download/${timecode}/${FILENAME}`
+  const query = querystring.parse(req._parsedUrl.query)
 
-  res.writeHead(301, { location })
-  return res.end()
+  switch (query.download) {
+    case 'sha': {
+      return res.end(SHASUM)
+    }
+
+    case 'magnet': {
+      const location = `magnet:?xt=urn:btih:${MAGNET}&dn=${FILENAME}&tr=https%3A%2F%2Fashrise.com%3A443%2Fphoenix%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.ccc.de%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80%2Fannounce&ws=http%3A${encodeURI(FILENAME)}`
+
+      res.writeHead(301, { location })
+      return res.end()
+    }
+
+    default: {
+      const location = `https://${region}.dl.elementary.io/download/${timecode}/${FILENAME}`
+
+      res.writeHead(301, { location })
+      return res.end()
+    }
+  }
 }

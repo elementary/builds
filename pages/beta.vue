@@ -7,14 +7,21 @@
     <div class="center">
       <a
         class="button"
-        href="#hash"
+        href="/api/beta?download=sha"
       >
         Download SHA256
       </a>
 
       <a
+        class="button"
+        href="/api/beta?download=magnet"
+      >
+        Magnet Download
+      </a>
+
+      <a
         class="button suggested"
-        href="/api/beta"
+        href="/api/beta?download=file"
       >
         Download (2.55 GB)
       </a>
