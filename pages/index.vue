@@ -7,7 +7,7 @@
     <p>elementary OS 6 Public Beta is here for developers and testers.</p>
 
     <div class="download">
-      <a class="button" href="https://blog.elementary.io">
+      <a class="button" href="https://blog.elementary.io/elementary-os-6-odin-beta">
         Read Announcement
       </a>
       <nuxt-link class="button suggested" to="/beta">
