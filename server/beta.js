@@ -15,10 +15,12 @@ async function getRegion (ip) {
     return randomFromArray('nyc3', 'sfo1')
   }
 
+  let details = {}
+
   try {
     const dbPath = path.join(__dirname, '/../data/GeoLite2-City.mmdb')
     const reader = await Reader.open(dbPath, {})
-    const details = reader.city(ip)
+    details = reader.city(ip)
   } catch (e) {
     return randomFromArray('nyc3', 'sfo1')
   }

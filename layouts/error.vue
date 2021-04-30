@@ -1,7 +1,11 @@
 <template>
   <div class="center">
     <h2>An Error Occured</h2>
-    <p>Try reloading or heading to the <nuxt-link to="/">home page</nuxt-link>.</p>
+    <p>
+      Try reloading or heading to the <nuxt-link to="/">
+        home page
+      </nuxt-link>.
+    </p>
   </div>
 </template>
 
