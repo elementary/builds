@@ -16,7 +16,7 @@
         class="button suggested"
         href="#iso"
       >
-        Download (1.92 GB)
+        Download (2.4 GB)
       </a>
     </div>
   </div>
