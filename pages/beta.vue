@@ -2,7 +2,7 @@
   <div>
     <h2>Public Beta</h2>
 
-    <p>Download the latest elementary OS 6 Public Beta build for testing and development.</p>
+    <disclaimer />
 
     <div class="center">
       <a

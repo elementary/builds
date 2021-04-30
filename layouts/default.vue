@@ -2,6 +2,9 @@
   <div id="__page">
     <layout-navbar />
 
+    <h1>elementary OS Builds</h1>
+    <p>Get your hands on beta and Early Access builds of elementary OS. The latest stable version of elementary OS can always be downloaded at <a href="https://elementary.io">elementary.io</a>.</p>
+
     <nuxt id="__content" />
 
     <layout-footer />

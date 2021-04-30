@@ -1,12 +1,11 @@
 <template>
   <div>
     <p>
-      These are <strong>pre-release</strong> daily development builds of elementary OS.
+      These are <strong>pre-release</strong> development builds of elementary OS.
       Current major known issues include, but are not limited to:
     </p>
 
     <ul>
-      <li>Installation failures while installing offline or with full-disk encryption</li>
       <li>Curated apps are not available in AppCenter</li>
       <li>Look &amp; feel issues, including unfinished dark style support</li>
       <li>General features and APIs are <strong>not finalized</strong></li>
@@ -25,7 +24,7 @@
     </p>
 
     <p>
-      <strong>Please refrain from publishing reviews or other in-depth looks of early access builds.</strong>
+      <strong>Please refrain from publishing reviews or other in-depth looks of early builds.</strong>
       We're excited that you're excited, but formally presenting unfinished products can damage our reputation. If you'd like to share informally, we'd appreciate a focus on features rather than quality or performance, which will change before release.
     </p>
   </div>

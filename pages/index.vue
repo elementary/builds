@@ -1,10 +1,7 @@
 <template>
   <div>
-    <h1>elementary OS Builds</h1>
-    <p>This site is for beta and Early Access builds of elementary OS. The latest stable version of elementary OS can always be downloaded at <a href="https://elementary.io">elementary.io</a>.</p>
-
     <h2>Public Beta</h2>
-    <p>elementary OS 6 Public Beta is here for developers and testers.</p>
+    <p>elementary OS 6 Public Beta is here for developers and testers!</p>
 
     <div class="download">
       <a class="button" href="https://blog.elementary.io/elementary-os-6-odin-beta">
