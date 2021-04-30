@@ -1,8 +1,5 @@
 <template>
   <div>
-    <h1>Downloads</h1>
-    <beta />
-
     <h2>Early Access Builds</h2>
 
     <disclaimer />
