@@ -14,9 +14,9 @@
 
       <a
         class="button suggested"
-        href="#iso"
+        href="/api/beta"
       >
-        Download (2.4 GB)
+        Download (2.55 GB)
       </a>
     </div>
   </div>
