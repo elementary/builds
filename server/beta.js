@@ -101,7 +101,8 @@ export default async (req, res, next) => {
     }
 
     case 'magnet': {
-      const location = `magnet:?xt=urn:btih:${MAGNET}&dn=${FILENAME}&tr=https%3A%2F%2Fashrise.com%3A443%2Fphoenix%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.ccc.de%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80%2Fannounce&ws=http%3A${encodeURI(FILENAME)}`
+      const standardLocation = `http://${region}.dl.elementary.io/download/${timecode}/${FILENAME}`
+      const location = `magnet:?xt=urn:btih:${MAGNET}&dn=${FILENAME}&tr=https%3A%2F%2Fashrise.com%3A443%2Fphoenix%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.ccc.de%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80%2Fannounce&ws=${encodeURI(standardLocation)}`
 
       res.writeHead(301, { location })
       return res.end()
