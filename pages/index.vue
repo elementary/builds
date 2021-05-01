@@ -1,19 +1,25 @@
 <template>
   <div>
-    <h1>elementary OS Early Access Builds</h1>
-    <p>You must sign in with an authorized GitHub account for access. Authorized accounts include OEMs, first-party contributors, $25+ <a href="https://www.indiegogo.com/projects/appcenter-for-everyone#/updates/21" target="_blank" rel="noopener">AppCenter for Everyone</a> backers, and $10/month and higher <a href="https://github.com/sponsors/elementary">GitHub Sponsors</a>.</p>
-    <p>The latest stable version of elementary OS can always be downloaded at <a href="https://elementary.io">elementary.io</a>.</p>
+    <h2>Public Beta</h2>
+    <p>elementary OS 6 Public Beta is here for developers and testers!</p>
 
     <div class="download">
-      <a class="button" href="https://elementary.io">
-        Visit elementary.io
+      <a class="button" href="https://blog.elementary.io/elementary-os-6-odin-beta">
+        Read Announcement
       </a>
+      <nuxt-link class="button suggested" to="/beta">
+        Get elementary OS 6 Public Beta
+      </nuxt-link>
+    </div>
+
+    <h2>Early Access</h2>
+    <p>Early Access includes daily builds and builds for experimental platforms like Raspberry Pi 4 and Pinebook Pro. Eligible accounts include OEMs, first-party contributors, $25+ <a href="https://www.indiegogo.com/projects/appcenter-for-everyone#/updates/21" target="_blank" rel="noopener">AppCenter for Everyone</a> backers, and $10/month and higher <a href="https://github.com/sponsors/elementary">GitHub Sponsors</a>.</p>
+
+    <div class="download">
       <nuxt-link class="button suggested" to="/downloads">
         Get Early Access Builds
       </nuxt-link>
     </div>
-
-    <disclaimer />
   </div>
 </template>
 

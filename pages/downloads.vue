@@ -1,10 +1,8 @@
 <template>
   <div>
-    <h1>elementary OS Early Access Builds</h1>
+    <h2>Early Access Builds</h2>
 
     <disclaimer />
-
-    <h2>Latest Builds</h2>
 
     <template v-if="latestDaily">
       <h3>64-bit AMD/Intel</h3>
@@ -88,7 +86,7 @@
       </div>
     </template>
 
-    <h2>Previous Builds</h2>
+    <h2>Previous Early Access Builds</h2>
     <p>
       Historical daily builds may be useful for debugging issues, or if the
       latest build is not working for you.

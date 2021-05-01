@@ -1,7 +1,11 @@
 <template>
   <div class="center">
-    <h1>elementary OS Early Access Builds</h1>
-    <p>An Error Occured</p>
+    <h2>An Error Occured</h2>
+    <p>
+      Try reloading or heading to the <nuxt-link to="/">
+        home page
+      </nuxt-link>.
+    </p>
   </div>
 </template>
 
