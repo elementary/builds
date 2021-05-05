@@ -87,7 +87,7 @@ async function getRegion (ip) {
 }
 
 export default async (req, res, next) => {
-  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  const ip = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress
   const region = await getRegion(ip)
 
   const timestamp = (Date.now() / 1000).toFixed()
