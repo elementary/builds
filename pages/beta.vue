@@ -16,14 +16,14 @@
         class="button"
         href="/api/beta?download=magnet"
       >
-        Magnet Download
+        Torrent Magnet
       </a>
 
       <a
         class="button suggested"
         href="/api/beta?download=file"
       >
-        Download (2.55 GB)
+        Download (2.7 GB)
       </a>
     </div>
   </div>
