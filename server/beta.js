@@ -2,9 +2,9 @@ import path from 'path'
 import querystring from 'querystring'
 import { Reader } from '@maxmind/geoip2-node'
 
-const FILENAME = 'elementaryos-6.0-daily.20210430.iso'
-const MAGNET = 'd83cd89ea7b75f433d5be5e222cb4eb8cf3a619a'
-const SHASUM = 'c5ea5781329655ecca297f26f3d9cae17c3d08274daa86c21405a7d77d7d094f'
+const FILENAME = 'elementaryos-6.0-daily.20210615.iso'
+const MAGNET = 'FIXME'
+const SHASUM = '4306a05ded0d2bcb7c12cd7995e408484ba6e1dcb6b68ab52bb24bf4e989599f'
 
 function randomFromArray (...list) {
   return list[Math.floor(Math.random() * list.length)]
