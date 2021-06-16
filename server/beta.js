@@ -3,7 +3,7 @@ import querystring from 'querystring'
 import { Reader } from '@maxmind/geoip2-node'
 
 const FILENAME = 'elementaryos-6.0-daily.20210615.iso'
-const MAGNET = 'FIXME'
+const MAGNET = 'e32279f003e185e5498ac9c23d4ae0966b8c7460'
 const SHASUM = '4306a05ded0d2bcb7c12cd7995e408484ba6e1dcb6b68ab52bb24bf4e989599f'
 
 function randomFromArray (...list) {
