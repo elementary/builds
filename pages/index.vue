@@ -1,14 +1,14 @@
 <template>
   <div>
     <h2>Public Beta</h2>
-    <p>elementary OS 6 Public Beta is here for developers and testers!</p>
+    <p>elementary OS 6 Beta 2 is here for developers and testers!</p>
 
     <div class="download">
-      <a class="button" href="https://blog.elementary.io/elementary-os-6-odin-beta">
+      <a class="button" href="https://blog.elementary.io/elementary-os-6-odin-beta-2">
         Read Announcement
       </a>
       <nuxt-link class="button suggested" to="/beta">
-        Get elementary OS 6 Public Beta
+        Get elementary OS 6 Beta 2
       </nuxt-link>
     </div>
 
