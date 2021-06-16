@@ -23,7 +23,7 @@
         class="button suggested"
         href="/api/beta?download=file"
       >
-        Download (2.7 GB)
+        Download (2.66 GB)
       </a>
     </div>
   </div>
