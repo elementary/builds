@@ -17,8 +17,8 @@
 
 ---
 
-This repository contains the website code for our daily builds. This **DOES
-NOT** build elementary OS or have any operating system related code.
+This repository contains the website code for our Early Access builds. This
+**DOES NOT** build elementary OS or have any operating system related code.
 
 ---
 

@@ -14,7 +14,7 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Unstable and daily builds of elementary OS' }
+      { hid: 'description', name: 'description', content: 'Early Access builds of elementary OS' }
     ],
 
     link: [

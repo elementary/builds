@@ -7,7 +7,28 @@
       and the next, but generally they should be safe to use.
     </p>
 
-    <p><strong>Coming Soon…</strong></p>
+    <template v-if="latestStable">
+      <h3>64-bit AMD/Intel</h3>
+      <p>
+        <code>{{ latestStable | name }}</code> was built {{
+          latestStable | relativeDate }}.
+      </p>
+
+      <div class="center">
+        <a
+          class="button"
+          :href="latestStable | shaUrl"
+        >
+          Download SHA256
+        </a>
+        <a
+          class="button suggested"
+          :href="latestStable | isoUrl"
+        >
+          Download ({{ latestStable | size }} GB)
+        </a>
+      </div>
+    </template>
 
     <h2>Daily Builds</h2>
 
@@ -277,6 +298,11 @@ export default {
   computed: {
     ...mapGetters('images', ['imagesFor']),
 
+    latestStable () {
+      const [latest] = this.imagesFor('stable')
+      return latest
+    },
+
     latestDaily () {
       const [latest] = this.imagesFor('daily')
       return latest
@@ -290,6 +316,11 @@ export default {
     latestRasPi () {
       const [latest] = this.imagesFor('daily-rpi')
       return latest
+    },
+
+    oldStables () {
+      const [, ...old] = this.imagesFor('stable')
+      return old
     },
 
     oldDailies () {
