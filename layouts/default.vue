@@ -3,8 +3,8 @@
     <layout-navbar />
 
     <div class="wrapper">
-      <h1>elementary OS Builds</h1>
-      <p>Get your hands on beta and Early Access builds of elementary OS. The latest stable version of elementary OS can always be downloaded at <a href="https://elementary.io">elementary.io</a>.</p>
+      <h1>elementary OS Early Access</h1>
+      <p>Get your hands on Early Access builds of elementary OS. The latest stable version of elementary OS can always be downloaded at <a href="https://elementary.io">elementary.io</a>.</p>
 
       <nuxt id="__content" />
     </div>

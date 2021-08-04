@@ -1,6 +1,15 @@
 <template>
   <div>
-    <h2>Early Access Builds</h2>
+    <h2>Stable (RC) Builds</h2>
+    <p>
+      These releases are built with the stable repos and are considered release
+      candidate (RC) quality. Configuration changes may occur between one build
+      and the next, but generally they should be safe to use.
+    </p>
+
+    <p><strong>Coming Soon…</strong></p>
+
+    <h2>Daily Builds</h2>
 
     <disclaimer />
 
@@ -86,7 +95,7 @@
       </div>
     </template>
 
-    <h2>Previous Early Access Builds</h2>
+    <h2>Previous Daily Builds</h2>
     <p>
       Historical daily builds may be useful for debugging issues, or if the
       latest build is not working for you.
