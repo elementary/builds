@@ -12,7 +12,7 @@
     </p>
 
     <p>
-      <strong>Please refrain from publishing reviews or other in-depth looks of daily builds.</strong>
+      <strong>Please refrain from publishing reviews or other in-depth looks</strong> of these builds.
       We're excited that you're excited, but formally presenting unfinished products can damage our reputation. If you'd like to share informally, we'd appreciate a focus on features rather than quality or performance.
     </p>
   </div>
