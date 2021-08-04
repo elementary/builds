@@ -1,5 +1,5 @@
 <template>
-  <div class="center">
+  <div>
     <h2>An Error Occured</h2>
     <p>
       Try reloading or heading to the <nuxt-link to="/">
