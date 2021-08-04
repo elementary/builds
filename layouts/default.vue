@@ -55,7 +55,7 @@
     flex-direction: column;
     justify-content: stretch;
   }
-  
+
   .wrapper {
     flex: 1 0 auto;
   }
