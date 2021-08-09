@@ -100,12 +100,14 @@
     
     // OEMs
     "Ben-StarLabs",      // Star Labs
+    "eclecticc",         // Framework
     "giovannicaligaris", // Juno Computers
+    "kiram9",            // Framework
     "laptopwithlinux",   // Laptop with Linux
     "LukaszErecinski",   // PINE64
     "Sean-StarLabs",     // Star Labs
     "slimbook",          // Slimbook
-    "Stephen-StarLabs",   // Star Labs
+    "Stephen-StarLabs",  // Star Labs
 
     // Third-party developers
     "JoseExposito",
