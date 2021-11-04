@@ -368,5 +368,25 @@
     "path": "stable/elementaryos-6.0-stable.20210804-rc.iso",
     "timestamp": "2021-08-04T00:16:37.811Z",
     "size": 2422964992
+  },
+  {
+    "path": "daily/elementaryos-7.0-daily.20211104.iso",
+    "timestamp": "2021-11-04T00:48:37.822Z",
+    "size": 2268439293
+  },
+  {
+    "path": "daily/elementaryos-6.0-daily.20211104.iso",
+    "timestamp": "2021-11-04T00:44:37.822Z",
+    "size": 2218439293
+  },
+  {
+    "path": "daily/elementaryos-7.0-daily.20211103.iso",
+    "timestamp": "2021-11-03T00:41:37.822Z",
+    "size": 2268439293
+  },
+  {
+    "path": "daily/elementaryos-6.0-daily.20211103.iso",
+    "timestamp": "2021-11-03T00:49:37.822Z",
+    "size": 2218439293
   }
 ]
