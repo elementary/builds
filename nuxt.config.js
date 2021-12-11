@@ -1,7 +1,6 @@
 export default {
-  mode: 'universal',
-
   components: true,
+  ssr: true,
   telemetry: true,
 
   head: {
