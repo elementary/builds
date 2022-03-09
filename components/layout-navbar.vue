@@ -49,12 +49,6 @@
         </li>
 
         <li>
-          <a href="https://elementaryos.stackexchange.com" target="_blank" rel="noopener" title="StackExchange">
-            <font-awesome-icon :icon="faStackExchange" />
-          </a>
-        </li>
-
-        <li>
           <a href="https://twitter.com/elementary" target="_blank" rel="noopener" title="Twitter">
             <font-awesome-icon :icon="faTwitter" />
           </a>
