@@ -15,7 +15,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^2.0.6",
     "@maxmind/geoip2-node": "^2.3.2",
-    "aws-sdk": "^2.1046.0",
+    "aws-sdk": "^2.1354.0",
     "cookie": "^0.4.1",
     "graphql": "^16.1.0",
     "graphql-request": "^3.7.0",
