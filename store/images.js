@@ -6,7 +6,7 @@ export const getters = {
   imagesFor: (state, getters) => (channel = 'daily') => {
     return getters.images
       .filter(({ path }) => path.startsWith(`${channel}/`))
-      .filter(({ path }) => path.includes('6.0') || path.includes('6.1') || path.includes('7.0'))
+      .filter(({ path }) => path.includes('6.0') || path.includes('6.1') || path.includes('7.0') || path.includes('7.1'))
   },
 
   images (state) {
