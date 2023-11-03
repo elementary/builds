@@ -26,8 +26,13 @@ This repository contains the website code for our Early Access builds. This
 This site is built with Nuxt.JS, a Vue.JS framework.
 
 You'll need the following dependencies:
-* nodejs >= 10.20.1
+* nodejs >= 12.22.12
 * npm
+
+```
+npm install -g n   # Install n globally
+n 12.22.12        # Install and use v12.22.12 
+```
 
 Run `npm` to install additional packages and start the development server
 
