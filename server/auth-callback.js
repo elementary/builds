@@ -84,7 +84,7 @@ function isSponsored (data) {
   return data.viewer.sponsorshipsAsSponsor.nodes
     .filter(s => (s.sponsorable.login === 'elementary'))
     .map(s => s.tier.monthlyPriceInCents)
-    .some(p => (p >= 1000))
+    .some(p => (p >= 100))
 }
 
 function isInOrganization (data) {
