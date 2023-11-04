@@ -11,9 +11,10 @@
     "lint:css": "stylelint **/*.{vue,scss}"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.441.0",
+    "@aws-sdk/s3-request-presigner": "^3.441.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/vue-fontawesome": "^2.0.6",
-    "aws-sdk": "^2.1354.0",
     "cookie": "^0.4.1",
     "graphql": "^16.1.0",
     "graphql-request": "^6.1.0",
