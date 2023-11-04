@@ -1,5 +1,5 @@
 :root {
-  --ui-font: Inter, "Open Sans", "Noto Sans", "Roboto", "Droid Sans", sans-serif;
+  --ui-font: "Inter", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", sans-serif;
   --copy-font: "Noto Serif", "Droid Serif", serif;
   --heading-font: var(--ui-font);
 }
@@ -10,11 +10,11 @@ html {
   font-weight: 400;
   word-spacing: -0.05em;
 
-  @media (min-width: 320px) {
+  @media (width >= 320px) {
     font-size: 18px;
   }
 
-  @media (min-width: 1024px) {
+  @media (width >= 1024px) {
     font-size: 20px;
   }
 
