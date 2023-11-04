@@ -28,7 +28,6 @@
     "sass-loader": "^10.1.1"
   },
   "devDependencies": {
-    "@mapbox/stylelint-processor-arbitrary-tags": "^0.4.0",
     "@nuxtjs/eslint-config": "^8.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^8.4.1",
