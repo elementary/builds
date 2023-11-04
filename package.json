@@ -18,7 +18,7 @@
     "aws-sdk": "^2.1354.0",
     "cookie": "^0.4.1",
     "graphql": "^16.1.0",
-    "graphql-request": "^3.7.0",
+    "graphql-request": "^6.1.0",
     "json5": "^2.2.2",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
