@@ -31,12 +31,6 @@
 
       <ul>
         <li>
-          <a href="https://www.facebook.com/elementaryos" target="_blank" rel="noopener" title="Facebook">
-            <font-awesome-icon :icon="faFacebookF" />
-          </a>
-        </li>
-
-        <li>
           <a href="https://mastodon.social/@elementary" target="_blank" rel="noopener" title="Mastodon">
             <font-awesome-icon :icon="faMastodon" />
           </a>
@@ -45,12 +39,6 @@
         <li>
           <a href="https://www.reddit.com/r/elementaryos" target="_blank" rel="noopener" title="Reddit">
             <font-awesome-icon :icon="faReddit" />
-          </a>
-        </li>
-
-        <li>
-          <a href="https://twitter.com/elementary" target="_blank" rel="noopener" title="Twitter">
-            <font-awesome-icon :icon="faTwitter" />
           </a>
         </li>
 
@@ -76,12 +64,10 @@
 
 <script>
 import {
-  faFacebookF,
   faMastodon,
   faReddit,
   faSlack,
-  faStackExchange,
-  faTwitter
+  faStackExchange
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -91,12 +77,10 @@ export default {
   },
 
   computed: {
-    faFacebookF: () => faFacebookF,
     faMastodon: () => faMastodon,
     faReddit: () => faReddit,
     faSlack: () => faSlack,
     faStackExchange: () => faStackExchange,
-    faTwitter: () => faTwitter,
 
     loggedIn () {
       return this.$store.getters['auth/loggedIn']
