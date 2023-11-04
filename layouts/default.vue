@@ -41,6 +41,7 @@
     fill: inherit;
   }
 
+  /* stylelint-disable-next-line selector-id-pattern */
   #__nuxt,
   #__layout,
   #__page {
@@ -48,18 +49,19 @@
     min-width: 100vw;
   }
 
+  /* stylelint-disable-next-line selector-id-pattern */
   #__page {
-    align-content: stretch;
+    place-content: stretch stretch;
     align-items: stretch;
     display: flex;
     flex-direction: column;
-    justify-content: stretch;
   }
 
   .wrapper {
     flex: 1 0 auto;
   }
 
+  /* stylelint-disable-next-line selector-id-pattern */
   #__content {
     flex: 1 0 auto;
     margin: 0 auto;
