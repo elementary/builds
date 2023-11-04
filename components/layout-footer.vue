@@ -30,6 +30,16 @@
   </footer>
 </template>
 
+<script>
+export default {
+  computed: {
+    year () {
+      return new Date().getFullYear()
+    }
+  }
+}
+</script>
+
 <style scoped>
   footer {
     background-color: var(--secondary-bg-color);
@@ -69,13 +79,3 @@
     margin: 0;
   }
 </style>
-
-<script>
-export default {
-  computed: {
-    year () {
-      return new Date().getFullYear()
-    }
-  }
-}
-</script>

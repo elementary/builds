@@ -32,7 +32,7 @@
 
     <h2>Daily Builds</h2>
 
-    <disclaimer />
+    <disclaimer-text />
 
     <template v-if="latestDaily">
       <h3>64-bit AMD/Intel</h3>
@@ -254,10 +254,6 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  middleware: (process.env.NODE_ENV === 'production')
-    ? 'auth'
-    : null,
-
   filters: {
     isoUrl (iso) {
       return `/api/download/${iso.path}`
@@ -290,6 +286,10 @@ export default {
       return (iso.size / 1000000000).toFixed(2)
     }
   },
+
+  middleware: (process.env.NODE_ENV === 'production')
+    ? 'auth'
+    : null,
 
   async fetch () {
     await this.$store.dispatch('images/fetch')

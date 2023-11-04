@@ -74,6 +74,44 @@
   </header>
 </template>
 
+<script>
+import {
+  faFacebookF,
+  faMastodon,
+  faReddit,
+  faSlack,
+  faStackExchange,
+  faTwitter
+} from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+export default {
+  components: {
+    FontAwesomeIcon
+  },
+
+  computed: {
+    faFacebookF: () => faFacebookF,
+    faMastodon: () => faMastodon,
+    faReddit: () => faReddit,
+    faSlack: () => faSlack,
+    faStackExchange: () => faStackExchange,
+    faTwitter: () => faTwitter,
+
+    loggedIn () {
+      return this.$store.getters['auth/loggedIn']
+    }
+  },
+
+  methods: {
+    logout () {
+      this.$store.commit('auth/clear')
+      this.$router.push('/')
+    }
+  }
+}
+</script>
+
 <style scoped lang="scss">
   header {
     background-color: var(--header-bg-color);
@@ -147,41 +185,3 @@
     }
   }
 </style>
-
-<script>
-import {
-  faFacebookF,
-  faMastodon,
-  faReddit,
-  faSlack,
-  faStackExchange,
-  faTwitter
-} from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-export default {
-  components: {
-    FontAwesomeIcon
-  },
-
-  computed: {
-    faFacebookF: () => faFacebookF,
-    faMastodon: () => faMastodon,
-    faReddit: () => faReddit,
-    faSlack: () => faSlack,
-    faStackExchange: () => faStackExchange,
-    faTwitter: () => faTwitter,
-
-    loggedIn () {
-      return this.$store.getters['auth/loggedIn']
-    }
-  },
-
-  methods: {
-    logout () {
-      this.$store.commit('auth/clear')
-      this.$router.push('/')
-    }
-  }
-}
-</script>
