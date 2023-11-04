@@ -1,5 +1,5 @@
 import Cookie from 'cookie'
-import jwtDecode from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 
 export const state = () => ({
   expires: null
