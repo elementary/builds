@@ -1,12 +1,16 @@
-import AWS from 'aws-sdk'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { GetObjectCommand, S3 } from '@aws-sdk/client-s3'
 import Cookie from 'cookie'
 import jwt from 'jsonwebtoken'
 
-const spacesEndpoint = new AWS.Endpoint('nyc3.digitaloceanspaces.com')
-const s3 = new AWS.S3({
-  endpoint: spacesEndpoint,
-  accessKeyId: process.env.SPACES_KEY,
-  secretAccessKey: process.env.SPACES_SECRET
+const s3 = new S3({
+  forcePathStyle: false,
+  endpoint: 'https://nyc3.digitaloceanspaces.com',
+  region: 'us-east-1',
+  credentials: {
+    accessKeyId: process.env.SPACES_KEY,
+    secretAccessKey: process.env.SPACES_SECRET
+  }
 })
 
 function hasAuthentication (req) {
@@ -32,10 +36,11 @@ export default async (req, res, next) => {
       return res.end('Unauthorized')
     }
 
-    location = await s3.getSignedUrl('getObject', {
+    location = await getSignedUrl(s3, new GetObjectCommand({
       Bucket: 'elementary-iso',
-      Key: downloadPath,
-      Expires: 60 * 60
+      Key: downloadPath
+    }), {
+      expiresIn: 60 * 60
     })
   }
 

@@ -1,15 +1,18 @@
-import AWS from 'aws-sdk'
+import { S3 } from '@aws-sdk/client-s3'
 import Cache from 'node-cache'
 
 const developmentImages = require('../data/development-images')
 
 const cache = new Cache({ stdTTL: 60 * 60 * 5 })
 
-const spacesEndpoint = new AWS.Endpoint('nyc3.digitaloceanspaces.com')
-const s3 = new AWS.S3({
-  endpoint: spacesEndpoint,
-  accessKeyId: process.env.SPACES_KEY,
-  secretAccessKey: process.env.SPACES_SECRET
+const s3 = new S3({
+  forcePathStyle: false,
+  endpoint: 'https://nyc3.digitaloceanspaces.com',
+  region: 'us-east-1',
+  credentials: {
+    accessKeyId: process.env.SPACES_KEY,
+    secretAccessKey: process.env.SPACES_SECRET
+  }
 })
 
 async function downloadImages () {
