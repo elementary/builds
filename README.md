@@ -11,10 +11,6 @@
   <br>
 </div>
 
-<p align="center">
-  <img src="https://github.com/elementary/builds/workflows/Publish/badge.svg" alt="Publish">
-</p>
-
 ---
 
 This repository contains the website code for our Early Access builds. This
