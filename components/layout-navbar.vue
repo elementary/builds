@@ -31,20 +31,20 @@
 
       <ul>
         <li>
-          <a href="https://mastodon.social/@elementary" target="_blank" rel="noopener" title="Mastodon">
-            <font-awesome-icon :icon="faMastodon" />
+          <a href="https://mastodon.social/@elementary" target="_blank" rel="noopener" aria-label="Mastodon" title="Mastodon">
+            <font-awesome-icon :icon="faMastodon" aria-hidden="true" />
           </a>
         </li>
 
         <li>
-          <a href="https://www.reddit.com/r/elementaryos" target="_blank" rel="noopener" title="Reddit">
-            <font-awesome-icon :icon="faReddit" />
+          <a href="https://www.reddit.com/r/elementaryos" target="_blank" rel="noopener" aria-label="Reddit" title="Reddit">
+            <font-awesome-icon :icon="faReddit" aria-hidden="true" />
           </a>
         </li>
 
         <li>
-          <a href="https://community-slack.elementary.io" target="_blank" rel="noopener" title="Slack">
-            <font-awesome-icon :icon="faSlack" />
+          <a href="https://community-slack.elementary.io" target="_blank" rel="noopener" aria-label="Slack" title="Slack">
+            <font-awesome-icon :icon="faSlack" aria-hidden="true" />
           </a>
         </li>
       </ul>
