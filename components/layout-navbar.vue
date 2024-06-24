@@ -43,8 +43,8 @@
         </li>
 
         <li>
-          <a href="https://community-slack.elementary.io" target="_blank" rel="noopener" aria-label="Slack" title="Slack">
-            <font-awesome-icon :icon="faSlack" aria-hidden="true" />
+          <a href="https://discord.gg/dGdDfGNa" target="_blank" rel="noopener" aria-label="Discord" title="Discord">
+            <font-awesome-icon :icon="faDiscord" aria-hidden="true" />
           </a>
         </li>
       </ul>
