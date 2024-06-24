@@ -78,8 +78,7 @@ export default {
   computed: {
     faMastodon: () => faMastodon,
     faReddit: () => faReddit,
-    faSlack: () => faSlack,
-    faStackExchange: () => faStackExchange,
+    faDiscord: () => faDiscord,
 
     loggedIn () {
       return this.$store.getters['auth/loggedIn']
