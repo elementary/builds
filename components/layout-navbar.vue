@@ -66,7 +66,7 @@
 import {
   faDiscord,
   faMastodon,
-  faReddit,
+  faReddit
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -76,9 +76,9 @@ export default {
   },
 
   computed: {
+    faDiscord: () => faDiscord,
     faMastodon: () => faMastodon,
     faReddit: () => faReddit,
-    faDiscord: () => faDiscord,
 
     loggedIn () {
       return this.$store.getters['auth/loggedIn']
