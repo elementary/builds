@@ -44,7 +44,7 @@
 
         <li>
           <a href="https://discord.gg/dGdDfGNa" target="_blank" rel="noopener" aria-label="Discord" title="Discord">
-            <font-awesome-icon :icon="faDiscord" aria-hidden="true" />
+            <font-awesome-icon :icon="['fab', 'discord']" aria-hidden="true" />
           </a>
         </li>
       </ul>
