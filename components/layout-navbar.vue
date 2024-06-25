@@ -64,10 +64,9 @@
 
 <script>
 import {
+  faDiscord,
   faMastodon,
-  faReddit,
-  faSlack,
-  faStackExchange
+  faReddit
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -77,10 +76,9 @@ export default {
   },
 
   computed: {
+    faDiscord: () => faDiscord,
     faMastodon: () => faMastodon,
     faReddit: () => faReddit,
-    faSlack: () => faSlack,
-    faStackExchange: () => faStackExchange,
 
     loggedIn () {
       return this.$store.getters['auth/loggedIn']
