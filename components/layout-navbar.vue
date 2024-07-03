@@ -43,7 +43,7 @@
         </li>
 
         <li>
-          <a href="https://discord.gg/dGdDfGNa" target="_blank" rel="noopener" aria-label="Discord" title="Discord">
+          <a href="https://discord.com/invite/kwRyqGCzm5" target="_blank" rel="noopener" aria-label="Discord" title="Discord">
             <font-awesome-icon :icon="faDiscord" aria-hidden="true" />
           </a>
         </li>
