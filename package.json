@@ -14,7 +14,7 @@
     "@aws-sdk/client-s3": "^3.654.0",
     "@aws-sdk/s3-request-presigner": "^3.592.0",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
-    "@fortawesome/vue-fontawesome": "^2.0.6",
+    "@fortawesome/vue-fontawesome": "^3.0.8",
     "cookie": "^0.6.0",
     "graphql": "^16.1.0",
     "graphql-request": "^6.1.0",
@@ -22,7 +22,7 @@
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "node-cache": "^5.1.2",
-    "nuxt": "^2.15.8",
+    "nuxt": "^3.14.0",
     "sass": "^1.77.4",
     "sass-loader": "^10.1.1"
   },
