@@ -24,7 +24,7 @@
     "node-cache": "^5.1.2",
     "nuxt": "^2.15.8",
     "sass": "^1.77.4",
-    "sass-loader": "^10.1.1"
+    "sass-loader": "^16.0.5"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^12.0.0",
