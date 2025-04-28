@@ -1,4 +1,4 @@
-/* eslint-disable import/first */
+/* eslint-disable import/first, import/named -- GraphQLClient causes an error of named import not found in tests, but does not actually do this when running as code. */
 require('json5/lib/register')
 
 import Cookie from 'cookie'
