@@ -17,11 +17,12 @@
     "@fortawesome/vue-fontawesome": "^2.0.6",
     "cookie": "^0.6.0",
     "graphql": "^16.11.0",
-    "graphql-request": "^6.1.0",
+    "graphql-request": "^7.1.2",
     "json5": "^2.2.2",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "node-cache": "^5.1.2",
+    "node-fetch": "^3.3.2",
     "nuxt": "^2.15.8",
     "sass": "^1.87.0",
     "sass-loader": "^10.1.1"
