@@ -1,4 +1,4 @@
-/* eslint-disable import/first, import/named -- GraphQLClient causes an error of named import not found in tests, but does not actually do this when running as code. */
+/* eslint-disable import/first */
 require('json5/lib/register')
 
 import Cookie from 'cookie'
@@ -35,8 +35,7 @@ function githubData (token) {
   const client = new GraphQLClient('https://api.github.com/graphql', {
     headers: {
       authorization: `bearer ${token}`
-    },
-    fetch // Explicitly pass the fetch implementation
+    }
   })
 
   const query = `{
