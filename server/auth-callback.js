@@ -35,7 +35,8 @@ function githubData (token) {
   const client = new GraphQLClient('https://api.github.com/graphql', {
     headers: {
       authorization: `bearer ${token}`
-    }
+    },
+    fetch // Explicitly pass the fetch implementation
   })
 
   const query = `{
