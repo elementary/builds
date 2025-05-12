@@ -47,5 +47,11 @@ export default {
     '/api/images': '~/server/images',
     '/auth/callback': '~/server/auth-callback',
     '/auth/login': '~/server/auth-url'
+  },
+
+  build: {
+    transpile: [
+      'cookie'
+    ]
   }
 }

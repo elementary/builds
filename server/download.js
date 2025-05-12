@@ -1,6 +1,6 @@
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { GetObjectCommand, S3 } from '@aws-sdk/client-s3'
-import Cookie from 'cookie'
+import { parse } from 'cookie'
 import jwt from 'jsonwebtoken'
 
 const s3 = new S3({
@@ -14,10 +14,10 @@ const s3 = new S3({
 })
 
 function hasAuthentication (req) {
-  const { builds: cookie } = Cookie.parse(req.headers.cookie || '')
+  const { builds: cookieValue } = parse(req.headers.cookie || '')
 
   try {
-    const decoded = jwt.verify(cookie, process.env.SIGNING_KEY)
+    const decoded = jwt.verify(cookieValue, process.env.SIGNING_KEY)
     return decoded.access || false
   } catch (err) {
     return false

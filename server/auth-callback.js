@@ -1,7 +1,7 @@
 /* eslint-disable import/first, import/named -- GraphQLClient causes an error of named import not found in tests, but does not actually do this when running as code. */
 require('json5/lib/register')
 
-import Cookie from 'cookie'
+import { serialize } from 'cookie'
 import { GraphQLClient } from 'graphql-request'
 import fetch from 'node-fetch'
 import jwt from 'jsonwebtoken'
@@ -129,7 +129,7 @@ export default async (req, res, next) => {
       expiresIn: 60 * 60 * 7
     })
 
-    const cookie = Cookie.serialize('builds', token, {
+    const cookie = serialize('builds', token, {
       path: '/',
       maxAge: 60 * 60 * 7
     })

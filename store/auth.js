@@ -1,4 +1,4 @@
-import Cookie from 'cookie'
+import { parse, serialize } from 'cookie'
 import { jwtDecode } from 'jwt-decode'
 
 export const state = () => ({
@@ -17,11 +17,11 @@ export const getters = {
 
 export const mutations = {
   check (state) {
-    const { builds: cookie } = (this.app.context.req != null)
-      ? Cookie.parse(this.app.context.req.headers.cookie || '')
-      : Cookie.parse(document.cookie || '')
+    const { builds: cookieValue } = (this.app.context.req != null)
+      ? parse(this.app.context.req.headers.cookie || '')
+      : parse(document.cookie || '')
 
-    const jwtToken = (cookie != null) ? jwtDecode(cookie) : {}
+    const jwtToken = (cookieValue != null) ? jwtDecode(cookieValue) : {}
 
     if (jwtToken.exp) {
       state.expires = new Date(jwtToken.exp)
@@ -35,7 +35,7 @@ export const mutations = {
   },
 
   clear (state) {
-    window.document.cookie = Cookie.serialize('builds', '', {
+    window.document.cookie = serialize('builds', '', {
       path: '/',
       maxAge: 0
     })
