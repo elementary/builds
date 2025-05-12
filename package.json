@@ -4,6 +4,9 @@
   "description": "Frontend to elementary OS Builds",
   "author": "elementary",
   "private": true,
+  "engines" : { 
+    "node" : ">=20.0.0"
+  },
   "scripts": {
     "start": "nuxt dev",
     "build": "nuxt build",
