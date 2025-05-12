@@ -1,11 +1,5 @@
 import { defineEventHandler, getRequestHost, getRequestProtocol, createError } from 'h3'
 
-// Helper function (can be moved to a utils file if used elsewhere)
-function encodeParams(obj: Record<string, string>): string {
-  return Object.entries(obj)
-    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-    .join('&')
-}
 
 export default defineEventHandler(async (event) => {
   console.log('[API /auth/login] Request received.');

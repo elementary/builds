@@ -1,14 +1,12 @@
 import { defineNuxtPlugin, useCookie } from '#app'
 import { useAuthStore } from '~/stores/auth'
-import { jwtDecode } from 'jwt-decode' // Assuming jwt-decode is installed
+import { jwtDecode } from 'jwt-decode'
 
 interface JwtPayload {
   exp?: number;
   user?: {
     login?: string;
-    // Add other fields stored in JWT if necessary
   };
-  // Add other relevant JWT payload fields
 }
 
 export default defineNuxtPlugin(async (nuxtApp) => {
@@ -34,10 +32,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         // Token exists and is not expired
         console.log('Auth plugin: Valid token found in cookie. Setting store state.');
         authStore.isAuthenticated = true;
-        // Set user info based on JWT payload (adjust as needed)
         authStore.user = decoded.user ? { login: decoded.user.login || 'unknown', name: decoded.user.login || 'unknown' } : null; 
         // NOTE: This user info is from the JWT payload, not freshly fetched.
-        // Consider adding an action to fetch fresh user data if needed.
       } else {
         // Token is expired
         console.log('Auth plugin: Token found but expired.');

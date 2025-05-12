@@ -2,9 +2,11 @@ import { defineEventHandler, readBody, setCookie, createError } from 'h3'
 import Cookie from 'cookie'
 import { GraphQLClient, gql } from 'graphql-request' // Import gql
 import jwt from 'jsonwebtoken'
-import JSON5 from 'json5' // Use standard import for json5
-import fs from 'node:fs' // For reading the allowlist file
-import path from 'node:path' // For resolving the allowlist path
+import JSON5 from 'json5' 
+import fs from 'node:fs'
+import path from 'node:path'
+// import { useRuntimeConfig } from '#imports' // Reverted
+// import { encodeParams } from '../utils/url' // Reverted
 
 // --- Types (improve maintainability) ---
 interface GitHubTokenResponse {
@@ -34,13 +36,6 @@ interface GitHubUserData {
 
 interface Allowlist {
   users: string[];
-}
-
-// --- Helper Functions (from original, slightly adapted) ---
-function encodeParams(obj: Record<string, string>): string {
-  return Object.entries(obj)
-    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-    .join('&')
 }
 
 async function getGithubAccessToken(code: string): Promise<string> {
@@ -85,7 +80,6 @@ async function getGithubData(token: string): Promise<GitHubUserData> {
     headers: { authorization: `bearer ${token}` }
   });
 
-  // Use gql tag for syntax highlighting and potential future benefits
   const query = gql`{
     viewer {
       login
