@@ -53,21 +53,45 @@ const performAuthentication = async () => {
     console.log(`[Callback Page] authStore.authenticate returned: ${success}`);
 
     // Retrieve and clear the intended redirect path
-    let intendedRedirect: string | null = null;
+    let intendedSessionRedirect: string | null = null;
     try {
-      intendedRedirect = sessionStorage.getItem('loginRedirect');
-      if (intendedRedirect) {
-        console.log(`[Callback Page] Found intended redirect in sessionStorage: ${intendedRedirect}`);
+      intendedSessionRedirect = sessionStorage.getItem('loginRedirect');
+      if (intendedSessionRedirect != null) { // Check for null or undefined explicitly
+        console.log(`[Callback Page] Raw intended redirect from sessionStorage: '${intendedSessionRedirect}' (length: ${intendedSessionRedirect.length})`);
         sessionStorage.removeItem('loginRedirect');
+      } else {
+        console.log(`[Callback Page] No intended redirect in sessionStorage (it was null/undefined).`);
       }
     } catch (e) {
       console.warn('[Callback Page] Could not access sessionStorage for redirect path:', e);
     }
 
     if (success) {
-      console.log(`[Callback Page] Authentication successful. Navigating client-side... (Intended: ${intendedRedirect || '/downloads'})`);
-      const finalRedirect = (intendedRedirect && intendedRedirect.startsWith('/')) ? intendedRedirect : '/downloads';
-      await navigateTo(finalRedirect);
+      console.log(`[Callback Page] Authentication successful. Setting justLoggedIn flag.`);
+      try {
+        sessionStorage.setItem('justLoggedIn', 'true'); // Set flag
+      } catch (e) {
+        console.warn('[Callback Page] Could not set justLoggedIn flag in sessionStorage:', e);
+      }
+
+      let determinedRedirectUrl: string;
+      if (intendedSessionRedirect && intendedSessionRedirect.startsWith('/')) {
+        determinedRedirectUrl = intendedSessionRedirect;
+      } else {
+        if (intendedSessionRedirect != null && intendedSessionRedirect !== "") { // Log if it was non-empty but invalid
+            console.warn(`[Callback Page] intendedRedirect '${intendedSessionRedirect}' was invalid (not null, not empty, but not starting with '/'). Defaulting to /downloads.`);
+        }
+        determinedRedirectUrl = '/downloads'; // Default to /downloads
+      }
+      
+      // Final safety net: if determinedRedirectUrl is somehow still empty or only whitespace, force to /downloads
+      if (!determinedRedirectUrl || determinedRedirectUrl.trim() === "") {
+          console.warn(`[Callback Page] determinedRedirectUrl became empty or whitespace. Forcing to /downloads. Original intended from session: '${intendedSessionRedirect}'`);
+          determinedRedirectUrl = '/downloads';
+      }
+
+      console.log(`[Callback Page] Navigating client-side to final URL: '${determinedRedirectUrl}'`);
+      await navigateTo(determinedRedirectUrl);
     } else {
       console.log('[Callback Page] Authentication failed (backend check). Navigating client-side to /sponsor.');
       await navigateTo('/sponsor');

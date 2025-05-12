@@ -59,10 +59,56 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
+    /**
+     * Sets the authentication status.
+     * @param {boolean} status - The new authentication status.
+     */
+    setAuthenticated(status: boolean) {
+      if (this.isAuthenticated === status) return; // Avoid unnecessary changes and logs
+
+      this.isAuthenticated = status;
+      if (status) {
+        console.log('[AuthStore] Authentication status set to true.');
+      } else {
+        console.log('[AuthStore] Authentication status set to false.');
+        // If becoming unauthenticated, also clear the user
+        this.user = null;
+      }
+    },
+
+    /**
+     * Sets the user information in the store.
+     * @param {User | null} userData - The user object or null.
+     */
+    setUser(userData: User | null) {
+      // Basic check to see if user data actually changed to avoid excessive logging/updates
+      if (JSON.stringify(this.user) === JSON.stringify(userData)) return;
+
+      this.user = userData;
+      if (userData) {
+        console.log(`[AuthStore] User set to: ${userData.login}`);
+      } else {
+        console.log('[AuthStore] User set to null.');
+      }
+    },
+
+    /**
+     * Initializes the authentication state.
+     * This version is simplified; robust checking is in middleware.
+     * Consider calling this from a Nuxt plugin on app load if needed.
+     */
+    initializeAuth() {
+      const logPrefix = '[AuthStore InitializeAuth]';
+      console.log(`${logPrefix} initializeAuth called. Current state: ${this.isAuthenticated}. Relies on middleware for robust check.`);
+    },
+
     logout() {
-      console.log('[Auth Store] logout action called.');
-      this.isAuthenticated = false;
-      this.user = null;
+      console.log('[AuthStore] Logout action called.');
+      this.setAuthenticated(false); // This will also clear the user via setAuthenticated logic
+      // Actual cookie clearing should be done via an API call to an endpoint
+      // that clears the HTTPOnly cookie, or if it's not HTTPOnly,
+      // by the component that calls logout using useCookie('builds').value = null.
+      // For an HttpOnly cookie, an API endpoint is necessary.
     }
   }
-}); 
+});
