@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Import components if not relying on auto-import (good practice for clarity)
 import LayoutNavbar from '~/components/layout-navbar.vue'
 import LayoutFooter from '~/components/layout-footer.vue'
 </script>
@@ -9,9 +8,8 @@ import LayoutFooter from '~/components/layout-footer.vue'
     <LayoutNavbar />
 
     <div class="wrapper">
-      <!-- Static content removed as it belongs on index page or app.vue -->
-      <!-- <h1>elementary OS Early Access</h1> -->
-      <!-- <p>Get your hands on Early Access builds of elementary OS. The latest stable version of elementary OS can always be downloaded at <a href="https://elementary.io">elementary.io</a>.</p> -->
+      <h1>elementary OS Early Access</h1>
+      <p>Get your hands on Early Access builds of elementary OS. The latest stable version of elementary OS can always be downloaded at <a href="https://elementary.io">elementary.io</a>.</p>
 
       <!-- Use NuxtPage to render the current page route -->
       <NuxtPage id="__content" />
