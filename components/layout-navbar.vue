@@ -4,7 +4,7 @@
       <ul>
         <li>
           <a href="https://elementary.io" class="logomark" target="_self">
-            <elementary-logomark />
+            <ElementaryLogomark />
           </a>
         </li>
 
@@ -32,19 +32,19 @@
       <ul>
         <li>
           <a href="https://mastodon.social/@elementary" target="_blank" rel="noopener" aria-label="Mastodon" title="Mastodon">
-            <font-awesome-icon :icon="faMastodon" aria-hidden="true" />
+            <font-awesome-icon :icon="computedFaMastodon" aria-hidden="true" />
           </a>
         </li>
 
         <li>
           <a href="https://www.reddit.com/r/elementaryos" target="_blank" rel="noopener" aria-label="Reddit" title="Reddit">
-            <font-awesome-icon :icon="faReddit" aria-hidden="true" />
+            <font-awesome-icon :icon="computedFaReddit" aria-hidden="true" />
           </a>
         </li>
 
         <li>
           <a href="https://discord.com/invite/kwRyqGCzm5" target="_blank" rel="noopener" aria-label="Discord" title="Discord">
-            <font-awesome-icon :icon="faDiscord" aria-hidden="true" />
+            <font-awesome-icon :icon="computedFaDiscord" aria-hidden="true" />
           </a>
         </li>
       </ul>
@@ -62,36 +62,32 @@
   </header>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useAuthStore } from '~/stores/auth'
+import { useCookie, navigateTo } from '#app'
 import {
   faDiscord,
   faMastodon,
   faReddit
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import ElementaryLogomark from '~/components/elementary-logomark.vue'
 
-export default {
-  components: {
-    FontAwesomeIcon
-  },
+const authStore = useAuthStore()
 
-  computed: {
-    faDiscord: () => faDiscord,
-    faMastodon: () => faMastodon,
-    faReddit: () => faReddit,
+const loggedIn = computed(() => authStore.isAuthenticated)
 
-    loggedIn () {
-      return this.$store.getters['auth/loggedIn']
-    }
-  },
-
-  methods: {
-    logout () {
-      this.$store.commit('auth/clear')
-      this.$router.push('/')
-    }
-  }
+const logout = () => {
+  authStore.logout()
+  const tokenCookie = useCookie<string | undefined>('builds');
+  tokenCookie.value = undefined;
+  navigateTo('/');
 }
+
+const computedFaDiscord = computed(() => faDiscord)
+const computedFaMastodon = computed(() => faMastodon)
+const computedFaReddit = computed(() => faReddit)
 </script>
 
 <style scoped lang="scss">
