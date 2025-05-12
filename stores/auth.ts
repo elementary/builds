@@ -1,19 +1,15 @@
 import { defineStore } from 'pinia'
-// import { useCookie } from '#app' // Remove: Handle cookie in component
-import { ofetch } from 'ofetch' // Import ofetch explicitly
+import { ofetch } from 'ofetch'
 
-// Define a type for the user data if possible
 interface User {
   login: string;
   name: string;
-  // Add other relevant user properties
 }
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     isAuthenticated: false,
     user: null as User | null,
-    // Consider adding loading/error states
   }),
 
   actions: {
@@ -67,7 +63,6 @@ export const useAuthStore = defineStore('auth', {
       console.log('[Auth Store] logout action called.');
       this.isAuthenticated = false;
       this.user = null;
-      // Cookie clearing moved to component
     }
   }
 }); 

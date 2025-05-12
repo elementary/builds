@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Consider adding minimal styling or layout components if needed -->
     <h2>An Error Occurred</h2>
     <p v-if="error">{{ error.message || 'Something went wrong.' }}</p>
     <p>
@@ -13,7 +12,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useError, NuxtLink } from '#app'
+import { useError } from '#app'
 
 // Get the error object provided by Nuxt
 const error = useError()
