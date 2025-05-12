@@ -30,14 +30,10 @@
   </footer>
 </template>
 
-<script>
-export default {
-  computed: {
-    year () {
-      return new Date().getFullYear()
-    }
-  }
-}
+<script setup lang="ts">
+import { computed } from 'vue'
+
+const year = computed(() => new Date().getFullYear())
 </script>
 
 <style scoped>
