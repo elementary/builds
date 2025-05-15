@@ -101,6 +101,7 @@
     "TGRush", // Workaround for a bug
 
     // Collaborators
+    "aaron-gh", // A11y testing
     "alice-mkh", // GNOME
     "mwcampbell", // AccessKit
     "zersiax", // A11y testing
