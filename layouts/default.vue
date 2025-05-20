@@ -1,14 +1,20 @@
+<script setup lang="ts">
+import LayoutNavbar from '~/components/layout-navbar.vue'
+import LayoutFooter from '~/components/layout-footer.vue'
+</script>
+
 <template>
   <div id="__page">
-    <layout-navbar />
+    <LayoutNavbar />
 
     <div class="wrapper">
       <h1>elementary OS Early Access</h1>
       <p>Get your hands on Early Access builds of elementary OS. The latest stable version of elementary OS can always be downloaded at <a href="https://elementary.io">elementary.io</a>.</p>
 
-      <nuxt id="__content" />
+      <!-- Use NuxtPage to render the current page route -->
+      <NuxtPage id="__content" />
     </div>
-    <layout-footer />
+    <LayoutFooter />
   </div>
 </template>
 

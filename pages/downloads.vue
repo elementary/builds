@@ -1,342 +1,239 @@
 <template>
   <div>
-    <h2>Stable (RC) Builds</h2>
-    <p>
-      These releases are built with the stable repos and are considered release
-      candidate (RC) quality. Configuration changes may occur between one build
-      and the next, but generally they should be safe to use.
-    </p>
+    <div v-if="pending" class="center">
+      <p>Loading available builds...</p>
+    </div>
 
-    <template v-if="latestStable">
-      <h3>64-bit AMD/Intel</h3>
+    <div v-else-if="error || imagesStore.error" class="center error-box">
+      <h2>Error Loading Builds</h2>
+      <p>{{ error?.message || imagesStore.error?.message || 'An unknown error occurred.' }}</p>
+      <button @click="refresh">Retry</button>
+    </div>
+
+    <template v-else>
+      <h2>Stable (RC) Builds</h2>
       <p>
-        <code>{{ latestStable | name }}</code> was built {{
-          latestStable | relativeDate }}.
+        These releases are built with the stable repos and are considered release
+        candidate (RC) quality. Configuration changes may occur between one build
+        and the next, but generally they should be safe to use.
       </p>
 
-      <div class="center">
-        <a
-          class="button"
-          :href="latestStable | shaUrl"
-        >
-          Download SHA256
-        </a>
-        <a
-          class="button suggested"
-          :href="latestStable | isoUrl"
-        >
-          Download ({{ latestStable | size }} GB)
-        </a>
-      </div>
-    </template>
+      <template v-if="latestStable">
+        <h3>64-bit AMD/Intel</h3>
+        <p>
+          <code>{{ getName(latestStable) }}</code> was built {{
+            getRelativeDate(latestStable) }}.
+        </p>
+        <div class="center">
+          <a class="button" :href="getShaUrl(latestStable)">Download SHA256</a>
+          <a class="button suggested" :href="getIsoUrl(latestStable)">
+            Download ({{ getSize(latestStable) }} GB)
+          </a>
+        </div>
+      </template>
+      <p v-else>No stable builds found.</p>
 
-    <h2>Daily Builds</h2>
+      <h2>Daily Builds</h2>
+      <DisclaimerText />
 
-    <disclaimer-text />
+      <template v-if="latestDaily">
+        <h3>64-bit AMD/Intel</h3>
+        <p>
+          <code>{{ getName(latestDaily) }}</code> was built {{
+            getRelativeDate(latestDaily) }}. If it does not install or
+          otherwise work for you, try a <a href="#oldDailies">previous build</a>.
+        </p>
+        <div class="center">
+          <a class="button" :href="getShaUrl(latestDaily)">Download SHA256</a>
+          <a class="button suggested" :href="getIsoUrl(latestDaily)">
+            Download ({{ getSize(latestDaily) }} GB)
+          </a>
+        </div>
+      </template>
+      <p v-else>No daily builds found.</p>
 
-    <template v-if="latestDaily">
-      <h3>64-bit AMD/Intel</h3>
+      <template v-if="latestPinebook">
+        <h3>Pinebook Pro</h3>
+         <p>
+          <strong>Experimental build</strong>; see
+          <a href="https://github.com/elementary/os/wiki/Pinebook-Pro" target="_blank" rel="noopener">the wiki</a>
+          for more info.
+        </p>
+        <p>
+          <code>{{ getName(latestPinebook) }}</code> was built
+          {{ getRelativeDate(latestPinebook) }}. If it does not install or
+          otherwise work for you, try a <a href="#oldPinebooks">previous build</a>.
+        </p>
+        <div class="center">
+          <a class="button" :href="getShaUrl(latestPinebook)">Download SHA256</a>
+          <a class="button suggested" :href="getIsoUrl(latestPinebook)">
+            Download ({{ getSize(latestPinebook) }} GB)
+          </a>
+        </div>
+      </template>
+
+       <template v-if="latestRasPi">
+         <h3>Raspberry Pi 4</h3>
+         <p>
+          <strong>Experimental build</strong>; see
+          <a href="https://github.com/elementary/os/wiki/Raspberry-Pi" target="_blank" rel="noopener">the wiki</a>
+          for more info.
+        </p>
+        <p>
+          <code>{{ getName(latestRasPi) }}</code> was built
+          {{ getRelativeDate(latestRasPi) }}. If it does not install or
+          otherwise work for you, try a <a href="#oldRasPis">previous build</a>.
+        </p>
+        <div class="center">
+          <a class="button" :href="getShaUrl(latestRasPi)">Download SHA256</a>
+          <a class="button suggested" :href="getIsoUrl(latestRasPi)">
+            Download ({{ getSize(latestRasPi) }} GB)
+          </a>
+        </div>
+      </template>
+
+      <h2>Previous Daily Builds</h2>
       <p>
-        <code>{{ latestDaily | name }}</code> was built {{
-          latestDaily | relativeDate }}. If it does not install or
-        otherwise work for you, try a <a href="#oldDailies">previous build</a>.
+        Historical daily builds may be useful for debugging issues, or if the
+        latest build is not working for you.
       </p>
 
-      <div class="center">
-        <a
-          class="button"
-          :href="latestDaily | shaUrl"
-        >
-          Download SHA256
-        </a>
-        <a
-          class="button suggested"
-          :href="latestDaily | isoUrl"
-        >
-          Download ({{ latestDaily | size }} GB)
-        </a>
-      </div>
-    </template>
+      <template v-if="oldDailies.length > 0">
+        <details>
+          <summary>
+            <h3 id="oldDailies">64-bit AMD/Intel</h3>
+          </summary>
+          <table>
+            <thead>
+              <tr><th>Name</th><th>Checksum</th><th>Date</th></tr>
+            </thead>
+            <tbody>
+              <tr v-for="iso in oldDailies" :key="iso.path">
+                <td><a :href="getIsoUrl(iso)">{{ getName(iso) }}</a></td>
+                <td><a :href="getShaUrl(iso)">SHA256</a></td>
+                <td>{{ getRelativeDate(iso) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+      </template>
+      <p v-else>No previous daily builds found.</p>
 
-    <template v-if="latestPinebook">
-      <h3>Pinebook Pro</h3>
-      <p>
-        <strong>Experimental build</strong>; see
-        <a href="https://github.com/elementary/os/wiki/Pinebook-Pro" target="_blank" rel="noopener">the wiki</a>
-        for more info.
-      </p>
-      <p>
-        <code>{{ latestPinebook | name }}</code> was built
-        {{ latestPinebook | relativeDate }}. If it does not install or
-        otherwise work for you, try a <a href="#oldPinebooks">previous build</a>.
-      </p>
+      <template v-if="oldPinebooks.length > 0">
+        <details>
+          <summary>
+            <h3 id="oldPinebooks">Pinebook Pro</h3>
+          </summary>
+          <table>
+             <thead>
+              <tr><th>Name</th><th>Checksum</th><th>Date</th></tr>
+            </thead>
+            <tbody>
+              <tr v-for="iso in oldPinebooks" :key="iso.path">
+                <td><a :href="getIsoUrl(iso)">{{ getName(iso) }}</a></td>
+                <td><a :href="getShaUrl(iso)">SHA256</a></td>
+                <td>{{ getRelativeDate(iso) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+      </template>
+      <p v-else>No previous Pinebook Pro builds found.</p>
 
-      <div class="center">
-        <a
-          class="button"
-          :href="latestPinebook | shaUrl"
-        >
-          Download SHA256
-        </a>
-        <a
-          class="button suggested"
-          :href="latestPinebook | isoUrl"
-        >
-          Download ({{ latestPinebook | size }} GB)
-        </a>
-      </div>
-    </template>
+       <template v-if="oldRasPis.length > 0">
+        <details>
+          <summary>
+            <h3 id="oldRasPis">Raspberry Pi 4</h3>
+          </summary>
+          <table>
+             <thead>
+              <tr><th>Name</th><th>Checksum</th><th>Date</th></tr>
+            </thead>
+            <tbody>
+              <tr v-for="iso in oldRasPis" :key="iso.path">
+                <td><a :href="getIsoUrl(iso)">{{ getName(iso) }}</a></td>
+                <td><a :href="getShaUrl(iso)">SHA256</a></td>
+                <td>{{ getRelativeDate(iso) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+      </template>
+      <p v-else>No previous Raspberry Pi builds found.</p>
 
-    <template v-if="latestRasPi">
-      <h3>Raspberry Pi 4</h3>
-      <p>
-        <strong>Experimental build</strong>; see
-        <a href="https://github.com/elementary/os/wiki/Raspberry-Pi" target="_blank" rel="noopener">the wiki</a>
-        for more info.
-      </p>
-      <p>
-        <code>{{ latestRasPi | name }}</code> was built
-        {{ latestRasPi | relativeDate }}. If it does not install or
-        otherwise work for you, try a <a href="#oldRasPis">previous build</a>.
-      </p>
-
-      <div class="center">
-        <a
-          class="button"
-          :href="latestRasPi | shaUrl"
-        >
-          Download SHA256
-        </a>
-        <a
-          class="button suggested"
-          :href="latestRasPi | isoUrl"
-        >
-          Download ({{ latestRasPi | size }} GB)
-        </a>
-      </div>
-    </template>
-
-    <h2>Previous Daily Builds</h2>
-    <p>
-      Historical daily builds may be useful for debugging issues, or if the
-      latest build is not working for you.
-    </p>
-
-    <template v-if="oldDailies.length > 0">
-      <details>
-        <summary>
-          <h3 id="oldDailies">
-            64-bit AMD/Intel
-          </h3>
-        </summary>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Checksum</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr
-              v-for="iso in oldDailies"
-              :key="iso.path"
-            >
-              <td>
-                <a :href="iso | isoUrl">
-                  {{ iso | name }}
-                </a>
-              </td>
-
-              <td>
-                <a :href="iso | shaUrl">
-                  SHA256
-                </a>
-              </td>
-
-              <td>
-                {{ iso | relativeDate }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </details>
-    </template>
-
-    <template v-if="oldPinebooks.length > 0">
-      <details>
-        <summary>
-          <h3 id="oldPinebooks">
-            Pinebook Pro
-          </h3>
-        </summary>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Checksum</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr
-              v-for="iso in oldPinebooks"
-              :key="iso.path"
-            >
-              <td>
-                <a :href="iso | isoUrl">
-                  {{ iso | name }}
-                </a>
-              </td>
-
-              <td>
-                <a :href="iso | shaUrl">
-                  SHA256
-                </a>
-              </td>
-
-              <td>
-                {{ iso | relativeDate }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </details>
-    </template>
-
-    <template v-if="oldRasPis.length > 0">
-      <details>
-        <summary>
-          <h3 id="oldRasPis">
-            Raspberry Pi 4
-          </h3>
-        </summary>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Checksum</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr
-              v-for="iso in oldRasPis"
-              :key="iso.path"
-            >
-              <td>
-                <a :href="iso | isoUrl">
-                  {{ iso | name }}
-                </a>
-              </td>
-
-              <td>
-                <a :href="iso | shaUrl">
-                  SHA256
-                </a>
-              </td>
-
-              <td>
-                {{ iso | relativeDate }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </details>
     </template>
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useAsyncData, useError, navigateTo } from '#app'
+import { useImagesStore } from '~/stores/images'
+import { useAuthStore } from '~/stores/auth'
+import DisclaimerText from '~/components/disclaimer-text.vue'
 
-export default {
-  filters: {
-    isoUrl (iso) {
-      return `/api/download/${iso.path}`
-    },
+definePageMeta({
+  middleware: 'auth'
+});
 
-    name (iso) {
-      const [, name] = iso.path.split('/')
-      return name
-    },
+const imagesStore = useImagesStore()
+const authStore = useAuthStore()
+const errorState = useError()
 
-    relativeDate (iso) {
-      const [, year, month, day] = iso.path.match(/([0-9]{4})([0-9]{2})([0-9]{2})/)
-      const date = new Date(`${year}-${month}-${day}T01:00:00.000Z`)
-      return date.toLocaleDateString(undefined, {
-        timeZone: 'UTC',
-        weekday: 'short',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      })
-    },
-
-    shaUrl (iso) {
-      return `/api/download/${iso.path}`
-        .replace('.iso', '.sha256.txt')
-        .replace('.img.xz', '.sha256.txt')
-    },
-
-    size (iso) {
-      return (iso.size / 1000000000).toFixed(2)
-    }
-  },
-
-  middleware: (process.env.NODE_ENV === 'production')
-    ? 'auth'
-    : null,
-
-  async fetch () {
-    await this.$store.dispatch('images/fetch')
-  },
-
-  computed: {
-    ...mapGetters('images', ['imagesFor']),
-
-    latestStable () {
-      const [latest] = this.imagesFor('stable')
-      return latest
-    },
-
-    latestDaily () {
-      const [latest] = this.imagesFor('daily')
-      return latest
-    },
-
-    latestPinebook () {
-      const [latest] = this.imagesFor('daily-pinebookpro')
-      return latest
-    },
-
-    latestRasPi () {
-      const [latest] = this.imagesFor('daily-rpi')
-      return latest
-    },
-
-    oldStables () {
-      const [, ...old] = this.imagesFor('stable')
-      return old
-    },
-
-    oldDailies () {
-      const [, ...old] = this.imagesFor('daily')
-      return old
-    },
-
-    oldPinebooks () {
-      const [, ...old] = this.imagesFor('daily-pinebookpro')
-      return old
-    },
-
-    oldRasPis () {
-      const [, ...old] = this.imagesFor('daily-rpi')
-      return old
-    }
+const { pending, error, refresh } = await useAsyncData(
+  'images',
+  () => imagesStore.fetchImages(),
+  {
   }
-}
+);
+
+const latestStable = computed(() => imagesStore.getImagesFor('stable')[0]);
+const latestDaily = computed(() => imagesStore.getImagesFor('daily')[0]);
+const latestPinebook = computed(() => imagesStore.getImagesFor('daily-pinebookpro')[0]);
+const latestRasPi = computed(() => imagesStore.getImagesFor('daily-rpi')[0]);
+
+const oldDailies = computed(() => imagesStore.getImagesFor('daily').slice(1));
+const oldPinebooks = computed(() => imagesStore.getImagesFor('daily-pinebookpro').slice(1));
+const oldRasPis = computed(() => imagesStore.getImagesFor('daily-rpi').slice(1));
+
+const getIsoUrl = (iso: { path: string }): string => {
+  return `/api/download/${iso.path}`;
+};
+
+const getName = (iso: { path: string }): string => {
+  const parts = iso.path.split('/');
+  return parts[parts.length - 1] || 'unknown';
+};
+
+const getRelativeDate = (iso: { timestamp: Date | string }): string => {
+  try {
+    const date = new Date(iso.timestamp);
+    if (isNaN(date.getTime())) return 'Invalid Date';
+    return date.toLocaleDateString(undefined, {
+      timeZone: 'UTC',
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  } catch {
+    return 'Invalid Date';
+  }
+};
+
+const getShaUrl = (iso: { path: string }): string => {
+  const basePath = `/api/download/${iso.path}`;
+  if (basePath.endsWith('.iso')) {
+      return basePath.replace('.iso', '.sha256.txt');
+  }
+  if (basePath.endsWith('.img.xz')) {
+      return basePath.replace('.img.xz', '.sha256.txt');
+  }
+  return `${basePath}.sha256.txt`;
+};
+
+const getSize = (iso: { size: number }): string => {
+  return (iso.size / 1000000000).toFixed(2);
+};
+
 </script>
