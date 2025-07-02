@@ -59,7 +59,7 @@
     </template>
 
     <template v-if="latestDailyArm64">
-      <h3>64-bit ARM</h3>
+      <h3>64-bit Native ARM</h3>
       <p>
         <strong>Experimental build</strong>
       </p>
@@ -195,7 +195,7 @@
       <details>
         <summary>
           <h3 id="oldDailiesArm64">
-            64-bit ARM
+            64-bit Native ARM
           </h3>
         </summary>
         <table>
