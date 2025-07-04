@@ -58,6 +58,33 @@
       </div>
     </template>
 
+    <template v-if="latestDailyArm64">
+      <h3>64-bit Native ARM</h3>
+      <p>
+        <strong>Experimental build</strong>
+      </p>
+      <p>
+        <code>{{ latestDailyArm64 | name }}</code> was built {{
+          latestDailyArm64 | relativeDate }}. If it does not install or
+        otherwise work for you, try a <a href="#oldDailiesArm64">previous build</a>.
+      </p>
+
+      <div class="center">
+        <a
+          class="button"
+          :href="latestDailyArm64 | shaUrl"
+        >
+          Download SHA256
+        </a>
+        <a
+          class="button suggested"
+          :href="latestDailyArm64 | isoUrl"
+        >
+          Download ({{ latestDailyArm64 | size }} GB)
+        </a>
+      </div>
+    </template>
+
     <template v-if="latestPinebook">
       <h3>Pinebook Pro</h3>
       <p>
@@ -141,6 +168,48 @@
           <tbody>
             <tr
               v-for="iso in oldDailies"
+              :key="iso.path"
+            >
+              <td>
+                <a :href="iso | isoUrl">
+                  {{ iso | name }}
+                </a>
+              </td>
+
+              <td>
+                <a :href="iso | shaUrl">
+                  SHA256
+                </a>
+              </td>
+
+              <td>
+                {{ iso | relativeDate }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
+    </template>
+
+    <template v-if="oldDailiesArm64.length > 0">
+      <details>
+        <summary>
+          <h3 id="oldDailiesArm64">
+            64-bit Native ARM
+          </h3>
+        </summary>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Checksum</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr
+              v-for="iso in oldDailiesArm64"
               :key="iso.path"
             >
               <td>
@@ -308,6 +377,11 @@ export default {
       return latest
     },
 
+    latestDailyArm64 () {
+      const [latest] = this.imagesFor('daily-arm64')
+      return latest
+    },
+
     latestPinebook () {
       const [latest] = this.imagesFor('daily-pinebookpro')
       return latest
@@ -325,6 +399,11 @@ export default {
 
     oldDailies () {
       const [, ...old] = this.imagesFor('daily')
+      return old
+    },
+
+    oldDailiesArm64 () {
+      const [, ...old] = this.imagesFor('daily-arm64')
       return old
     },
 
