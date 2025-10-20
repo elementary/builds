@@ -14,13 +14,13 @@
     "lint:css": "stylelint **/*.{vue,scss}"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.908.0",
-    "@aws-sdk/s3-request-presigner": "^3.908.0",
+    "@aws-sdk/client-s3": "^3.913.0",
+    "@aws-sdk/s3-request-presigner": "^3.913.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
     "@fortawesome/vue-fontawesome": "^2.0.6",
     "cookie": "^1.0.2",
     "graphql": "^16.11.0",
-    "graphql-request": "^7.2.0",
+    "graphql-request": "^7.3.1",
     "json5": "^2.2.2",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
