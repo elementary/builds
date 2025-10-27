@@ -88,6 +88,12 @@ function isSponsored (data) {
     .some(p => (p >= 100))
 }
 
+function isPatreon (data) {
+  return data.viewer.sponsorshipsAsSponsor.nodes
+    .filter(s => (s.sponsorable.login === 'elementary'))
+    .some(q => (q.paymentSource === 'PATREON'))
+}
+
 function isInOrganization (data) {
   return data.viewer.organizations.nodes
     .some(org => (org.login === 'elementary'))
@@ -115,9 +121,10 @@ export default async (req, res, next) => {
     const data = await githubData(accessToken)
 
     const sponsored = isSponsored(data)
+    const patreon = isPatreon(data)
     const organizationed = isInOrganization(data)
     const allowListed = isAllowlisted(data)
-    const success = (sponsored || organizationed || allowListed)
+    const success = (sponsored || patreon || organizationed || allowListed)
 
     if (!success) {
       throw new Error('Not sponsoring or allow listed')
