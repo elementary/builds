@@ -52,7 +52,7 @@
         </a>
       </div>
     </template>
-    
+
     <h2>Daily Builds</h2>
 
     <disclaimer-text />
@@ -399,7 +399,7 @@ export default {
       const [latest] = this.imagesFor('stable-arm64')
       return latest
     },
-    
+
     latestDaily () {
       const [latest] = this.imagesFor('daily')
       return latest
