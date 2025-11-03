@@ -30,6 +30,29 @@
       </div>
     </template>
 
+    <template v-if="latestStableArm64">
+      <h3>64-bit Native ARM</h3>
+      <p>
+        <code>{{ latestStableArm64 | name }}</code> was built {{
+          latestStableArm64 | relativeDate }}.
+      </p>
+
+      <div class="center">
+        <a
+          class="button"
+          :href="latestStableArm64 | shaUrl"
+        >
+          Download SHA256
+        </a>
+        <a
+          class="button suggested"
+          :href="latestStableArm64 | isoUrl"
+        >
+          Download ({{ latestStableArm64 | size }} GB)
+        </a>
+      </div>
+    </template>
+    
     <h2>Daily Builds</h2>
 
     <disclaimer-text />
@@ -368,10 +391,15 @@ export default {
     ...mapGetters('images', ['imagesFor']),
 
     latestStable () {
-      const [latest] = this.imagesFor('stable')
+      const [latest] = this.imagesFor('stable-amd64')
       return latest
     },
 
+    latestStableArm64 () {
+      const [latest] = this.imagesFor('stable-arm64')
+      return latest
+    },
+    
     latestDaily () {
       const [latest] = this.imagesFor('daily')
       return latest
