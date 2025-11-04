@@ -391,7 +391,7 @@ export default {
     ...mapGetters('images', ['imagesFor']),
 
     latestStable () {
-      const [latest] = this.imagesFor('stable-amd64')
+      const [latest] = this.imagesFor('stable')
       return latest
     },
 
