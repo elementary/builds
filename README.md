@@ -24,7 +24,7 @@ This site is built with Nuxt.JS, a Vue.JS framework.
 
 You'll need the following dependencies:
 
-- nodejs >= 20
+- nodejs >= 25
 - npm
 
 Run `npm` to install additional packages and start the development server
