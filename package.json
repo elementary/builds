@@ -14,8 +14,8 @@
     "lint:css": "stylelint **/*.{vue,scss}"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.971.0",
-    "@aws-sdk/s3-request-presigner": "^3.971.0",
+    "@aws-sdk/client-s3": "^3.980.0",
+    "@aws-sdk/s3-request-presigner": "^3.980.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
     "@fortawesome/vue-fontawesome": "^2.0.6",
     "cookie": "^1.1.1",
@@ -27,7 +27,7 @@
     "node-cache": "^5.1.2",
     "node-fetch": "^3.3.2",
     "nuxt": "^2.15.8",
-    "sass": "^1.97.2",
+    "sass": "^1.97.3",
     "sass-loader": "^10.1.1"
   },
   "devDependencies": {
