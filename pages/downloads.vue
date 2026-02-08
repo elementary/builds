@@ -108,64 +108,6 @@
       </div>
     </template>
 
-    <template v-if="latestPinebook">
-      <h3>Pinebook Pro</h3>
-      <p>
-        <strong>Experimental build</strong>; see
-        <a href="https://github.com/elementary/os/wiki/Pinebook-Pro" target="_blank" rel="noopener">the wiki</a>
-        for more info.
-      </p>
-      <p>
-        <code>{{ latestPinebook | name }}</code> was built
-        {{ latestPinebook | relativeDate }}. If it does not install or
-        otherwise work for you, try a <a href="#oldPinebooks">previous build</a>.
-      </p>
-
-      <div class="center">
-        <a
-          class="button"
-          :href="latestPinebook | shaUrl"
-        >
-          Download SHA256
-        </a>
-        <a
-          class="button suggested"
-          :href="latestPinebook | isoUrl"
-        >
-          Download ({{ latestPinebook | size }} GB)
-        </a>
-      </div>
-    </template>
-
-    <template v-if="latestRasPi">
-      <h3>Raspberry Pi 4</h3>
-      <p>
-        <strong>Experimental build</strong>; see
-        <a href="https://github.com/elementary/os/wiki/Raspberry-Pi" target="_blank" rel="noopener">the wiki</a>
-        for more info.
-      </p>
-      <p>
-        <code>{{ latestRasPi | name }}</code> was built
-        {{ latestRasPi | relativeDate }}. If it does not install or
-        otherwise work for you, try a <a href="#oldRasPis">previous build</a>.
-      </p>
-
-      <div class="center">
-        <a
-          class="button"
-          :href="latestRasPi | shaUrl"
-        >
-          Download SHA256
-        </a>
-        <a
-          class="button suggested"
-          :href="latestRasPi | isoUrl"
-        >
-          Download ({{ latestRasPi | size }} GB)
-        </a>
-      </div>
-    </template>
-
     <h2>Previous Daily Builds</h2>
     <p>
       Historical daily builds may be useful for debugging issues, or if the
@@ -233,90 +175,6 @@
           <tbody>
             <tr
               v-for="iso in oldDailiesArm64"
-              :key="iso.path"
-            >
-              <td>
-                <a :href="iso | isoUrl">
-                  {{ iso | name }}
-                </a>
-              </td>
-
-              <td>
-                <a :href="iso | shaUrl">
-                  SHA256
-                </a>
-              </td>
-
-              <td>
-                {{ iso | relativeDate }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </details>
-    </template>
-
-    <template v-if="oldPinebooks.length > 0">
-      <details>
-        <summary>
-          <h3 id="oldPinebooks">
-            Pinebook Pro
-          </h3>
-        </summary>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Checksum</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr
-              v-for="iso in oldPinebooks"
-              :key="iso.path"
-            >
-              <td>
-                <a :href="iso | isoUrl">
-                  {{ iso | name }}
-                </a>
-              </td>
-
-              <td>
-                <a :href="iso | shaUrl">
-                  SHA256
-                </a>
-              </td>
-
-              <td>
-                {{ iso | relativeDate }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </details>
-    </template>
-
-    <template v-if="oldRasPis.length > 0">
-      <details>
-        <summary>
-          <h3 id="oldRasPis">
-            Raspberry Pi 4
-          </h3>
-        </summary>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Checksum</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr
-              v-for="iso in oldRasPis"
               :key="iso.path"
             >
               <td>
@@ -410,16 +268,6 @@ export default {
       return latest
     },
 
-    latestPinebook () {
-      const [latest] = this.imagesFor('daily-pinebookpro')
-      return latest
-    },
-
-    latestRasPi () {
-      const [latest] = this.imagesFor('daily-rpi')
-      return latest
-    },
-
     oldStables () {
       const [, ...old] = this.imagesFor('stable')
       return old
@@ -432,16 +280,6 @@ export default {
 
     oldDailiesArm64 () {
       const [, ...old] = this.imagesFor('daily-arm64')
-      return old
-    },
-
-    oldPinebooks () {
-      const [, ...old] = this.imagesFor('daily-pinebookpro')
-      return old
-    },
-
-    oldRasPis () {
-      const [, ...old] = this.imagesFor('daily-rpi')
       return old
     }
   }
