@@ -84,9 +84,6 @@
     <template v-if="latestDailyArm64">
       <h3>64-bit Native ARM</h3>
       <p>
-        <strong>Experimental build</strong>
-      </p>
-      <p>
         <code>{{ latestDailyArm64 | name }}</code> was built {{
           latestDailyArm64 | relativeDate }}. If it does not install or
         otherwise work for you, try a <a href="#oldDailiesArm64">previous build</a>.
