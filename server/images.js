@@ -16,17 +16,23 @@ const s3 = new S3({
 })
 
 async function downloadImages () {
-  const manifest = await new Promise((resolve, reject) => {
-    s3.listObjects({ Bucket: 'elementary-iso' }, (err, data) => {
-      if (err != null) {
-        return reject(err)
-      } else {
-        return resolve(data)
-      }
-    })
-  })
+  const allContents = []
+  let marker = null
 
-  return manifest.Contents
+  do {
+    const params = { Bucket: 'elementary-iso' }
+    if (marker) {
+      params.Marker = marker
+    }
+
+    const data = await s3.listObjects(params)
+    allContents.push(...data.Contents)
+    marker = data.IsTruncated
+      ? data.Contents[data.Contents.length - 1].Key
+      : null
+  } while (marker)
+
+  return allContents
     .filter(({ Key }) => Key.endsWith('.iso') || Key.endsWith('.img.xz'))
     .map(d => ({
       path: d.Key,

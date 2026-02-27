@@ -6,7 +6,9 @@ export const getters = {
   imagesFor: (state, getters) => (channel = 'daily') => {
     return getters.images
       .filter(({ path }) => path.startsWith(`${channel}/`))
-      .filter(({ path }) => path.includes('7.0') || path.includes('7.1') || path.includes('8.0') || path.includes('8.1'))
+      // This filter allows us to build dailies for future releases internally before allowing them to be public.
+      // It only modifies the images shown in the UI, not the actual images that are available for download.
+      .filter(({ path }) => path.includes('8.0') || path.includes('8.1'))
   },
 
   images (state) {
