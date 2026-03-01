@@ -84,7 +84,10 @@ function githubData (token) {
 function isSponsored (data) {
   return data.viewer.sponsorshipsAsSponsor.nodes
     .filter(s => (s.sponsorable.login === 'elementary'))
-    .map(s => s.tier.monthlyPriceInCents)
+    // Patreon-linked sponsorships have `tier: null`, so guard against that
+    // to avoid a TypeError that would prevent other auth checks (e.g.
+    // organization membership or allowlist) from running.
+    .map(s => s.tier && s.tier.monthlyPriceInCents)
     .some(p => (p >= 100))
 }
 
