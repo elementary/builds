@@ -82,9 +82,7 @@ function githubData (token) {
     })
 }
 
-function isSponsored (data) {
-  // Users with no sponsorships may not have this field at all.
-  const nodes = (data.viewer.sponsorshipsAsSponsor && data.viewer.sponsorshipsAsSponsor.nodes) || []
+function isSponsored (nodes) {
   return nodes
     .filter(s => (s.sponsorable.login === 'elementary'))
     // Patreon-linked sponsorships have `tier: null`, so guard against that
@@ -94,8 +92,7 @@ function isSponsored (data) {
     .some(p => (p >= 100))
 }
 
-function isPatreon (data) {
-  const nodes = (data.viewer.sponsorshipsAsSponsor && data.viewer.sponsorshipsAsSponsor.nodes) || []
+function isPatreon (nodes) {
   return nodes
     .filter(s => (s.sponsorable.login === 'elementary'))
     .some(q => (q.paymentSource === 'PATREON'))
@@ -127,8 +124,11 @@ export default async (req, res, next) => {
     const { access_token: accessToken } = await githubAccessToken(code)
     const data = await githubData(accessToken)
 
-    const sponsored = isSponsored(data)
-    const patreon = isPatreon(data)
+    // Users with no sponsorships may not have this field at all.
+    const sponsorNodes = (data.viewer.sponsorshipsAsSponsor && data.viewer.sponsorshipsAsSponsor.nodes) || []
+
+    const sponsored = isSponsored(sponsorNodes)
+    const patreon = isPatreon(sponsorNodes)
     const organizationed = isInOrganization(data)
     const allowListed = isAllowlisted(data)
     const success = (sponsored || patreon || organizationed || allowListed)
@@ -145,7 +145,7 @@ export default async (req, res, next) => {
           organizationed,
           allowListed,
           organizations: data.viewer.organizations.nodes,
-          sponsorships: (data.viewer.sponsorshipsAsSponsor && data.viewer.sponsorshipsAsSponsor.nodes) || []
+          sponsorships: sponsorNodes
         }
       }))
       return
