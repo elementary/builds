@@ -49,6 +49,7 @@ function githubData (token) {
       }
       sponsorshipsAsSponsor(last: 100) {
         nodes {
+          paymentSource
           tier {
             monthlyPriceInCents
           }
