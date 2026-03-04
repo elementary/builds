@@ -83,7 +83,9 @@ function githubData (token) {
 }
 
 function isSponsored (data) {
-  return data.viewer.sponsorshipsAsSponsor.nodes
+  // Users with no sponsorships may not have this field at all.
+  const nodes = (data.viewer.sponsorshipsAsSponsor && data.viewer.sponsorshipsAsSponsor.nodes) || []
+  return nodes
     .filter(s => (s.sponsorable.login === 'elementary'))
     // Patreon-linked sponsorships have `tier: null`, so guard against that
     // to avoid a TypeError that would prevent other auth checks (e.g.
@@ -93,7 +95,8 @@ function isSponsored (data) {
 }
 
 function isPatreon (data) {
-  return data.viewer.sponsorshipsAsSponsor.nodes
+  const nodes = (data.viewer.sponsorshipsAsSponsor && data.viewer.sponsorshipsAsSponsor.nodes) || []
+  return nodes
     .filter(s => (s.sponsorable.login === 'elementary'))
     .some(q => (q.paymentSource === 'PATREON'))
 }
@@ -131,7 +134,21 @@ export default async (req, res, next) => {
     const success = (sponsored || patreon || organizationed || allowListed)
 
     if (!success) {
-      throw new Error('Not sponsoring or allow listed')
+      console.error('Auth failed for user:', JSON.stringify(data, null, 2))
+      res.end(JSON.stringify({
+        success: false,
+        reason: 'Not sponsoring or allow listed',
+        debug: {
+          login: data.viewer.login,
+          sponsored,
+          patreon,
+          organizationed,
+          allowListed,
+          organizations: data.viewer.organizations.nodes,
+          sponsorships: (data.viewer.sponsorshipsAsSponsor && data.viewer.sponsorshipsAsSponsor.nodes) || []
+        }
+      }))
+      return
     }
 
     const token = jwt.sign({
@@ -148,6 +165,11 @@ export default async (req, res, next) => {
     res.setHeader('set-cookie', cookie)
     res.end(JSON.stringify({ success: true }))
   } catch (err) {
-    res.end(JSON.stringify({ success: false }))
+    console.error('Auth callback error:', err)
+    res.end(JSON.stringify({
+      success: false,
+      reason: err.message,
+      debug: err.response ? err.response : undefined
+    }))
   }
 }
