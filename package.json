@@ -26,7 +26,7 @@
     "jwt-decode": "^4.0.0",
     "node-cache": "^5.1.2",
     "node-fetch": "^3.3.2",
-    "nuxt": "^2.18.1",
+    "nuxt": "^4.4.2",
     "sass": "^1.97.3",
     "sass-loader": "^10.1.1"
   },
