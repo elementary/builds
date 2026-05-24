@@ -6,7 +6,9 @@ export default defineNuxtConfig({
 
   modules: [
     '@pinia/nuxt',
-    '@nuxtjs/plausible',
+    // Plausible only loads in production; dev pageviews would pollute analytics
+    // and the script path matches common tracker blocklists, hanging the dev client.
+    ...(process.env.NODE_ENV === 'production' ? ['@nuxtjs/plausible'] : []),
   ],
 
   css: [
