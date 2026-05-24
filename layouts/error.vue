@@ -36,13 +36,16 @@ onMounted(() => {
     text-align: center;
     font-family: sans-serif;
   }
+
   h2 {
     color: #d32f2f; /* Or use CSS variables */
     margin-bottom: 1rem;
   }
+
   p {
     margin-bottom: 0.5rem;
   }
+
   a {
     color: var(--link-color, blue); /* Use theme variable if available */
     text-decoration: underline;
