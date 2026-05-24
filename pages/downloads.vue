@@ -133,9 +133,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useAsyncData, useError, navigateTo } from '#app'
+import { useAsyncData } from '#app'
 import { useImagesStore } from '~/stores/images'
-import { useAuthStore } from '~/stores/auth'
 import DisclaimerText from '~/components/disclaimer-text.vue'
 
 definePageMeta({
@@ -143,8 +142,6 @@ definePageMeta({
 });
 
 const imagesStore = useImagesStore()
-const authStore = useAuthStore()
-const errorState = useError()
 
 const { pending, error, refresh } = await useAsyncData(
   'images',

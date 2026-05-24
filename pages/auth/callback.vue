@@ -96,12 +96,13 @@ const performAuthentication = async () => {
       console.log('[Callback Page] Authentication failed (backend check). Navigating client-side to /sponsor.');
       await navigateTo('/sponsor');
     }
-  } catch (error: any) {
+  } catch (error) {
     console.error('[Callback Page] Error during authentication process:', error);
+    const e = error as { statusCode?: number; statusMessage?: string; data?: unknown };
     showError({
-      statusCode: error.statusCode || 500,
-      message: error.statusMessage || 'An unexpected error occurred during authentication.',
-      data: error.data
+      statusCode: e.statusCode || 500,
+      message: e.statusMessage || 'An unexpected error occurred during authentication.',
+      data: e.data
     });
   } finally {
     console.log('[Callback Page] performAuthentication finished.');

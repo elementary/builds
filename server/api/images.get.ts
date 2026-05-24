@@ -116,16 +116,17 @@ async function getImages(): Promise<ImageInfo[]> {
       cache.set(cacheKey, images);
       console.log(`Fetched and cached ${images.length} images from S3.`);
       return images;
-    } catch (s3Error: any) {
+    } catch (s3Error) {
+      const e = s3Error as { message?: string; statusMessage?: string; statusCode?: number };
       // Log the S3 error
-      console.error('S3 fetch failed:', s3Error.message || s3Error.statusMessage || s3Error);
+      console.error('S3 fetch failed:', e.message || e.statusMessage || s3Error);
 
       // If in production, this S3 failure is a hard error.
       // listS3Images or getS3Client should have already thrown an h3 error.
       // If for some reason it's not an h3 error, ensure one is thrown.
       if (process.env.NODE_ENV === 'production') {
-        if (s3Error.statusCode) throw s3Error; // Re-throw if already an h3 error
-        throw createError({ statusCode: 503, statusMessage: 'Failed to retrieve image list from S3 in production.', data: s3Error.message });
+        if (e.statusCode) throw s3Error; // Re-throw if already an h3 error
+        throw createError({ statusCode: 503, statusMessage: 'Failed to retrieve image list from S3 in production.', data: e.message });
       }
       
       // In development, if S3 fails (e.g., keys present but invalid, network issue),
@@ -152,23 +153,24 @@ async function getImages(): Promise<ImageInfo[]> {
 }
 
 // --- Event Handler ---
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   try {
     const images = await getImages();
     return images;
-  } catch (error: any) { // Catch potential errors from getImages (like S3 config errors)
+  } catch (error) { // Catch potential errors from getImages (like S3 config errors)
     // Log the caught error for debugging
     console.error('Error in /api/images endpoint:', error);
 
     // If it's an error created by createError, re-throw it
-    if (error.statusCode) {
+    if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error;
     }
     // Otherwise, wrap it
+    const message = error instanceof Error ? error.message : String(error);
     throw createError({
       statusCode: 500,
       statusMessage: 'An unexpected error occurred while fetching image data.',
-      data: error.message
+      data: message
     });
   }
 }); 

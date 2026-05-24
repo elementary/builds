@@ -48,8 +48,9 @@ async function checkAuthenticationStatus(
         console.warn(`${logPrefix} Server: JWT invalid (claim).`);
         return { status: AuthCheckResultStatus.INVALID_TOKEN_CLEAR_COOKIE, storeNeedsUpdate: false };
       }
-    } catch (error: any) {
-      console.warn(`${logPrefix} Server: JWT verification error: ${error.message}.`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(`${logPrefix} Server: JWT verification error: ${message}.`);
       return { status: AuthCheckResultStatus.INVALID_TOKEN_CLEAR_COOKIE, storeNeedsUpdate: false };
     }
   } else { // Client-side
@@ -68,8 +69,9 @@ async function checkAuthenticationStatus(
         console.log(`${logPrefix} Client: JWT decoded, but access claim not true or malformed.`);
         return { status: AuthCheckResultStatus.NOT_AUTHENTICATED, storeNeedsUpdate: false };
       }
-    } catch (e: any) {
-      console.warn(`${logPrefix} Client: Error decoding JWT: ${e.message}`);
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      console.warn(`${logPrefix} Client: Error decoding JWT: ${message}`);
       return { status: AuthCheckResultStatus.INVALID_TOKEN_CLEAR_COOKIE, storeNeedsUpdate: false };
     }
   }

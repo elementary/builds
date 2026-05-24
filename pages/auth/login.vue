@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useAuthStore } from '~/stores/auth'
-import { useRoute, navigateTo } from '#app'
+import { useRoute } from '#app'
 
 const authStore = useAuthStore()
 const route = useRoute()
@@ -28,7 +28,9 @@ onMounted(async () => {
     console.log('[Login Page] No redirect path in query.');
     try {
       sessionStorage.removeItem('loginRedirect');
-    } catch (e) {}
+    } catch (e) {
+      console.error('[Login Page] Failed to clear redirect path from sessionStorage:', e);
+    }
   }
 
   // Fetch the GitHub login URL

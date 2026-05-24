@@ -1,5 +1,4 @@
 import { defineEventHandler, readBody, setCookie, createError } from 'h3'
-import Cookie from 'cookie'
 import { GraphQLClient, gql } from 'graphql-request' // Import gql
 import jwt from 'jsonwebtoken'
 import JSON5 from 'json5' 
@@ -103,11 +102,12 @@ async function getGithubData(token: string): Promise<GitHubUserData> {
   try {
     // Type the expected response
     return await client.request<GitHubUserData>(query);
-  } catch (error: any) {
+  } catch (error) {
     // Handle partial data error from graphql-request
-    if (error.response && error.response.data) {
+    const e = error as { response?: { data?: unknown } };
+    if (e.response?.data) {
       console.warn('GitHub GraphQL query returned partial data.');
-      return error.response.data as GitHubUserData;
+      return e.response.data as GitHubUserData;
     }
     console.error('GitHub GraphQL request error:', error);
     throw createError({ statusCode: 502, statusMessage: 'GitHub Data Request Failed' });
@@ -240,9 +240,10 @@ export default defineEventHandler(async (event) => {
     // Include user details for the store
     return { success: true, user: { login: userLogin, name: userLogin } }; 
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('[API /auth/callback] Error during processing:', error);
-    if (error.statusCode) { throw error; }
-    throw createError({ statusCode: 500, statusMessage: 'Authentication failed due to an unexpected server error.', data: error.message });
+    if (error && typeof error === 'object' && 'statusCode' in error) { throw error; }
+    const message = error instanceof Error ? error.message : String(error);
+    throw createError({ statusCode: 500, statusMessage: 'Authentication failed due to an unexpected server error.', data: message });
   }
 }); 

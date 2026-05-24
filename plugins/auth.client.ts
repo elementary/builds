@@ -11,7 +11,7 @@ interface JwtPayload {
   user?: JwtUserPayload;
 }
 
-export default defineNuxtPlugin(async (nuxtApp) => {
+export default defineNuxtPlugin(async () => {
   if (import.meta.server) {
     return; 
   }
