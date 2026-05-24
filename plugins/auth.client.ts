@@ -12,7 +12,7 @@ interface JwtPayload {
 }
 
 export default defineNuxtPlugin(async (nuxtApp) => {
-  if (process.server) {
+  if (import.meta.server) {
     return; 
   }
 

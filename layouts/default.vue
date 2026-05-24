@@ -47,7 +47,7 @@ import LayoutFooter from '~/components/layout-footer.vue'
     fill: inherit;
   }
 
-  /* stylelint-disable-next-line selector-id-pattern */
+  /* stylelint-disable selector-id-pattern */
   #__nuxt,
   #__layout,
   #__page {
@@ -55,13 +55,13 @@ import LayoutFooter from '~/components/layout-footer.vue'
     min-width: 100vw;
   }
 
-  /* stylelint-disable-next-line selector-id-pattern */
   #__page {
     place-content: stretch stretch;
     align-items: stretch;
     display: flex;
     flex-direction: column;
   }
+  /* stylelint-enable selector-id-pattern */
 
   .wrapper {
     flex: 1 0 auto;

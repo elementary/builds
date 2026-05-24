@@ -30,6 +30,7 @@
     "pinia": "^3.0.2"
   },
   "devDependencies": {
+    "@eslint/compat": "^2.1.0",
     "@nuxt/eslint-config": "^1.15.2",
     "@types/jsonwebtoken": "^9.0.10",
     "eslint": "^10.4.0",

@@ -32,7 +32,7 @@ async function checkAuthenticationStatus(
 
   let isValidBasedOnCookie = false;
 
-  if (process.server) {
+  if (import.meta.server) {
     if (!serverSigningKey) {
       console.warn(`${logPrefix} Server: 'signingKey' not provided. Cannot confirm token validity.`);
       return { status: AuthCheckResultStatus.NOT_AUTHENTICATED, storeNeedsUpdate: false };
@@ -84,12 +84,12 @@ async function checkAuthenticationStatus(
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const logPrefix = '[Auth Middleware]';
-  console.log(`${logPrefix} Running for path: ${to.path} (from: ${from.path}) on ${process.server ? 'server' : 'client'}`);
+  console.log(`${logPrefix} Running for path: ${to.path} (from: ${from.path}) on ${import.meta.server ? 'server' : 'client'}`);
   
   const authStore = useAuthStore();
 
   // Check for "justLoggedIn" flag (client-side only)
-  if (process.client) {
+  if (import.meta.client) {
     console.log(`${logPrefix} CLIENT-SIDE: Initial store state before any checks - isAuthenticated: ${authStore.isAuthenticated}`);
     try {
       if (sessionStorage.getItem('justLoggedIn') === 'true') {
@@ -115,7 +115,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   console.log(`${logPrefix} Initial store state - isAuthenticated: ${initialStoreAuth}`);
 
   let signingKeyForServer: string | undefined;
-  if (process.server) {
+  if (import.meta.server) {
     const config = useRuntimeConfig();
     signingKeyForServer = config.signingKey as string | undefined;
   }
