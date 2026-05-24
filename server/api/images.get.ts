@@ -76,7 +76,7 @@ async function listS3Images(): Promise<ImageInfo[]> {
         allContents.push(...data.Contents);
       }
       marker = data.IsTruncated && data.Contents?.length
-        ? data.Contents[data.Contents.length - 1].Key
+        ? data.Contents[data.Contents.length - 1]?.Key
         : undefined;
     } while (marker);
 
