@@ -11,7 +11,8 @@
     "start": "nuxt dev",
     "build": "nuxt build",
     "lint:js": "eslint .",
-    "lint:css": "stylelint **/*.{vue,scss}"
+    "lint:css": "stylelint **/*.{vue,scss}",
+    "typecheck": "nuxt typecheck"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1049.0",
@@ -40,6 +41,8 @@
     "stylelint": "^17.12.0",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-config-standard-scss": "^17.0.0",
-    "stylelint-config-standard-vue": "^1.0.0"
+    "stylelint-config-standard-vue": "^1.0.0",
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.1"
   }
 }

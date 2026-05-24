@@ -6,8 +6,8 @@
 
     <div v-else-if="error || imagesStore.error" class="center error-box">
       <h2>Error Loading Builds</h2>
-      <p>{{ error?.message || imagesStore.error?.message || 'An unknown error occurred.' }}</p>
-      <button @click="refresh">Retry</button>
+      <p>{{ errorMessage }}</p>
+      <button @click="() => refresh()">Retry</button>
     </div>
 
     <template v-else>
@@ -149,6 +149,13 @@ const { pending, error, refresh } = await useAsyncData(
   {
   }
 );
+
+const errorMessage = computed(() => {
+  const e = error.value ?? imagesStore.error;
+  if (e instanceof Error) return e.message;
+  if (e && typeof e === 'object' && 'message' in e) return String((e as { message: unknown }).message);
+  return 'An unknown error occurred.';
+});
 
 const latestStable = computed(() => imagesStore.getImagesFor('stable')[0]);
 const latestStableArm64 = computed(() => imagesStore.getImagesFor('stable-arm64')[0]);
