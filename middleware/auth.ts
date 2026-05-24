@@ -172,7 +172,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   if (isGoingToProtectedRoute && !finalIsAuthenticated) {
     console.log(`${logPrefix} Redirecting to /auth/login for protected route.`);
     const intendedRedirect = to.fullPath;
-    const redirectPath = intendedRedirect.split('?')[0]; 
+    const redirectPath = intendedRedirect.split('?')[0] ?? intendedRedirect;
     return navigateTo(`/auth/login?redirect=${encodeURIComponent(redirectPath)}`);
   }
 
