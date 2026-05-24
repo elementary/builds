@@ -1,6 +1,6 @@
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { defineEventHandler, getCookie, sendRedirect, createError, getRouterParam } from 'h3'
+import { defineEventHandler, getCookie, sendRedirect, createError, getRouterParam, type H3Event } from 'h3'
 import jwt from 'jsonwebtoken'
 
 // Config now accessed via useRuntimeConfig() below
@@ -26,7 +26,7 @@ function getS3Client(): S3Client {
 }
 
 // --- Authentication Helper (Consider moving to a shared server util) ---
-function isAuthenticated(event: any): boolean {
+function isAuthenticated(event: H3Event): boolean {
   const token = getCookie(event, 'builds');
   const config = useRuntimeConfig(); // Use auto-available composable
   const key = config.signingKey;
@@ -85,10 +85,10 @@ export default defineEventHandler(async (event) => {
         expiresIn: 60 * 60, // 1 hour
       });
       console.log(`Generated presigned URL for: ${downloadPath}`);
-    } catch (error: any) {
+    } catch (error) {
       console.error(`Error generating presigned URL for ${downloadPath}:`, error);
       // Handle specific S3 errors like NoSuchKey?
-      if (error.name === 'NoSuchKey') {
+      if (error instanceof Error && error.name === 'NoSuchKey') {
            throw createError({ statusCode: 404, statusMessage: 'File not found.' });
       }
       throw createError({ statusCode: 500, statusMessage: 'Failed to generate download link.' });

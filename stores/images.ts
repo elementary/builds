@@ -11,7 +11,7 @@ export const useImagesStore = defineStore('images', {
   state: () => ({
     allImages: [] as ImageInfo[],
     isLoading: false,
-    error: null as any | null,
+    error: null as unknown,
   }),
 
   getters: {
@@ -51,7 +51,7 @@ export const useImagesStore = defineStore('images', {
           ...img,
           timestamp: new Date(img.timestamp)
         }));
-      } catch (err: any) {
+      } catch (err) {
         console.error('Failed to fetch images:', err);
         this.error = err;
         this.allImages = []; // Clear images on error
