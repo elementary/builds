@@ -25,7 +25,6 @@ export default defineNuxtConfig({
     }
   },
 
-  // @ts-expect-error: Plausible module adds this key directly
   plausible: {
     // Required: Specify the domain registered with Plausible
     domain: 'builds.elementary.io',

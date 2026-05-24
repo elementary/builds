@@ -1,4 +1,4 @@
-import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3'
+import { S3Client, ListObjectsCommand, type ListObjectsCommandOutput } from '@aws-sdk/client-s3'
 import Cache from 'node-cache'
 import { defineEventHandler, createError } from 'h3'
 import JSON5 from 'json5'
@@ -65,7 +65,7 @@ function loadDevelopmentImages(): ImageInfo[] {
 
 async function listS3Images(): Promise<ImageInfo[]> {
   const client = getS3Client();
-  const allContents: NonNullable<Awaited<ReturnType<typeof client.send<ListObjectsCommand>>>['Contents']> = [];
+  const allContents: NonNullable<ListObjectsCommandOutput['Contents']> = [];
   let marker: string | undefined;
 
   try {

@@ -5,8 +5,7 @@ import jwt from 'jsonwebtoken'
 import JSON5 from 'json5' 
 import fs from 'node:fs'
 import path from 'node:path'
-// import { useRuntimeConfig } from '#imports' // Reverted
-// import { encodeParams } from '../utils/url' // Reverted
+import { encodeParams } from '../../utils/url'
 
 // --- Types (improve maintainability) ---
 interface GitHubTokenResponse {
