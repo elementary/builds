@@ -12,7 +12,7 @@ interface ImageInfo {
 
 // Use singleton pattern for cache and S3 client to avoid re-initialization on every request
 let s3: S3Client | null = null;
-const cache = new Cache({ stdTTL: 60 * 60 * 5 }); // 5 hour TTL
+const cache = new Cache({ stdTTL: 60 * 10 }); // 10 minute TTL
 
 function getS3Client(): S3Client {
   if (!s3) {

@@ -19,11 +19,16 @@ export const useImagesStore = defineStore('images', {
     // Example categories: 'stable', 'daily', 'daily-pinebookpro', 'daily-rpi'
     getImagesFor: (state) => {
       return (category: string): ImageInfo[] => {
+        // Which release lines surface in the UI comes from runtime config, so
+        // promoting a new line (e.g. 8.2) is an env change, not a code change.
+        const visibleReleases = String(useRuntimeConfig().public.visibleReleases ?? '')
+          .split(',')
+          .map(v => v.trim())
+          .filter(Boolean);
         return state.allImages
           .filter(image => image.path.startsWith(`${category}/`))
-          // Restricts which release lines surface in the UI so future internal
-          // builds stay hidden until promoted.
-          .filter(image => image.path.includes('8.0') || image.path.includes('8.1'))
+          // Hide release lines that haven't been promoted to the UI yet.
+          .filter(image => visibleReleases.some(v => image.path.includes(v)))
           // Sort by timestamp descending (newest first)
           .sort((a, b) => {
             const dateA = new Date(a.timestamp).getTime();
