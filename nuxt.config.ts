@@ -15,6 +15,28 @@ export default defineNuxtConfig({
     '~/assets/styles/main.scss'
   ],
 
+  app: {
+    head: {
+      title: 'elementary Builds',
+      htmlAttrs: {
+        lang: 'en'
+      },
+      // charset and viewport are provided by Nuxt's defaults.
+      meta: [
+        { name: 'description', content: 'Early Access builds of elementary OS' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      ]
+    }
+  },
+
+  // Nuxt 3 serves static assets from `public/` by default; this repo keeps them
+  // in `static/` (favicon.ico, elementary.svg), so point the public dir at it.
+  dir: {
+    public: 'static'
+  },
+
   runtimeConfig: {
     // Private keys are only available server-side
     githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
