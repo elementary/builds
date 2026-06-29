@@ -10,19 +10,6 @@ interface ImageInfo {
   size: number;
 }
 
-// --- Configuration & Initialization ---
-const spacesKey = process.env.SPACES_KEY;
-const spacesSecret = process.env.SPACES_SECRET;
-
-if (!spacesKey || !spacesSecret) {
-  // Log error only in non-production, throw generic error in production
-  if (process.env.NODE_ENV !== 'production') {
-    console.error('Missing SPACES_KEY or SPACES_SECRET environment variables for S3 access.');
-  }
-  // We might allow the app to run without S3 in dev using dev data, so don't throw here yet.
-  // Throwing later if S3 access is actually attempted in production without keys.
-}
-
 // Use singleton pattern for cache and S3 client to avoid re-initialization on every request
 let s3: S3Client | null = null;
 const cache = new Cache({ stdTTL: 60 * 60 * 5 }); // 5 hour TTL
@@ -99,9 +86,16 @@ async function getImages(): Promise<ImageInfo[]> {
 
   // Determine if S3 should be used:
   // - Always in production.
-  // - In development, if SPACES_KEY and SPACES_SECRET are present.
-  const s3KeysPresent = !!(spacesKey && spacesSecret); // spacesKey, spacesSecret are from module scope
+  // - In development, only if the Spaces credentials are configured.
+  const config = useRuntimeConfig();
+  const s3KeysPresent = !!(config.spacesKey && config.spacesSecret);
   const shouldUseS3 = process.env.NODE_ENV === 'production' || s3KeysPresent;
+
+  if (shouldUseS3 && !s3KeysPresent) {
+    // Production requires S3 (there's no dev-data fallback) but the Spaces
+    // credentials aren't configured — surface the misconfiguration loudly.
+    console.error('[API /images] S3 is required but SPACES_KEY/SPACES_SECRET are not configured.');
+  }
 
   if (shouldUseS3) {
     try {
