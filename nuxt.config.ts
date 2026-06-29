@@ -59,7 +59,10 @@ export default defineNuxtConfig({
     spacesSecret: process.env.SPACES_SECRET,
     // Public keys that are exposed to the client
     public: {
-      githubClientId: process.env.GITHUB_CLIENT_ID
+      githubClientId: process.env.GITHUB_CLIENT_ID,
+      // Comma-separated release lines shown in the UI; unpromoted lines stay
+      // hidden. Override at runtime with NUXT_PUBLIC_VISIBLE_RELEASES (no rebuild).
+      visibleReleases: process.env.NUXT_PUBLIC_VISIBLE_RELEASES || '8.0,8.1'
     }
   },
 
