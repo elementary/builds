@@ -1,10 +1,8 @@
 import { defineEventHandler, readBody, setCookie, createError } from 'h3'
 import { GraphQLClient, gql } from 'graphql-request' // Import gql
 import jwt from 'jsonwebtoken'
-import JSON5 from 'json5' 
-import fs from 'node:fs'
-import path from 'node:path'
 import { encodeParams } from '../../utils/url'
+import { readDataAsset } from '../../utils/data'
 
 // --- Types (improve maintainability) ---
 interface GitHubTokenResponse {
@@ -114,13 +112,14 @@ async function getGithubData(token: string): Promise<GitHubUserData> {
   }
 }
 
-function loadAllowlist(): Allowlist {
+async function loadAllowlist(): Promise<Allowlist> {
   try {
-    // Resolve path relative to the current file (__dirname is not available in ESM)
-    // Assuming server/api/auth/callback.post.ts
-    const allowlistPath = path.resolve(process.cwd(), 'data', 'allowlist.json5');
-    const fileContent = fs.readFileSync(allowlistPath, 'utf-8');
-    return JSON5.parse(fileContent);
+    const data = await readDataAsset<Allowlist>('allowlist.json5');
+    if (!data || !Array.isArray(data.users)) {
+      console.error('Allowlist asset missing or malformed.');
+      return { users: [] };
+    }
+    return data;
   } catch (err) {
     console.error('Failed to load or parse allowlist.json5:', err);
     // Depending on requirements, either throw or return an empty list
@@ -190,7 +189,7 @@ export default defineEventHandler(async (event) => {
     console.log(`[API /auth/callback] Got GitHub data for user: ${userLogin}`);
 
     console.log('[API /auth/callback] Loading allowlist...');
-    const allowlist = loadAllowlist();
+    const allowlist = await loadAllowlist();
 
     console.log('[API /auth/callback] Checking authorization...');
     // Users with no sponsorships may not have this field at all.
