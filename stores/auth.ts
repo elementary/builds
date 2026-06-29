@@ -21,7 +21,9 @@ export const useAuthStore = defineStore('auth', {
         return data.url;
       } catch (error) {
         console.error('[Auth Store] Error fetching login URL:', error);
-        return null;
+        // Rethrow so the caller can surface the failure to the user instead of
+        // silently sitting on "Logging in to GitHub...".
+        throw error;
       }
     },
 
