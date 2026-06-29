@@ -174,20 +174,21 @@ const getName = (iso: { path: string }): string => {
   return parts[parts.length - 1] || 'unknown';
 };
 
-const getRelativeDate = (iso: { timestamp: Date | string }): string => {
-  try {
-    const date = new Date(iso.timestamp);
-    if (isNaN(date.getTime())) return 'Invalid Date';
-    return date.toLocaleDateString(undefined, {
-      timeZone: 'UTC',
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  } catch {
-    return 'Invalid Date';
-  }
+const getRelativeDate = (iso: { path: string }): string => {
+  // The YYYYMMDD date encoded in the filename is authoritative for the build
+  // date; the S3 LastModified timestamp can drift (e.g. on re-upload).
+  const match = iso.path.match(/([0-9]{4})([0-9]{2})([0-9]{2})/);
+  if (!match) return 'Invalid Date';
+  const [, year, month, day] = match;
+  const date = new Date(`${year}-${month}-${day}T01:00:00.000Z`);
+  if (isNaN(date.getTime())) return 'Invalid Date';
+  return date.toLocaleDateString(undefined, {
+    timeZone: 'UTC',
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
 };
 
 const getShaUrl = (iso: { path: string }): string => {
