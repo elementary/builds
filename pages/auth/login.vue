@@ -1,19 +1,37 @@
 <template>
   <div class="center">
     <h1>elementary OS Early Access Builds</h1>
-    <p>Logging in to GitHub...</p>
+    <template v-if="error">
+      <p role="alert">{{ error }}</p>
+      <button class="button suggested" @click="attemptLogin">Try again</button>
+    </template>
+    <p v-else>Logging in to GitHub...</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useAuthStore } from '~/stores/auth'
 import { useRoute } from '#app'
 
 const authStore = useAuthStore()
 const route = useRoute()
+const error = ref<string | null>(null)
 
-onMounted(async () => {
+const attemptLogin = async () => {
+  error.value = null
+  console.log('[Login Page] Fetching login URL...');
+  try {
+    const url = await authStore.fetchLoginUrl();
+    console.log(`[Login Page] Got login URL, redirecting to GitHub: ${url}`);
+    window.location.href = url;
+  } catch (e) {
+    console.error('[Login Page] Failed to get login URL for redirect:', e);
+    error.value = "Couldn't reach the login service. Check your network and try again.";
+  }
+}
+
+onMounted(() => {
   console.log('[Login Page] Mounted.');
   // Check for redirect query parameter and store it
   const redirectPath = route.query.redirect as string | undefined;
@@ -33,14 +51,7 @@ onMounted(async () => {
     }
   }
 
-  // Fetch the GitHub login URL
-  console.log('[Login Page] Fetching login URL...');
-  const url = await authStore.fetchLoginUrl();
-  if (url) {
-    console.log(`[Login Page] Got login URL, redirecting to GitHub: ${url}`);
-    window.location.href = url;
-  } else {
-    console.error('[Login Page] Failed to get login URL for redirect.');
-  }
+  // Fetch the GitHub login URL and redirect (or surface an error to retry)
+  attemptLogin();
 });
 </script>
