@@ -5,9 +5,10 @@
   "author": "elementary",
   "private": true,
   "engines": {
-    "node": ">=25.0.0"
+    "node": ">=26.0.0"
   },
   "scripts": {
+    "prod": "nuxt start",
     "start": "nuxt dev",
     "build": "nuxt build",
     "lint:js": "eslint .",
