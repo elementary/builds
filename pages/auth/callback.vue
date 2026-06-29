@@ -67,12 +67,7 @@ const performAuthentication = async () => {
     }
 
     if (success) {
-      console.log(`[Callback Page] Authentication successful. Setting justLoggedIn flag.`);
-      try {
-        sessionStorage.setItem('justLoggedIn', 'true'); // Set flag
-      } catch (e) {
-        console.warn('[Callback Page] Could not set justLoggedIn flag in sessionStorage:', e);
-      }
+      console.log(`[Callback Page] Authentication successful.`);
 
       let determinedRedirectUrl: string;
       if (intendedSessionRedirect && intendedSessionRedirect.startsWith('/')) {

@@ -1,178 +1,34 @@
-import { defineNuxtRouteMiddleware, navigateTo, useCookie, useRuntimeConfig } from '#app'
+import { defineNuxtRouteMiddleware, navigateTo, useRequestFetch } from '#app'
 import { useAuthStore } from '~/stores/auth'
-import { jwtDecode } from 'jwt-decode'
 
-enum AuthCheckResultStatus {
-  AUTHENTICATED,
-  NOT_AUTHENTICATED,
-  INVALID_TOKEN_CLEAR_COOKIE
+interface AuthStatus {
+  authenticated: boolean;
+  user?: { login: string } | null;
 }
 
-interface AuthCheckResult {
-  status: AuthCheckResultStatus;
-  storeNeedsUpdate: boolean; 
-}
-
-async function checkAuthenticationStatus(
-  initialStoreAuthStatus: boolean,
-  token?: string | null,
-  serverSigningKey?: string
-): Promise<AuthCheckResult> {
-  const logPrefix = '[AuthCheckInternal]';
-
-  if (initialStoreAuthStatus) {
-    console.log(`${logPrefix} Store already indicates authenticated.`);
-    return { status: AuthCheckResultStatus.AUTHENTICATED, storeNeedsUpdate: false };
-  }
-
-  if (!token) {
-    console.log(`${logPrefix} No token provided.`);
-    return { status: AuthCheckResultStatus.NOT_AUTHENTICATED, storeNeedsUpdate: false };
-  }
-
-  let isValidBasedOnCookie = false;
-
-  if (import.meta.server) {
-    if (!serverSigningKey) {
-      console.warn(`${logPrefix} Server: 'signingKey' not provided. Cannot confirm token validity.`);
-      return { status: AuthCheckResultStatus.NOT_AUTHENTICATED, storeNeedsUpdate: false };
-    }
-    const jwtModule = await import('jsonwebtoken');
-    const jwt = jwtModule.default || jwtModule; // Handle CJS/ESM default export
-    try {
-      const decoded = jwt.verify(token, serverSigningKey) as { access?: boolean };
-      if (decoded?.access === true) {
-        console.log(`${logPrefix} Server: JWT verified successfully.`);
-        isValidBasedOnCookie = true;
-      } else {
-        console.warn(`${logPrefix} Server: JWT invalid (claim).`);
-        return { status: AuthCheckResultStatus.INVALID_TOKEN_CLEAR_COOKIE, storeNeedsUpdate: false };
-      }
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      console.warn(`${logPrefix} Server: JWT verification error: ${message}.`);
-      return { status: AuthCheckResultStatus.INVALID_TOKEN_CLEAR_COOKIE, storeNeedsUpdate: false };
-    }
-  } else { // Client-side
-    console.log(`${logPrefix} Client: Attempting to decode JWT with jwt-decode.`);
-    try {
-      const decoded = jwtDecode<{ access?: boolean; exp?: number }>(token);
-      if (decoded && decoded.access === true) {
-        if (decoded.exp && (decoded.exp * 1000) < Date.now()) {
-          console.log(`${logPrefix} Client: JWT decoded, but token is expired.`);
-          return { status: AuthCheckResultStatus.INVALID_TOKEN_CLEAR_COOKIE, storeNeedsUpdate: false };
-        } else {
-          console.log(`${logPrefix} Client: JWT decoded successfully.`);
-          isValidBasedOnCookie = true;
-        }
-      } else {
-        console.log(`${logPrefix} Client: JWT decoded, but access claim not true or malformed.`);
-        return { status: AuthCheckResultStatus.NOT_AUTHENTICATED, storeNeedsUpdate: false };
-      }
-    } catch (e) {
-      const message = e instanceof Error ? e.message : String(e);
-      console.warn(`${logPrefix} Client: Error decoding JWT: ${message}`);
-      return { status: AuthCheckResultStatus.INVALID_TOKEN_CLEAR_COOKIE, storeNeedsUpdate: false };
-    }
-  }
-
-  if (isValidBasedOnCookie) {
-    return { status: AuthCheckResultStatus.AUTHENTICATED, storeNeedsUpdate: !initialStoreAuthStatus };
-  }
-  
-  return { status: AuthCheckResultStatus.NOT_AUTHENTICATED, storeNeedsUpdate: false };
-}
-
-
-export default defineNuxtRouteMiddleware(async (to, from) => {
-  const logPrefix = '[Auth Middleware]';
-  console.log(`${logPrefix} Running for path: ${to.path} (from: ${from.path}) on ${import.meta.server ? 'server' : 'client'}`);
-  
+export default defineNuxtRouteMiddleware(async (to) => {
   const authStore = useAuthStore();
 
-  // Check for "justLoggedIn" flag (client-side only)
-  if (import.meta.client) {
-    console.log(`${logPrefix} CLIENT-SIDE: Initial store state before any checks - isAuthenticated: ${authStore.isAuthenticated}`);
-    try {
-      if (sessionStorage.getItem('justLoggedIn') === 'true') {
-        sessionStorage.removeItem('justLoggedIn');
-        console.log(`${logPrefix} 'justLoggedIn' flag found and removed.`);
-        // Ensure store is marked as authenticated if not already
-        if (!authStore.isAuthenticated) {
-          authStore.setAuthenticated(true); // Update store state
-          console.log(`${logPrefix} Updated authStore to authenticated based on 'justLoggedIn' flag.`);
-        }
-        console.log(`${logPrefix} Allowing navigation due to 'justLoggedIn' flag.`);
-        return; // Allow navigation
-      }
-    } catch (e) {
-      console.warn(`${logPrefix} Error accessing sessionStorage for 'justLoggedIn' flag:`, e);
-    }
+  // The 'builds' cookie is httpOnly, so it can't be read (let alone verified)
+  // on the client. Authentication is therefore re-validated server-side via
+  // /api/auth/status on every navigation; client store state is never trusted
+  // as proof. useRequestFetch() forwards the incoming cookies during SSR.
+  let status: AuthStatus = { authenticated: false };
+  try {
+    const apiFetch = import.meta.server ? useRequestFetch() : $fetch;
+    status = await apiFetch<AuthStatus>('/api/auth/status');
+  } catch (error) {
+    console.warn('[Auth Middleware] Auth status check failed:', error);
   }
 
-  const cookieRef = useCookie('builds');
-  const tokenFromCookie = cookieRef.value;
-  
-  const initialStoreAuth = authStore.isAuthenticated;
-  console.log(`${logPrefix} Initial store state - isAuthenticated: ${initialStoreAuth}`);
-
-  let signingKeyForServer: string | undefined;
-  if (import.meta.server) {
-    const config = useRuntimeConfig();
-    signingKeyForServer = config.signingKey as string | undefined;
+  // Mirror the authoritative result into the store (drives navbar UI only).
+  authStore.setAuthenticated(status.authenticated);
+  if (status.authenticated && status.user?.login) {
+    authStore.setUser({ login: status.user.login, name: status.user.login });
   }
 
-  const authResult = await checkAuthenticationStatus(
-    initialStoreAuth,
-    tokenFromCookie,
-    signingKeyForServer
-  );
-
-  let finalIsAuthenticated = false;
-
-  switch (authResult.status) {
-    case AuthCheckResultStatus.AUTHENTICATED:
-      finalIsAuthenticated = true;
-      if (authResult.storeNeedsUpdate) {
-        if (typeof authStore.setAuthenticated === 'function') {
-          authStore.setAuthenticated(true);
-          console.log(`${logPrefix} Updated authStore.isAuthenticated to true via cookie check.`);
-        } else {
-          console.warn(`${logPrefix} Cookie valid, store out of sync, but no setAuthenticated method on authStore.`);
-        }
-      }
-      break;
-    case AuthCheckResultStatus.NOT_AUTHENTICATED:
-      finalIsAuthenticated = false;
-      // If store thought it was authenticated but cookie says no (and not invalid), correct store.
-      if (initialStoreAuth) {
-        authStore.setAuthenticated(false);
-        console.log(`${logPrefix} Corrected store to not authenticated as cookie was missing/invalid.`);
-      }
-      break;
-    case AuthCheckResultStatus.INVALID_TOKEN_CLEAR_COOKIE:
-      finalIsAuthenticated = false;
-      console.log(`${logPrefix} Invalid token detected. Clearing 'builds' cookie.`);
-      cookieRef.value = null; 
-      if (initialStoreAuth || authStore.isAuthenticated) { 
-         if (typeof authStore.setAuthenticated === 'function') {
-          authStore.setAuthenticated(false);
-          console.log(`${logPrefix} Cleared cookie and set store to not authenticated.`);
-        }
-      }
-      break;
-  }
-  
-  console.log(`${logPrefix} Effective authentication status after full check: ${finalIsAuthenticated}`);
-
-  // This is a named middleware attached (via definePageMeta) only to protected
-  // pages, so reaching here unauthenticated always means we should redirect.
-  if (!finalIsAuthenticated) {
-    console.log(`${logPrefix} Redirecting to /auth/login for protected route.`);
-    const intendedRedirect = to.fullPath;
-    const redirectPath = intendedRedirect.split('?')[0] ?? intendedRedirect;
+  if (!status.authenticated) {
+    const redirectPath = to.fullPath.split('?')[0] ?? to.fullPath;
     return navigateTo(`/auth/login?redirect=${encodeURIComponent(redirectPath)}`);
   }
-
-  console.log(`${logPrefix} Allowing navigation.`);
 });
