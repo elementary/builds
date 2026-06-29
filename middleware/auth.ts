@@ -165,11 +165,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   
   console.log(`${logPrefix} Effective authentication status after full check: ${finalIsAuthenticated}`);
 
-  const protectedRoutes = ['/downloads']; 
-  const isGoingToProtectedRoute = protectedRoutes.some(route => to.path.startsWith(route));
-  console.log(`${logPrefix} Is going to protected route (${to.path}): ${isGoingToProtectedRoute}`);
-
-  if (isGoingToProtectedRoute && !finalIsAuthenticated) {
+  // This is a named middleware attached (via definePageMeta) only to protected
+  // pages, so reaching here unauthenticated always means we should redirect.
+  if (!finalIsAuthenticated) {
     console.log(`${logPrefix} Redirecting to /auth/login for protected route.`);
     const intendedRedirect = to.fullPath;
     const redirectPath = intendedRedirect.split('?')[0] ?? intendedRedirect;
