@@ -6,13 +6,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { useRoute, showError, navigateTo } from '#app'
 import { useAuthStore } from '~/stores/auth'
 
 const route = useRoute()
 const authStore = useAuthStore()
-const processing = ref(false)
 
 // Only allow same-site absolute paths as a post-login redirect. Reject
 // protocol-relative ('//evil.com') and backslash-prefixed ('/\\evil.com')
@@ -111,24 +110,15 @@ const performAuthentication = async () => {
     });
   } finally {
     console.log('[Callback Page] performAuthentication finished.');
-    processing.value = false; // Allow potential re-runs if needed?
   }
 };
 
 onMounted(() => {
   console.log('[Callback Page] Mounted.');
-  if (processing.value) {
-    console.log('[Callback Page] Already processing, skipping.');
-    return;
-  }
-  processing.value = true;
-  console.log('[Callback Page] Set processing flag to true.');
-
   if (!checkForErrors()) {
     performAuthentication(); // Call the async function
   } else {
-    console.log('[Callback Page] Errors found in query, stopping processing.');
-    processing.value = false;
+    console.log('[Callback Page] Errors found in query.');
   }
 })
 </script>
