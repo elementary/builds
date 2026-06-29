@@ -102,13 +102,15 @@ export const useAuthStore = defineStore('auth', {
       console.log(`${logPrefix} initializeAuth called. Current state: ${this.isAuthenticated}. Relies on middleware for robust check.`);
     },
 
-    logout() {
+    async logout() {
       console.log('[AuthStore] Logout action called.');
+      // The 'builds' cookie is httpOnly, so it must be cleared by the server.
+      try {
+        await ofetch('/api/auth/logout', { method: 'POST' });
+      } catch (error) {
+        console.error('[AuthStore] Error clearing auth cookie on logout:', error);
+      }
       this.setAuthenticated(false); // This will also clear the user via setAuthenticated logic
-      // Actual cookie clearing should be done via an API call to an endpoint
-      // that clears the HTTPOnly cookie, or if it's not HTTPOnly,
-      // by the component that calls logout using useCookie('builds').value = null.
-      // For an HttpOnly cookie, an API endpoint is necessary.
     }
   }
 });

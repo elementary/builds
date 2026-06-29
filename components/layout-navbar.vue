@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useAuthStore } from '~/stores/auth'
-import { useCookie, navigateTo } from '#app'
+import { navigateTo } from '#app'
 import {
   faDiscord,
   faMastodon,
@@ -78,10 +78,8 @@ const authStore = useAuthStore()
 
 const loggedIn = computed(() => authStore.isAuthenticated)
 
-const logout = () => {
-  authStore.logout()
-  const tokenCookie = useCookie<string | undefined>('builds');
-  tokenCookie.value = undefined;
+const logout = async () => {
+  await authStore.logout()
   navigateTo('/');
 }
 
