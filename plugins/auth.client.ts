@@ -37,13 +37,18 @@ export default defineNuxtPlugin(async () => {
   if (token) {
     try {
       const decoded = jwtDecode<JwtPayload>(token);
-      console.log(`${logPrefix} Decoded token payload:`, JSON.stringify(decoded));
+      // Token contents are sensitive; only dump them in development.
+      if (import.meta.dev) {
+        console.log(`${logPrefix} Decoded token payload:`, JSON.stringify(decoded));
+      }
 
       const expires = decoded.exp ? decoded.exp * 1000 : 0;
       const now = Date.now();
       const hasAccessClaim = decoded.access === true;
-      
-      console.log(`${logPrefix} Token 'access' claim: ${decoded.access}, 'exp' claim: ${decoded.exp} (raw), expires_ms: ${expires}, now_ms: ${now}`);
+
+      if (import.meta.dev) {
+        console.log(`${logPrefix} Token 'access' claim: ${decoded.access}, 'exp' claim: ${decoded.exp} (raw), expires_ms: ${expires}, now_ms: ${now}`);
+      }
 
       if (hasAccessClaim && expires > now) {
         console.log(`${logPrefix} Valid token found by plugin. Setting store state.`);
