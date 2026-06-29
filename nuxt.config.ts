@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
@@ -35,6 +36,19 @@ export default defineNuxtConfig({
   // in `static/` (favicon.ico, elementary.svg), so point the public dir at it.
   dir: {
     public: 'static'
+  },
+
+  nitro: {
+    // Bundle the `data/` JSON5 files into the server build so they're read from
+    // the bundle (assets:data) rather than process.cwd()/data at runtime.
+    serverAssets: [
+      {
+        baseName: 'data',
+        // Absolute path to <projectRoot>/data — a bare 'data' resolves against
+        // Nitro's srcDir (server/), which would miss the real directory.
+        dir: fileURLToPath(new URL('data', import.meta.url))
+      }
+    ]
   },
 
   runtimeConfig: {

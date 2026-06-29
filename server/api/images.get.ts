@@ -1,9 +1,7 @@
 import { S3Client, ListObjectsCommand, type ListObjectsCommandOutput } from '@aws-sdk/client-s3'
 import Cache from 'node-cache'
 import { defineEventHandler, createError } from 'h3'
-import JSON5 from 'json5'
-import fs from 'node:fs'
-import path from 'node:path'
+import { readDataAsset } from '../utils/data'
 
 // --- Types ---
 interface ImageInfo {
@@ -51,12 +49,10 @@ function getS3Client(): S3Client {
   return s3;
 }
 
-function loadDevelopmentImages(): ImageInfo[] {
+async function loadDevelopmentImages(): Promise<ImageInfo[]> {
   try {
-    const devImagesPath = path.resolve(process.cwd(), 'data', 'development-images.json5');
-    const fileContent = fs.readFileSync(devImagesPath, 'utf-8');
-    // Add basic validation or type assertion if needed
-    return JSON5.parse(fileContent) as ImageInfo[];
+    const data = await readDataAsset<ImageInfo[]>('development-images.json5');
+    return Array.isArray(data) ? data : [];
   } catch (err) {
     console.error('Failed to load development-images.json5:', err);
     return []; // Return empty array if dev data fails
@@ -140,7 +136,7 @@ async function getImages(): Promise<ImageInfo[]> {
   // 2. Non-production environment AND S3 keys ARE present BUT S3 fetch failed.
   if (process.env.NODE_ENV !== 'production') {
     console.log('Using local development images data (S3 not configured, S3 disabled for dev, or S3 fetch failed in dev).');
-    const devImages = loadDevelopmentImages();
+    const devImages = await loadDevelopmentImages();
     // It's good practice to cache dev images too, to avoid frequent file reads.
     cache.set(cacheKey, devImages);
     return devImages;
