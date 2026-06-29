@@ -14,6 +14,16 @@ const route = useRoute()
 const authStore = useAuthStore()
 const processing = ref(false)
 
+// Only allow same-site absolute paths as a post-login redirect. Reject
+// protocol-relative ('//evil.com') and backslash-prefixed ('/\\evil.com')
+// URLs, which navigateTo would treat as external — an open-redirect vector.
+const isSafeRedirect = (path: string | null): path is string => {
+  return !!path
+    && path.startsWith('/')
+    && !path.startsWith('//')
+    && !path.startsWith('/\\');
+}
+
 // Function to check for errors in query params
 const checkForErrors = () => {
   console.log('[Callback Page] Checking for errors in query params:', route.query);
@@ -70,11 +80,11 @@ const performAuthentication = async () => {
       console.log(`[Callback Page] Authentication successful.`);
 
       let determinedRedirectUrl: string;
-      if (intendedSessionRedirect && intendedSessionRedirect.startsWith('/')) {
+      if (isSafeRedirect(intendedSessionRedirect)) {
         determinedRedirectUrl = intendedSessionRedirect;
       } else {
         if (intendedSessionRedirect != null && intendedSessionRedirect !== "") { // Log if it was non-empty but invalid
-            console.warn(`[Callback Page] intendedRedirect '${intendedSessionRedirect}' was invalid (not null, not empty, but not starting with '/'). Defaulting to /downloads.`);
+            console.warn(`[Callback Page] intendedRedirect '${intendedSessionRedirect}' was unsafe (not a same-site absolute path). Defaulting to /downloads.`);
         }
         determinedRedirectUrl = '/downloads'; // Default to /downloads
       }
