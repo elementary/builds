@@ -202,19 +202,29 @@ export default defineEventHandler(async (event) => {
     console.log(`[API /auth/callback] Auth check result - Sponsored: ${sponsored}, Patreon: ${patreon}, OrgMember: ${organizationMember}, Allowlisted: ${allowListed}, Overall: ${success}`);
 
     if (!success) {
-      console.error(`[API /auth/callback] Auth denied for ${userLogin}.`, JSON.stringify(githubData, null, 2));
+      // The full GitHub graph (orgs, sponsorships, paymentSource) is sensitive,
+      // so only dump it to logs and echo it back to the client in development.
+      if (import.meta.dev) {
+        console.error(`[API /auth/callback] Auth denied for ${userLogin}.`, JSON.stringify(githubData, null, 2));
+        return {
+          success: false,
+          reason: 'User does not meet authorization criteria.',
+          debug: {
+            login: userLogin,
+            sponsored,
+            patreon,
+            organizationMember,
+            allowListed,
+            organizations: githubData?.viewer?.organizations?.nodes ?? [],
+            sponsorships: sponsorNodes
+          }
+        };
+      }
+
+      console.error(`[API /auth/callback] Auth denied for ${userLogin}.`);
       return {
         success: false,
-        reason: 'User does not meet authorization criteria.',
-        debug: {
-          login: userLogin,
-          sponsored,
-          patreon,
-          organizationMember,
-          allowListed,
-          organizations: githubData?.viewer?.organizations?.nodes ?? [],
-          sponsorships: sponsorNodes
-        }
+        reason: 'User does not meet authorization criteria.'
       };
     }
 
