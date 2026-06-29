@@ -27,12 +27,16 @@ function getS3Client(): S3Client {
 
 // --- Authentication Helper (Consider moving to a shared server util) ---
 function isAuthenticated(event: H3Event): boolean {
-  const token = getCookie(event, 'builds');
-  const config = useRuntimeConfig(); // Use auto-available composable
-  const key = config.signingKey;
+  const key = useRuntimeConfig().signingKey;
+  if (!key) {
+    // A missing signing key is a fatal server misconfiguration, not an
+    // unauthenticated request — fail loudly rather than 401-ing everyone.
+    console.error('Download auth check: Missing SIGNING_KEY in runtime config.');
+    throw createError({ statusCode: 500, statusMessage: 'Server Configuration Error (Signing Key)' });
+  }
 
-  if (!token || !key) {
-    console.warn('Download auth check failed: Missing token or signing key in runtime config');
+  const token = getCookie(event, 'builds');
+  if (!token) {
     return false;
   }
 

@@ -1,4 +1,4 @@
-import { defineNuxtRouteMiddleware, navigateTo, useRequestFetch } from '#app'
+import { defineNuxtRouteMiddleware, navigateTo, useRequestFetch, createError } from '#app'
 import { useAuthStore } from '~/stores/auth'
 
 interface AuthStatus {
@@ -18,6 +18,15 @@ export default defineNuxtRouteMiddleware(async (to) => {
     const apiFetch = import.meta.server ? useRequestFetch() : $fetch;
     status = await apiFetch<AuthStatus>('/api/auth/status');
   } catch (error) {
+    // A 5xx means the auth service itself is broken (e.g. server misconfig),
+    // not that the user is unauthenticated — surface an error page rather than
+    // bouncing them to login.
+    const err = error as { statusCode?: number; response?: { status?: number } };
+    const statusCode = err.statusCode ?? err.response?.status;
+    if (statusCode !== undefined && statusCode >= 500) {
+      console.error('[Auth Middleware] /api/auth/status returned a server error:', error);
+      throw createError({ statusCode, statusMessage: 'Authentication service unavailable.' });
+    }
     console.warn('[Auth Middleware] Auth status check failed:', error);
   }
 
