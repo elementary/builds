@@ -1,4 +1,4 @@
-import { defineEventHandler, getCookie } from 'h3'
+import { defineEventHandler, getCookie, createError } from 'h3'
 import jwt from 'jsonwebtoken'
 
 interface BuildsTokenPayload {
@@ -11,10 +11,16 @@ interface BuildsTokenPayload {
 // the route middleware calls here on every protected navigation rather than
 // trusting client-side store state.
 export default defineEventHandler((event) => {
-  const token = getCookie(event, 'builds');
   const signingKey = useRuntimeConfig().signingKey;
+  if (!signingKey) {
+    // A missing signing key is a fatal server misconfiguration, not an
+    // unauthenticated user — fail loudly instead of silently denying everyone.
+    console.error('[API /auth/status] Missing SIGNING_KEY in runtime config.');
+    throw createError({ statusCode: 500, statusMessage: 'Server Configuration Error (Signing Key)' });
+  }
 
-  if (!token || !signingKey) {
+  const token = getCookie(event, 'builds');
+  if (!token) {
     return { authenticated: false };
   }
 
