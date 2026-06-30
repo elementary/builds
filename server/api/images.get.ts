@@ -10,6 +10,11 @@ interface ImageInfo {
   size: number;
 }
 
+// An S3 object narrowed to the fields an ImageInfo needs (see the type-guard
+// filter in listS3Images), which lets the map drop non-null assertions.
+type S3Object = NonNullable<ListObjectsCommandOutput['Contents']>[number];
+type ImageObject = S3Object & { Key: string; LastModified: Date; Size: number };
+
 // Use singleton pattern for cache and S3 client to avoid re-initialization on every request
 let s3: S3Client | null = null;
 const cache = new Cache({ stdTTL: 60 * 10 }); // 10 minute TTL
@@ -64,11 +69,15 @@ async function listS3Images(): Promise<ImageInfo[]> {
     } while (marker);
 
     return allContents
-      .filter(obj => obj.Key && (obj.Key.endsWith('.iso') || obj.Key.endsWith('.img.xz')) && obj.LastModified && obj.Size != null)
+      .filter((obj): obj is ImageObject =>
+        !!obj.Key
+        && (obj.Key.endsWith('.iso') || obj.Key.endsWith('.img.xz'))
+        && obj.LastModified != null
+        && obj.Size != null)
       .map(obj => ({
-        path: obj.Key!,
-        timestamp: obj.LastModified!,
-        size: obj.Size!,
+        path: obj.Key,
+        timestamp: obj.LastModified,
+        size: obj.Size,
       }));
   } catch (error) {
     console.error('Error listing objects from S3:', error);
