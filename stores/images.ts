@@ -1,9 +1,16 @@
 import { defineStore } from 'pinia'
 
-// Match the interface from the API route
+// Shape returned by /api/images over the wire (JSON serializes Date -> string).
+interface ImageDto {
+  path: string;
+  timestamp: string;
+  size: number;
+}
+
+// Working shape held in the store once timestamps are parsed to Date.
 interface ImageInfo {
   path: string;
-  timestamp: Date | string; // API might return string initially
+  timestamp: Date;
   size: number;
 }
 
@@ -50,8 +57,8 @@ export const useImagesStore = defineStore('images', {
       this.error = null;
       try {
         // Use Nuxt 3's $fetch (auto-imported)
-        const images = await $fetch<ImageInfo[]>('/api/images');
-        // Process timestamps into Date objects if they are strings
+        const images = await $fetch<ImageDto[]>('/api/images');
+        // Parse the wire timestamps (strings) into Date objects for the store.
         this.allImages = images.map(img => ({
           ...img,
           timestamp: new Date(img.timestamp)
