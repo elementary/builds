@@ -1,5 +1,5 @@
 import { defineEventHandler, getRequestHost, getRequestProtocol, createError } from 'h3'
-
+import { encodeParams } from '../../utils/url'
 
 export default defineEventHandler(async (event) => {
   console.log('[API /auth/login] Request received.');
