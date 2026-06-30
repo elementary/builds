@@ -49,7 +49,6 @@ import LayoutFooter from '~/components/layout-footer.vue'
 
   /* stylelint-disable selector-id-pattern */
   #__nuxt,
-  #__layout,
   #__page {
     min-height: 100vh;
     min-width: 100vw;
