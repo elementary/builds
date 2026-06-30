@@ -83,8 +83,9 @@ export const useAuthStore = defineStore('auth', {
      * @param {User | null} userData - The user object or null.
      */
     setUser(userData: User | null) {
-      // Basic check to see if user data actually changed to avoid excessive logging/updates
-      if (JSON.stringify(this.user) === JSON.stringify(userData)) return;
+      // Skip redundant updates/logs when the user hasn't changed (compare
+      // fields directly rather than serializing).
+      if (this.user?.login === userData?.login && this.user?.name === userData?.name) return;
 
       this.user = userData;
       if (userData) {

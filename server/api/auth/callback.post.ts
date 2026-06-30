@@ -133,7 +133,7 @@ type SponsorshipNode = NonNullable<GitHubUserData['viewer']['sponsorshipsAsSpons
 
 function isSponsored(nodes: SponsorshipNode[]): boolean {
   return nodes
-    .filter(s => s?.sponsorable && (s.sponsorable as { login?: string }).login === 'elementary')
+    .filter(s => s?.sponsorable && s.sponsorable.login === 'elementary')
     // Patreon-linked sponsorships have `tier: null`; guard to avoid TypeError.
     .map(s => s.tier && s.tier.monthlyPriceInCents)
     .some(p => p != null && p >= 100);
@@ -141,7 +141,7 @@ function isSponsored(nodes: SponsorshipNode[]): boolean {
 
 function isPatreon(nodes: SponsorshipNode[]): boolean {
   return nodes
-    .filter(s => s?.sponsorable && (s.sponsorable as { login?: string }).login === 'elementary')
+    .filter(s => s?.sponsorable && s.sponsorable.login === 'elementary')
     .some(q => q.paymentSource === 'PATREON');
 }
 
