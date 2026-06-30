@@ -31,9 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
-const year = computed(() => new Date().getFullYear())
+const year = new Date().getFullYear()
 </script>
 
 <style scoped>
