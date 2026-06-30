@@ -32,19 +32,19 @@
       <ul>
         <li>
           <a href="https://mastodon.social/@elementary" target="_blank" rel="noopener" aria-label="Mastodon" title="Mastodon">
-            <font-awesome-icon :icon="computedFaMastodon" aria-hidden="true" />
+            <font-awesome-icon :icon="faMastodon" aria-hidden="true" />
           </a>
         </li>
 
         <li>
           <a href="https://www.reddit.com/r/elementaryos" target="_blank" rel="noopener" aria-label="Reddit" title="Reddit">
-            <font-awesome-icon :icon="computedFaReddit" aria-hidden="true" />
+            <font-awesome-icon :icon="faReddit" aria-hidden="true" />
           </a>
         </li>
 
         <li>
           <a href="https://discord.com/invite/kwRyqGCzm5" target="_blank" rel="noopener" aria-label="Discord" title="Discord">
-            <font-awesome-icon :icon="computedFaDiscord" aria-hidden="true" />
+            <font-awesome-icon :icon="faDiscord" aria-hidden="true" />
           </a>
         </li>
       </ul>
@@ -80,12 +80,8 @@ const loggedIn = computed(() => authStore.isAuthenticated)
 
 const logout = async () => {
   await authStore.logout()
-  navigateTo('/');
+  await navigateTo('/');
 }
-
-const computedFaDiscord = computed(() => faDiscord)
-const computedFaMastodon = computed(() => faMastodon)
-const computedFaReddit = computed(() => faReddit)
 </script>
 
 <style scoped lang="scss">
