@@ -4,7 +4,7 @@
       <ul>
         <li>
           <a href="https://elementary.io" class="logomark" target="_self">
-            <elementary-logomark />
+            <ElementaryLogomark />
           </a>
         </li>
 
@@ -62,35 +62,25 @@
   </header>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useAuthStore } from '~/stores/auth'
+import { navigateTo } from '#app'
 import {
   faDiscord,
   faMastodon,
   faReddit
 } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import ElementaryLogomark from '~/components/elementary-logomark.vue'
 
-export default {
-  components: {
-    FontAwesomeIcon
-  },
+const authStore = useAuthStore()
 
-  computed: {
-    faDiscord: () => faDiscord,
-    faMastodon: () => faMastodon,
-    faReddit: () => faReddit,
+const loggedIn = computed(() => authStore.isAuthenticated)
 
-    loggedIn () {
-      return this.$store.getters['auth/loggedIn']
-    }
-  },
-
-  methods: {
-    logout () {
-      this.$store.commit('auth/clear')
-      this.$router.push('/')
-    }
-  }
+const logout = async () => {
+  await authStore.logout()
+  await navigateTo('/');
 }
 </script>
 

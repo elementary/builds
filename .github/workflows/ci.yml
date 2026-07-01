@@ -6,8 +6,12 @@ on:
   pull_request:
     types:
       - opened
+      - ready_for_review
       - reopened
       - synchronize
+  push:
+    branches:
+      - master
 
 jobs:
   lint_js:
@@ -21,7 +25,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: '25'
+          node-version: '26'
 
       - name: Install
         run: npm ci
@@ -40,13 +44,32 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: '25'
+          node-version: '26'
 
       - name: Install
         run: npm ci
 
       - name: Lint
         run: npm run lint:css
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '26'
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
 
   build:
     name: Build
@@ -59,7 +82,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: '25'
+          node-version: '26'
 
       - name: Install
         run: npm ci
