@@ -8,7 +8,7 @@ export const getters = {
       .filter(({ path }) => path.startsWith(`${channel}/`))
       // This filter allows us to build dailies for future releases internally before allowing them to be public.
       // It only modifies the images shown in the UI, not the actual images that are available for download.
-      .filter(({ path }) => path.includes('8.0') || path.includes('8.1'))
+      .filter(({ path }) => path.includes('8.1') || path.includes('9.0'))
   },
 
   images (state) {
