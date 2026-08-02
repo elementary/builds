@@ -30,14 +30,8 @@
   </footer>
 </template>
 
-<script>
-export default {
-  computed: {
-    year () {
-      return new Date().getFullYear()
-    }
-  }
-}
+<script setup lang="ts">
+const year = new Date().getFullYear()
 </script>
 
 <style scoped>

@@ -1,14 +1,20 @@
+<script setup lang="ts">
+import LayoutNavbar from '~/components/layout-navbar.vue'
+import LayoutFooter from '~/components/layout-footer.vue'
+</script>
+
 <template>
   <div id="__page">
-    <layout-navbar />
+    <LayoutNavbar />
 
     <div class="wrapper">
       <h1>elementary OS Early Access</h1>
       <p>Get your hands on Early Access builds of elementary OS. The latest stable version of elementary OS can always be downloaded at <a href="https://elementary.io">elementary.io</a>.</p>
 
-      <nuxt id="__content" />
+      <!-- Use NuxtPage to render the current page route -->
+      <NuxtPage id="__content" />
     </div>
-    <layout-footer />
+    <LayoutFooter />
   </div>
 </template>
 
@@ -41,21 +47,20 @@
     fill: inherit;
   }
 
-  /* stylelint-disable-next-line selector-id-pattern */
+  /* stylelint-disable selector-id-pattern */
   #__nuxt,
-  #__layout,
   #__page {
     min-height: 100vh;
     min-width: 100vw;
   }
 
-  /* stylelint-disable-next-line selector-id-pattern */
   #__page {
     place-content: stretch stretch;
     align-items: stretch;
     display: flex;
     flex-direction: column;
   }
+  /* stylelint-enable selector-id-pattern */
 
   .wrapper {
     flex: 1 0 auto;
