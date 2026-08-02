@@ -2,6 +2,8 @@
 .env
 .github/
 .nuxt
+# A local build bakes .env values into the bundle; keep them out of the image.
+.output
 *.log
 *.pid
 *.pid.lock

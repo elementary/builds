@@ -7,10 +7,14 @@ WORKDIR /app
 RUN npm ci
 RUN npm run build
 
+# A Windows checkout does not carry the executable bit.
+RUN chmod +x /app/docker-entrypoint.sh
+
 ENV NODE_ENV=production
-ENV NUXT_HOST=0.0.0.0
-ENV NUXT_PORT=80
+# Nitro reads HOST/PORT; the Nuxt 2 era NUXT_HOST/NUXT_PORT no longer bind.
+ENV HOST=0.0.0.0
+ENV PORT=80
 
 EXPOSE 80
 
-CMD ["/app/node_modules/.bin/nuxt", "start"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
