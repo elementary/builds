@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Missing download path' });
   }
 
-  let redirectUrl = '';
+  let redirectUrl: string;
 
   // Config access within handler if needed (example)
   // const config = useRuntimeConfig(); 
