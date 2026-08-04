@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@eslint/compat": "^2.1.0",
-    "@nuxt/eslint-config": "^1.15.2",
+    "@nuxt/eslint-config": "^1.16.0",
     "@types/jsonwebtoken": "^9.0.10",
     "eslint": "^10.4.0",
     "nuxt": "^3.17.3",
@@ -42,6 +42,6 @@
     "stylelint-config-standard-scss": "^17.0.0",
     "stylelint-config-standard-vue": "^1.0.0",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.1"
+    "vue-tsc": "^3.3.9"
   }
 }
