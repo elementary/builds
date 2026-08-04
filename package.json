@@ -27,7 +27,7 @@
     "json5": "^2.2.3",
     "jsonwebtoken": "^9.0.3",
     "node-cache": "^5.1.2",
-    "pinia": "^3.0.2"
+    "pinia": "^4.0.2"
   },
   "devDependencies": {
     "@eslint/compat": "^2.1.0",
