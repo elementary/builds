@@ -15,6 +15,14 @@
       >
         ♡ Sponsor elementary
       </a>
+      <a
+        class="button"
+        href="https://github.com/sponsors/elementary/dashboard"
+        target="_blank"
+        rel="noopener"
+      >
+        Manage Sponsorship
+      </a>
     </div>
   </div>
 </template>
