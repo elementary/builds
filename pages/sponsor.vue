@@ -17,7 +17,7 @@
       </a>
       <a
         class="button"
-        href="https://github.com/sponsors/elementary/dashboard"
+        href="https://github.com/sponsors/elementary"
         target="_blank"
         rel="noopener"
       >
