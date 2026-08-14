@@ -53,6 +53,11 @@
     <nav v-if="loggedIn" class="secondary">
       <ul>
         <li>
+          <a href="https://github.com/sponsors/elementary" target="_blank" rel="noopener">
+            Manage Sponsorship
+          </a>
+        </li>
+        <li>
           <a @click="logout">
             Log Out
           </a>
