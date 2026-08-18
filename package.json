@@ -20,7 +20,7 @@
     "@aws-sdk/s3-request-presigner": "^3.1111.0",
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
     "@fortawesome/vue-fontawesome": "^3.0.8",
-    "@nuxtjs/plausible": "^1.2.0",
+    "@nuxtjs/plausible": "^4.0.0",
     "@pinia/nuxt": "^1.0.2",
     "graphql": "^16.14.2",
     "graphql-request": "^7.4.0",
