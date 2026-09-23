@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
+import { parseImagePath, type Architecture } from '~/utils/image-path'
 
 // Shape returned by /api/images over the wire (JSON serializes Date -> string).
 interface ImageDto {
   path: string;
   timestamp: string;
   size: number;
+  checksum: string | null;
 }
 
 // Working shape held in the store once timestamps are parsed to Date.
@@ -12,6 +14,15 @@ interface ImageInfo {
   path: string;
   timestamp: Date;
   size: number;
+  // The checksum object's key, or null where storage holds no checksum for it.
+  checksum: string | null;
+}
+
+export interface BuildImage extends ImageInfo {
+  filename: string;
+  version: string;
+  arch: Architecture;
+  built: Date;
 }
 
 export const useImagesStore = defineStore('images', {
@@ -22,26 +33,32 @@ export const useImagesStore = defineStore('images', {
   }),
 
   getters: {
-    // Getter to filter images by category derived from path
-    // Example categories: 'stable', 'daily', 'daily-pinebookpro', 'daily-rpi'
+    // Latest images for one channel ('daily', 'stable') and architecture.
     getImagesFor: (state) => {
-      return (category: string): ImageInfo[] => {
-        // Which release lines surface in the UI comes from runtime config, so
-        // promoting a new line (e.g. 8.2) is an env change, not a code change.
-        const visibleReleases = String(useRuntimeConfig().public.visibleReleases ?? '')
+      return (channel: string, arch: Architecture): BuildImage[] => {
+        const config = useRuntimeConfig().public as unknown as Record<string, string | undefined>;
+        const key = `visible${channel[0]!.toUpperCase()}${channel.slice(1)}Releases`;
+        const visibleReleases = String(config[key] ?? '')
           .split(',')
           .map(v => v.trim())
           .filter(Boolean);
+
         return state.allImages
-          .filter(image => image.path.startsWith(`${category}/`))
-          // Hide release lines that haven't been promoted to the UI yet.
-          .filter(image => visibleReleases.some(v => image.path.includes(v)))
-          // Sort by timestamp descending (newest first)
-          .sort((a, b) => {
-            const dateA = new Date(a.timestamp).getTime();
-            const dateB = new Date(b.timestamp).getTime();
-            return dateB - dateA;
-          });
+          .flatMap((image) => {
+            const parsed = parseImagePath(image.path);
+            // Unrecognised keys are not offered for download.
+            if (!parsed || parsed.channel !== channel || parsed.arch !== arch) return [];
+            // Use environment/runtime config to determine which releases are visible.
+            if (!visibleReleases.includes(parsed.version)) return [];
+            return [{
+              ...image,
+              filename: parsed.filename,
+              version: parsed.version,
+              arch: parsed.arch,
+              built: parsed.built,
+            }];
+          })
+          .sort((a, b) => b.built.getTime() - a.built.getTime());
       };
     },
   },

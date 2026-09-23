@@ -36,7 +36,7 @@ npm start # Starts the web server
 
 A link to the test server will appear in Terminal. (Typically this is `http://localhost:3000/`)
 
-### Testing GitHub & DigitalOcean Spaces integration
+### Testing GitHub & Cloudflare R2 integration
 
 To test the GitHub login integration locally, generate a GitHub OAuth application client ID and secret at https://github.com/settings/applications/new
 and store them in a `.env` file. Also add a `SIGNING_KEY` which can just be random hex characters used to sign JWT tokens.
@@ -47,12 +47,25 @@ GITHUB_CLIENT_SECRET=XXXXXXXXXXXXXXXXXXX
 SIGNING_KEY=XXXXXXXXXXXXXXXXXXXXXXX
 ```
 
-If also testing DigitalOcean Spaces integration, add the secrets:
+If also testing the Cloudflare R2 integration, add the account and credentials
+for the builds buckets:
 
 ```
-SPACES_KEY=XXXXXXXXXXXXX
-SPACES_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXX
+R2_ACCOUNT_ID=XXXXXXXXXXXXXXXXXXXXXXXXX
+R2_ACCESS_KEY_ID=XXXXXXXXXXXXX
+R2_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXX
 ```
+
+Displayed versions are configured per-channel, so stable can show 8.1 while
+dailies are on 9.0.
+
+```
+NUXT_PUBLIC_VISIBLE_DAILY_RELEASES=9.0
+NUXT_PUBLIC_VISIBLE_STABLE_RELEASES=8.1
+```
+
+Without those variables the development server serves the sample listing in
+`data/development-images.json5` instead.
 
 You can then run the application in production mode with:
 
