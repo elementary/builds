@@ -1,29 +1,9 @@
-import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
+import { GetObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { defineEventHandler, getCookie, sendRedirect, createError, getRouterParam, type H3Event } from 'h3'
 import jwt from 'jsonwebtoken'
-
-// Config now accessed via useRuntimeConfig() below
-
-let s3: S3Client | null = null;
-
-function getS3Client(): S3Client {
-  if (!s3) {
-    const config = useRuntimeConfig(); // Use auto-available composable
-    const key = config.spacesKey;
-    const secret = config.spacesSecret;
-    if (!key || !secret) {
-      console.error('Missing S3 credentials in runtime config');
-      throw createError({ statusCode: 500, statusMessage: 'Server Configuration Error: Missing S3 Credentials' });
-    }
-    s3 = new S3Client({
-      endpoint: 'https://nyc3.digitaloceanspaces.com',
-      region: 'us-east-1',
-      credentials: { accessKeyId: key, secretAccessKey: secret },
-    });
-  }
-  return s3;
-}
+import { getBucket, getR2Client } from '../../utils/r2'
+import { channelForKey } from '../../../utils/image-path'
 
 // --- Authentication Helper (Consider moving to a shared server util) ---
 function isAuthenticated(event: H3Event): boolean {
@@ -51,54 +31,51 @@ function isAuthenticated(event: H3Event): boolean {
 
 // --- Event Handler ---
 export default defineEventHandler(async (event) => {
-  // Get the download path from the dynamic route parameter `slug`
-  // `event.context.params.slug` should contain the matched path segments
-  const downloadPath = getRouterParam(event, 'slug');
+  const key = getRouterParam(event, 'slug');
 
-  if (!downloadPath) {
+  if (!key) {
     throw createError({ statusCode: 400, statusMessage: 'Missing download path' });
   }
 
-  let redirectUrl: string;
-
-  // Config access within handler if needed (example)
-  // const config = useRuntimeConfig(); 
-
-  // --- Development Environment --- 
-  if (process.env.NODE_ENV !== 'production') {
-    console.log(`DEV MODE: Redirecting directly to S3 for ${downloadPath}`);
-    redirectUrl = `https://elementary-iso.nyc3.digitaloceanspaces.com/${downloadPath}`;
+  const segments = key.split('/');
+  if (segments.some(segment => !segment || segment === '.' || segment === '..')) {
+    throw createError({ statusCode: 400, statusMessage: 'Invalid download path' });
   }
-  // --- Production Environment --- 
-  else {
-    if (!isAuthenticated(event)) {
-      console.warn(`Unauthorized download attempt for: ${downloadPath}`);
-      throw createError({ statusCode: 401, statusMessage: 'Unauthorized: Access token is missing or invalid.' });
-    }
 
-    // User is authenticated, generate presigned URL
-    try {
-      const client = getS3Client();
-      const command = new GetObjectCommand({
-        Bucket: 'elementary-iso',
-        Key: downloadPath,
-        // ResponseContentType: 'application/octet-stream' // Optional: Suggest download
-      });
+  const channel = channelForKey(key);
+  if (!channel) {
+    throw createError({ statusCode: 404, statusMessage: 'File not found.' });
+  }
 
-      redirectUrl = await getSignedUrl(client, command, {
-        expiresIn: 60 * 60, // 1 hour
-      });
-      console.log(`Generated presigned URL for: ${downloadPath}`);
-    } catch (error) {
-      console.error(`Error generating presigned URL for ${downloadPath}:`, error);
-      // Handle specific S3 errors like NoSuchKey?
-      if (error instanceof Error && error.name === 'NoSuchKey') {
-           throw createError({ statusCode: 404, statusMessage: 'File not found.' });
-      }
-      throw createError({ statusCode: 500, statusMessage: 'Failed to generate download link.' });
+  if (process.env.NODE_ENV === 'production' && !isAuthenticated(event)) {
+    console.warn(`Unauthorized download attempt for: ${key}`);
+    throw createError({ statusCode: 401, statusMessage: 'Unauthorized: Access token is missing or invalid.' });
+  }
+
+  let redirectUrl: string;
+  try {
+    const client = getR2Client(channel);
+    const command = new GetObjectCommand({
+      Bucket: getBucket(channel),
+      Key: key,
+      // ResponseContentType: 'application/octet-stream' // Optional: Suggest download
+    });
+
+    redirectUrl = await getSignedUrl(client, command, {
+      expiresIn: 60 * 60, // 1 hour
+    });
+    console.log(`Generated presigned URL for: ${key}`);
+  } catch (error) {
+    console.error(`Error generating presigned URL for ${key}:`, error);
+    if (error && typeof error === 'object' && 'statusCode' in error) {
+      throw error; // Configuration errors already carry a status.
     }
+    if (error instanceof Error && error.name === 'NoSuchKey') {
+      throw createError({ statusCode: 404, statusMessage: 'File not found.' });
+    }
+    throw createError({ statusCode: 500, statusMessage: 'Failed to generate download link.' });
   }
 
   // Perform the redirect
   await sendRedirect(event, redirectUrl, 302); // Use 302 Found for temporary redirect
-}); 
+});

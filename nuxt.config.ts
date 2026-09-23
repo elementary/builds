@@ -55,14 +55,22 @@ export default defineNuxtConfig({
     // Private keys are only available server-side
     githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
     signingKey: process.env.SIGNING_KEY,
-    spacesKey: process.env.SPACES_KEY,
-    spacesSecret: process.env.SPACES_SECRET,
+    r2AccountId: process.env.R2_ACCOUNT_ID,
+    r2Endpoint: process.env.R2_ENDPOINT,
+    r2Region: process.env.R2_REGION, // R2 only accepts 'auto' (the default)
+    r2AccessKeyId: process.env.R2_ACCESS_KEY_ID,
+    r2SecretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+    r2DailyBucket: process.env.R2_DAILY_BUCKET || 'daily-installer',
+    r2StableBucket: process.env.R2_STABLE_BUCKET || 'stable-installer',
     // Public keys that are exposed to the client
     public: {
       githubClientId: process.env.GITHUB_CLIENT_ID,
-      // Comma-separated release lines shown in the UI; unpromoted lines stay
-      // hidden. Override at runtime with NUXT_PUBLIC_VISIBLE_RELEASES (no rebuild).
-      visibleReleases: process.env.NUXT_PUBLIC_VISIBLE_RELEASES || '8.1,9.0'
+      // Comma-separated release lines shown in the UI, per channel:
+      // the two are independent: stable stays on 8.1 while daily is on 9.0
+      // Override at runtime with NUXT_PUBLIC_VISIBLE_DAILY_RELEASES and
+      // NUXT_PUBLIC_VISIBLE_STABLE_RELEASES without needing to rebuild.
+      visibleDailyReleases: process.env.NUXT_PUBLIC_VISIBLE_DAILY_RELEASES || '9.0',
+      visibleStableReleases: process.env.NUXT_PUBLIC_VISIBLE_STABLE_RELEASES || '8.1'
     }
   },
 

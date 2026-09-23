@@ -25,7 +25,7 @@
             getRelativeDate(latestStable) }}.
         </p>
         <div class="center">
-          <a class="button" :href="getShaUrl(latestStable)">Download SHA256</a>
+          <a v-if="latestStable.checksum" class="button" :href="getShaUrl(latestStable)">Download SHA256</a>
           <a class="button suggested" :href="getIsoUrl(latestStable)">
             Download ({{ getSize(latestStable) }} GB)
           </a>
@@ -40,7 +40,7 @@
             getRelativeDate(latestStableArm64) }}.
         </p>
         <div class="center">
-          <a class="button" :href="getShaUrl(latestStableArm64)">Download SHA256</a>
+          <a v-if="latestStableArm64.checksum" class="button" :href="getShaUrl(latestStableArm64)">Download SHA256</a>
           <a class="button suggested" :href="getIsoUrl(latestStableArm64)">
             Download ({{ getSize(latestStableArm64) }} GB)
           </a>
@@ -58,7 +58,7 @@
           otherwise work for you, try a <a href="#oldDailies">previous build</a>.
         </p>
         <div class="center">
-          <a class="button" :href="getShaUrl(latestDaily)">Download SHA256</a>
+          <a v-if="latestDaily.checksum" class="button" :href="getShaUrl(latestDaily)">Download SHA256</a>
           <a class="button suggested" :href="getIsoUrl(latestDaily)">
             Download ({{ getSize(latestDaily) }} GB)
           </a>
@@ -74,7 +74,7 @@
           otherwise work for you, try a <a href="#oldDailiesArm64">previous build</a>.
         </p>
         <div class="center">
-          <a class="button" :href="getShaUrl(latestDailyArm64)">Download SHA256</a>
+          <a v-if="latestDailyArm64.checksum" class="button" :href="getShaUrl(latestDailyArm64)">Download SHA256</a>
           <a class="button suggested" :href="getIsoUrl(latestDailyArm64)">
             Download ({{ getSize(latestDailyArm64) }} GB)
           </a>
@@ -99,7 +99,10 @@
             <tbody>
               <tr v-for="iso in oldDailies" :key="iso.path">
                 <td><a :href="getIsoUrl(iso)">{{ getName(iso) }}</a></td>
-                <td><a :href="getShaUrl(iso)">SHA256</a></td>
+                <td>
+                  <a v-if="iso.checksum" :href="getShaUrl(iso)">SHA256</a>
+                  <span v-else>&mdash;</span>
+                </td>
                 <td>{{ getRelativeDate(iso) }}</td>
               </tr>
             </tbody>
@@ -120,7 +123,10 @@
             <tbody>
               <tr v-for="iso in oldDailiesArm64" :key="iso.path">
                 <td><a :href="getIsoUrl(iso)">{{ getName(iso) }}</a></td>
-                <td><a :href="getShaUrl(iso)">SHA256</a></td>
+                <td>
+                  <a v-if="iso.checksum" :href="getShaUrl(iso)">SHA256</a>
+                  <span v-else>&mdash;</span>
+                </td>
                 <td>{{ getRelativeDate(iso) }}</td>
               </tr>
             </tbody>
@@ -134,7 +140,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useAsyncData } from '#app'
-import { useImagesStore } from '~/stores/images'
+import { useImagesStore, type BuildImage } from '~/stores/images'
 import DisclaimerText from '~/components/disclaimer-text.vue'
 
 definePageMeta({
@@ -157,32 +163,24 @@ const errorMessage = computed(() => {
   return 'An unknown error occurred.';
 });
 
-const latestStable = computed(() => imagesStore.getImagesFor('stable')[0]);
-const latestStableArm64 = computed(() => imagesStore.getImagesFor('stable-arm64')[0]);
-const latestDaily = computed(() => imagesStore.getImagesFor('daily')[0]);
-const latestDailyArm64 = computed(() => imagesStore.getImagesFor('daily-arm64')[0]);
+const latestStable = computed(() => imagesStore.getImagesFor('stable', 'x86-64')[0]);
+const latestStableArm64 = computed(() => imagesStore.getImagesFor('stable', 'arm64')[0]);
+const latestDaily = computed(() => imagesStore.getImagesFor('daily', 'x86-64')[0]);
+const latestDailyArm64 = computed(() => imagesStore.getImagesFor('daily', 'arm64')[0]);
 
-const oldDailies = computed(() => imagesStore.getImagesFor('daily').slice(1));
-const oldDailiesArm64 = computed(() => imagesStore.getImagesFor('daily-arm64').slice(1));
+const oldDailies = computed(() => imagesStore.getImagesFor('daily', 'x86-64').slice(1));
+const oldDailiesArm64 = computed(() => imagesStore.getImagesFor('daily', 'arm64').slice(1));
 
-const getIsoUrl = (iso: { path: string }): string => {
+const getIsoUrl = (iso: BuildImage): string => {
   return `/api/download/${iso.path}`;
 };
 
-const getName = (iso: { path: string }): string => {
-  const parts = iso.path.split('/');
-  return parts[parts.length - 1] || 'unknown';
+const getName = (iso: BuildImage): string => {
+  return iso.filename;
 };
 
-const getRelativeDate = (iso: { path: string }): string => {
-  // The YYYYMMDD date encoded in the filename is authoritative for the build
-  // date; the S3 LastModified timestamp can drift (e.g. on re-upload).
-  const match = iso.path.match(/([0-9]{4})([0-9]{2})([0-9]{2})/);
-  if (!match) return 'Invalid Date';
-  const [, year, month, day] = match;
-  const date = new Date(`${year}-${month}-${day}T01:00:00.000Z`);
-  if (isNaN(date.getTime())) return 'Invalid Date';
-  return date.toLocaleDateString(undefined, {
+const getRelativeDate = (iso: BuildImage): string => {
+  return iso.built.toLocaleDateString(undefined, {
     timeZone: 'UTC',
     weekday: 'short',
     year: 'numeric',
@@ -191,18 +189,11 @@ const getRelativeDate = (iso: { path: string }): string => {
   });
 };
 
-const getShaUrl = (iso: { path: string }): string => {
-  const basePath = `/api/download/${iso.path}`;
-  if (basePath.endsWith('.iso')) {
-      return basePath.replace('.iso', '.sha256.txt');
-  }
-  if (basePath.endsWith('.img.xz')) {
-      return basePath.replace('.img.xz', '.sha256.txt');
-  }
-  return `${basePath}.sha256.txt`;
+const getShaUrl = (iso: BuildImage): string => {
+  return `/api/download/${iso.checksum}`;
 };
 
-const getSize = (iso: { size: number }): string => {
+const getSize = (iso: BuildImage): string => {
   return (iso.size / 1000000000).toFixed(2);
 };
 
