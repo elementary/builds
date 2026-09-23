@@ -37,8 +37,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Missing download path' });
   }
 
-  const segments = key.split('/');
-  if (segments.some(segment => !segment || segment === '.' || segment === '..')) {
+  if (key.includes('/') || key === '.' || key === '..') {
     throw createError({ statusCode: 400, statusMessage: 'Invalid download path' });
   }
 

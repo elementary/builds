@@ -9,12 +9,8 @@ const ARCHITECTURES: Record<string, Architecture> = {
   arm64: 'arm64',
 };
 
-const ARCH_PATTERN = Object.keys(ARCHITECTURES)
-  .sort((a, b) => b.length - a.length)
-  .join('|');
-
 const FILENAME = new RegExp(
-  `^elementaryos-(\\d+\\.\\d+)-(${CHANNELS.join('|')})-(${ARCH_PATTERN})\\.(\\d{8}|\\d{14})\\.(?:iso|img\\.xz)$`
+  `^elementaryos-(\\d+\\.\\d+)-(${CHANNELS.join('|')})-(${Object.keys(ARCHITECTURES).join('|')})\\.(\\d{8}|\\d{14})\\.(?:iso|img\\.xz)$`
 );
 
 export interface ParsedImagePath {
@@ -27,8 +23,7 @@ export interface ParsedImagePath {
 }
 
 export function channelForKey(key: string): Channel | null {
-  const filename = key.split('/').pop() ?? '';
-  return CHANNELS.find(channel => filename.includes(`-${channel}-`)) ?? null;
+  return CHANNELS.find(channel => key.includes(`-${channel}-`)) ?? null;
 }
 
 function buildDate(stamp: string): Date | null {
@@ -45,24 +40,13 @@ function buildDate(stamp: string): Date | null {
 }
 
 export function parseImagePath(key: string): ParsedImagePath | null {
-  const segments = key.split('/');
-  if (segments.length > 2) return null;
-
-  const filename = segments[segments.length - 1] ?? '';
-  const match = FILENAME.exec(filename);
+  const match = FILENAME.exec(key);
   if (!match) return null;
 
   const [, version, channel, arch, stamp] = match as unknown as [string, string, Channel, string, string];
-  const architecture = ARCHITECTURES[arch];
-  if (!architecture) return null;
-
-  if (segments.length === 2) {
-    const directory = ARCHITECTURES[segments[0] ?? ''];
-    if (!directory || directory !== architecture) return null;
-  }
 
   const built = buildDate(stamp);
   if (!built) return null;
 
-  return { key, filename, channel, version, arch: architecture, built };
+  return { key, filename: key, channel, version, arch: ARCHITECTURES[arch]!, built };
 }

@@ -28,12 +28,9 @@ type ListedObject = StorageObject & { Key: string; LastModified: Date; Size: num
 // credential rollover) in server/utils/r2.ts.
 const cache = new Cache({ stdTTL: 60 * 10 }); // 10 minute TTL
 
-// Search for the checksum file
-// - `<key>.sha256.txt`
-// - `<key minus extension>.sha256.txt`
 function findChecksum(key: string, keys: Set<string>): string | null {
-  const candidates = [`${key}.sha256.txt`, key.replace(/\.(iso|img\.xz)$/, '.sha256.txt')];
-  return candidates.find(candidate => keys.has(candidate)) ?? null;
+  const checksum = `${key}.sha256.txt`;
+  return keys.has(checksum) ? checksum : null;
 }
 
 function shapeEntries(channel: Channel, entries: StorageEntry[]): ImageInfo[] {
