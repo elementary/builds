@@ -16,8 +16,8 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1169.0",
-    "@aws-sdk/s3-request-presigner": "^3.1169.0",
+    "@aws-sdk/client-s3": "^3.1175.0",
+    "@aws-sdk/s3-request-presigner": "^3.1175.0",
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@nuxtjs/plausible": "^1.2.0",
@@ -35,7 +35,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "eslint": "^10.4.0",
     "nuxt": "^3.17.3",
-    "postcss-html": "^2.0.0",
+    "postcss-html": "^2.0.1",
     "sass": "^1.108.2",
     "stylelint": "^17.12.0",
     "stylelint-config-standard": "^40.0.0",
